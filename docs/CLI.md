@@ -8,6 +8,7 @@ Static analysis only. Package code is **never** executed.
 # Registry scan — resolves via npm, can verify registry-declared integrity
 pnpm scan lodash@4.17.21
 pnpm packagegate scan express@4.21.2 --json
+pnpm packagegate scan lodash@4.17.21 --ml
 
 # Local preserved tarball — same investigation pipeline after secure extraction
 pnpm packagegate scan-tarball ./preserved-package.tgz
@@ -19,6 +20,9 @@ pnpm packagegate diff version-diff-benign-v1 version-diff-remote-v2 --color
 
 # Inert offline fixture (never executed)
 pnpm packagegate fixture inert-env-exfil --color
+
+# Versioned ML feature/slice export (for training pipelines)
+pnpm packagegate ml-export inert-install-curl-bash
 
 # Repeatable evaluation harness (real malware never auto-downloaded)
 pnpm packagegate evaluate --json

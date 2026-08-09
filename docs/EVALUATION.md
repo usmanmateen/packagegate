@@ -33,6 +33,12 @@ Do not rewrite history to claim behavioural analysis alone returned BLOCK.
 - **Evaluation harness** (`packagegate evaluate`) — intervention-level TP/TN/FP/FN; real malware never auto-downloaded
 - **Decision explanation** — why final policy was chosen, with lanes kept separate
 
+## ML V1 scaffolding
+
+See `docs/ML_EVALUATION.md`. Optional `--ml` lane is separate from behavioural
+risk. ML may escalate ALLOW→REVIEW only; never independent BLOCK. Code-model
+fine-tuning is gated on external curated data quality.
+
 ## Controls (post-v3)
 
 | Sample | Score | Final |
