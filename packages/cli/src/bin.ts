@@ -4,6 +4,7 @@
  *
  * Usage:
  *   packagegate scan <package[@version]> [--json] [--no-color]
+ *   packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color]
  *   packagegate fixture <name> [--json] [--no-color]
  *   packagegate --help
  */
@@ -17,11 +18,13 @@ import { formatInvestigationJson } from "./output/json.js";
 import { createTheme, shouldUseColor } from "./output/theme.js";
 import { formatInvestigationReport } from "./report.js";
 import { scanPackage } from "./scan.js";
+import { scanLocalTarball } from "./scan-tarball.js";
 import type { InvestigationResult } from "./types.js";
 
 interface CliFlags {
   readonly json: boolean;
   readonly color: boolean | undefined;
+  readonly expectedSha256: string | undefined;
 }
 
 function print(message: string): void {
@@ -41,21 +44,29 @@ function usage(): string {
     "PackageGate — npm package Trust & Safety investigation",
     "",
     "Usage:",
-    "  packagegate scan <package[@version]> [--json] [--no-color]",
-    "  packagegate fixture <name> [--json] [--no-color]",
+    "  packagegate scan <package[@version]> [--json] [--no-color] [--color]",
+    "  packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color] [--color]",
+    "  packagegate fixture <name> [--json] [--no-color] [--color]",
     "",
     "Examples:",
     "  packagegate scan lodash@4.17.21",
     "  packagegate scan express@^4.0.0",
     "  packagegate scan @babel/parser --json",
+    "  packagegate scan-tarball ./preserved-package.tgz",
+    "  packagegate scan-tarball ./preserved-package.tgz --sha256 <hex>",
     "  packagegate fixture inert-env-exfil",
     "",
     "Flags:",
-    "  --json       Machine-readable JSON (never includes ANSI colour)",
-    "  --no-color   Disable ANSI colour even on a TTY",
-    "  --color      Force ANSI colour (useful when piping through a pager)",
+    "  --json              Machine-readable JSON (never includes ANSI colour)",
+    "  --sha256 <digest>   Expected SHA-256 for scan-tarball (mismatch aborts)",
+    "  --no-color          Disable ANSI colour even on a TTY",
+    "  --color             Force ANSI colour (useful when piping through a pager)",
     "",
-    "The package under investigation is never installed or executed.",
+    "Registry scans can verify npm-declared artifact integrity.",
+    "Local tarball scans hash the file but cannot claim registry integrity",
+    "unless --sha256 is supplied and matches.",
+    "",
+    "STATIC ANALYSIS ONLY. Package code is never executed.",
     "Absence of findings is not evidence of safety.",
   ].join("\n");
 }
@@ -64,8 +75,12 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
   const positional: string[] = [];
   let json = false;
   let color: boolean | undefined;
+  let expectedSha256: string | undefined;
 
-  for (const arg of args) {
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === undefined) continue;
+
     if (arg === "--json") {
       json = true;
       continue;
@@ -78,13 +93,26 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
       color = true;
       continue;
     }
+    if (arg === "--sha256") {
+      const value = args[index + 1];
+      if (value === undefined || value.startsWith("-")) {
+        throw new Error("--sha256 requires a 64-character hex digest");
+      }
+      expectedSha256 = value;
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith("--sha256=")) {
+      expectedSha256 = arg.slice("--sha256=".length);
+      continue;
+    }
     if (arg.startsWith("-")) {
       throw new Error(`Unknown flag: ${arg}`);
     }
     positional.push(arg);
   }
 
-  return { positional, flags: { json, color } };
+  return { positional, flags: { json, color, expectedSha256 } };
 }
 
 function resolveThemeEnabled(flag: boolean | undefined): boolean {
@@ -175,6 +203,9 @@ async function main(argv: string[]): Promise<number> {
     }
 
     if (command === "scan") {
+      if (flags.expectedSha256 !== undefined) {
+        throw new Error("--sha256 is only valid with scan-tarball");
+      }
       if (!flags.json) {
         print(
           `Investigating ${target} (static analysis only; package is not executed)…\n`,
@@ -185,7 +216,25 @@ async function main(argv: string[]): Promise<number> {
       return 0;
     }
 
+    if (command === "scan-tarball") {
+      if (!flags.json) {
+        print(
+          `Investigating local tarball ${target} (static analysis only; never executed)…\n`,
+        );
+      }
+      const result = await scanLocalTarball(target, {
+        ...(flags.expectedSha256 === undefined
+          ? {}
+          : { expectedSha256: flags.expectedSha256 }),
+      });
+      emitResult(result, flags);
+      return 0;
+    }
+
     if (command === "fixture") {
+      if (flags.expectedSha256 !== undefined) {
+        throw new Error("--sha256 is only valid with scan-tarball");
+      }
       if (!flags.json) {
         print(
           `Investigating fixture ${target} (static analysis only; never executed)…\n`,

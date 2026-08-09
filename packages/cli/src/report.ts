@@ -1,7 +1,7 @@
 import type { BehaviourChain, Confidence, Severity } from "@packagegate/shared";
 import type { Theme } from "./output/theme.js";
 import { createTheme } from "./output/theme.js";
-import type { InvestigationResult } from "./types.js";
+import type { AcquisitionInfo, InvestigationResult } from "./types.js";
 
 export interface ReportOptions {
   /**
@@ -57,32 +57,62 @@ function formatFindingBadge(
   return `[${severityPart} · ${confidencePart}]`;
 }
 
-function formatIntegrityLine(
-  verified: boolean | undefined,
+function formatSourceLine(acquisition: AcquisitionInfo, theme: Theme): string {
+  switch (acquisition.source) {
+    case "REGISTRY":
+      return theme.info("npm registry");
+    case "LOCAL":
+      return theme.warning("Local tarball");
+    case "FIXTURE":
+      return theme.info("Inert fixture");
+    default: {
+      const _exhaustive: never = acquisition.source;
+      return _exhaustive;
+    }
+  }
+}
+
+function formatIntegrityLines(
+  result: InvestigationResult,
   theme: Theme,
-): string {
-  if (verified === true) {
-    return theme.success("✓ Integrity verified");
+): string[] {
+  const lines: string[] = [];
+  const { acquisition } = result;
+
+  if (acquisition.suppliedDigest?.matched === true) {
+    lines.push(theme.success("✓ Supplied SHA-256 verified"));
   }
-  if (verified === false) {
-    return theme.danger("✗ Integrity MISMATCH");
+
+  switch (acquisition.registryIntegrity.status) {
+    case "VERIFIED":
+      lines.push(theme.success("✓ Registry integrity verified"));
+      break;
+    case "UNSUPPORTED":
+      lines.push(theme.warning("⚠ Registry integrity unsupported"));
+      break;
+    case "NOT_DECLARED":
+      lines.push(theme.warning("? Registry integrity not declared"));
+      break;
+    case "NOT_APPLICABLE":
+      lines.push(theme.warning("⚠ Registry integrity not verified"));
+      lines.push(theme.muted(`  ${acquisition.registryIntegrity.reason}`));
+      break;
+    default: {
+      const _exhaustive: never = acquisition.registryIntegrity.status;
+      return _exhaustive;
+    }
   }
-  return theme.warning("? Integrity not declared");
+
+  return lines;
 }
 
 function formatChainPath(chain: BehaviourChain, theme: Theme): string {
-  const nodes = [
-    chain.source,
-    ...chain.transformations,
-    chain.sink,
-  ];
+  const nodes = [chain.source, ...chain.transformations, chain.sink];
   const arrow = theme.muted(" → ");
   const rendered = nodes.map((node, index) => {
     const label = nodeLabel(node);
     const isEndpoint = index === 0 || index === nodes.length - 1;
     if (!isEndpoint) return theme.info(label);
-    // Endpoints follow overall risk posture via caller; here emphasise as info
-    // for structure and let recommendation colour sit on the confidence tag.
     return theme.emphasis(label);
   });
   return rendered.join(arrow);
@@ -114,14 +144,21 @@ export function formatInvestigationReport(
   push(theme.muted("========================="));
   push("");
   const packageId = `${result.resolved.name}@${result.resolved.version}`;
-  push(`Package:        ${theme.heading(packageId)}`);
-  push(`Requested:      ${theme.info(result.requestedSpec)}`);
-  push(`Duration:       ${theme.muted(`${String(result.durationMs)}ms`)}`);
+  push(`Package:          ${theme.heading(packageId)}`);
+  push(`Source:           ${formatSourceLine(result.acquisition, theme)}`);
+  if (result.acquisition.localPath !== undefined) {
+    push(`Artifact path:    ${theme.info(result.acquisition.localPath)}`);
+  } else {
+    push(`Requested:        ${theme.info(result.requestedSpec)}`);
+  }
+  push(`Duration:         ${theme.muted(`${String(result.durationMs)}ms`)}`);
   push("");
 
   push(theme.heading("Artifact"));
   push(theme.muted("--------"));
-  push(`  ${formatIntegrityLine(result.artifact.integrityVerified, theme)}`);
+  for (const line of formatIntegrityLines(result, theme)) {
+    push(`  ${line}`);
+  }
   push(`  ${theme.muted("SHA-256:")} ${theme.info(result.artifact.sha256)}`);
   push(
     `  ${theme.muted("Files extracted:")} ${theme.info(String(result.artifact.fileCount))}`,
@@ -214,7 +251,6 @@ export function formatInvestigationReport(
         chain.confidence,
         chain.confidence,
       );
-      // Marker colour follows the machine recommendation — not a second score.
       const marker =
         result.risk.recommendation === "BLOCK"
           ? theme.danger("●")

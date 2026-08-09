@@ -25,6 +25,16 @@ export const SCAN_ERROR_CODES = [
   "INTEGRITY_MISMATCH",
   /** The scan exceeded its overall wall-clock budget. */
   "TIMEOUT",
+  /** Local artifact path does not exist. */
+  "LOCAL_ARTIFACT_NOT_FOUND",
+  /** Local path exists but is not a regular file. */
+  "LOCAL_ARTIFACT_NOT_FILE",
+  /** Local path is not a supported npm tarball format (.tgz / .tar.gz). */
+  "UNSUPPORTED_ARTIFACT_FORMAT",
+  /** Extracted archive has no package.json at the package root. */
+  "PACKAGE_MANIFEST_NOT_FOUND",
+  /** package.json exists but is not valid JSON or lacks required identity. */
+  "PACKAGE_MANIFEST_INVALID",
   /** An unexpected internal fault. Always logged with the scan id. */
   "INTERNAL",
 ] as const;

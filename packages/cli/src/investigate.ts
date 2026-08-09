@@ -1,20 +1,23 @@
+import type {
+  ArtifactInfo,
+  PackageMetadata,
+} from "@packagegate/shared";
+import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
 import {
   assessRisk,
   computeScoringBreakdown,
   WEIGHTS_VERSION,
 } from "@packagegate/risk-engine";
-import type {
-  ArtifactInfo,
-  PackageMetadata,
-  ScannedFile,
-} from "@packagegate/shared";
-import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
 import {
   analysePackage,
   RULES_VERSION as STATIC_RULES_VERSION,
 } from "@packagegate/static-analyser";
-import { SAFETY_DISCLAIMER, type InvestigationResult } from "./types.js";
-import { SCANNER_VERSION } from "./scan.js";
+import type { ScannedFile } from "@packagegate/shared";
+import { SCANNER_VERSION } from "./pipeline.js";
+import {
+  SAFETY_DISCLAIMER,
+  type InvestigationResult,
+} from "./types.js";
 
 export interface SourceInvestigationInput {
   readonly requestedSpec: string;
@@ -57,11 +60,12 @@ export function investigateSources(
   const analysisCoverage =
     analysable.length === 0 ? 1 : analysedCount / analysable.length;
 
+  const integrityVerified = input.integrityVerified === true;
   const riskInput = {
     findings: staticResult.findings,
     chains: behaviour.chains,
     analysisCoverage,
-    integrityVerified: input.integrityVerified ?? true,
+    integrityVerified,
     scannerVersion: SCANNER_VERSION,
     rulesVersion: `${STATIC_RULES_VERSION}+${behaviour.engineVersion}+${WEIGHTS_VERSION}`,
   };
@@ -85,7 +89,6 @@ export function investigateSources(
       input.files.reduce((sum, file) => sum + Buffer.byteLength(file.content, "utf8"), 0),
     fileCount: input.artifact?.fileCount ?? input.files.length,
     sha256: input.artifact?.sha256 ?? "fixture",
-    integrityVerified: input.integrityVerified ?? true,
     skippedEntries: input.artifact?.skippedEntries ?? [],
   };
 
@@ -111,6 +114,13 @@ export function investigateSources(
     resolved: input.resolved,
     metadata,
     artifact,
+    acquisition: {
+      source: "FIXTURE",
+      registryIntegrity: {
+        status: "NOT_APPLICABLE",
+        reason: "Inert fixture has no registry integrity reference",
+      },
+    },
     lifecycleScripts: staticResult.lifecycleScripts,
     files,
     findings: staticResult.findings,

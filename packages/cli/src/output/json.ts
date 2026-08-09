@@ -10,6 +10,16 @@ export function investigationToJson(result: InvestigationResult): unknown {
   return {
     requestedSpec: result.requestedSpec,
     resolved: result.resolved,
+    acquisition: {
+      source: result.acquisition.source,
+      ...(result.acquisition.localPath === undefined
+        ? {}
+        : { localPath: result.acquisition.localPath }),
+      registryIntegrity: result.acquisition.registryIntegrity,
+      ...(result.acquisition.suppliedDigest === undefined
+        ? {}
+        : { suppliedDigest: result.acquisition.suppliedDigest }),
+    },
     metadata: {
       name: result.metadata.name,
       version: result.metadata.version,
@@ -20,7 +30,19 @@ export function investigationToJson(result: InvestigationResult): unknown {
       scripts: result.metadata.scripts,
       dist: result.metadata.dist,
     },
-    artifact: result.artifact,
+    artifact: {
+      ...result.artifact,
+      integrity: {
+        status: result.acquisition.registryIntegrity.status,
+        reason: result.acquisition.registryIntegrity.reason,
+        ...(result.acquisition.suppliedDigest === undefined
+          ? {}
+          : {
+              suppliedSha256: result.acquisition.suppliedDigest.expectedSha256,
+              suppliedSha256Matched: result.acquisition.suppliedDigest.matched,
+            }),
+      },
+    },
     lifecycleScripts: result.lifecycleScripts,
     files: result.files,
     findings: result.findings,

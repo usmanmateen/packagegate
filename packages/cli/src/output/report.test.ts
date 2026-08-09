@@ -52,7 +52,7 @@ describe("report formatting", () => {
     expect(containsAnsi(coloured)).toBe(true);
     expect(stripAnsi(coloured)).toContain("PACKAGEGATE INVESTIGATION");
     expect(stripAnsi(coloured)).toContain(result.risk.recommendation);
-    expect(stripAnsi(coloured)).toContain("✓ Integrity verified");
+    expect(stripAnsi(coloured)).toContain("Registry integrity not verified");
   });
 
   it("marks absent behaviour chains as neutral success text, not safety proof", () => {
