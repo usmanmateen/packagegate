@@ -1,0 +1,165 @@
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+.yarn-integrity
+jspm_packages/
+web_modules/
+
+# ---------------------------------------------------------------------------
+# Build output (monorepo: match at any workspace depth)
+# ---------------------------------------------------------------------------
+dist/
+build/
+out/
+lib-cov/
+*.tsbuildinfo
+.tsbuildinfo
+next-env.d.ts
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.vite/
+.turbo/
+.nx/cache/
+.rollup.cache/
+storybook-static/
+
+# ---------------------------------------------------------------------------
+# Tests / coverage
+# ---------------------------------------------------------------------------
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+junit.xml
+
+# ---------------------------------------------------------------------------
+# Logs & diagnostics
+# ---------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+*.heapsnapshot
+*.cpuprofile
+
+# ---------------------------------------------------------------------------
+# Environment & secrets
+#   Committed:  *.example / *.template files only.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+.secrets/
+credentials.json
+.npmrc.local
+
+# ---------------------------------------------------------------------------
+# Docker
+# ---------------------------------------------------------------------------
+docker-compose.override.yml
+docker-compose.*.local.yml
+.docker/data/
+.docker/volumes/
+
+# ---------------------------------------------------------------------------
+# PackageGate scan artifacts
+#   Untrusted package payloads, extracted trees and generated reports are
+#   never committed — they are analysis inputs/outputs, not source.
+# ---------------------------------------------------------------------------
+.scan-cache/
+.packagegate/
+scans/
+sandbox/
+quarantine/
+tarballs/
+extracted/
+artifacts/
+reports/
+*.tgz
+*.tar
+*.tar.gz
+sbom.json
+sbom-*.json
+*.sarif
+!fixtures/**/*.sarif
+
+# ---------------------------------------------------------------------------
+# Test fixtures: keep declared fixtures, ignore anything fetched at runtime
+# ---------------------------------------------------------------------------
+fixtures/downloaded/
+**/__fixtures__/downloaded/
+
+# ---------------------------------------------------------------------------
+# Caches & temporary files
+# ---------------------------------------------------------------------------
+.cache/
+.eslintcache
+.stylelintcache
+.parcel-cache/
+tmp/
+temp/
+.tmp/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# ---------------------------------------------------------------------------
+# IDE & editor
+# ---------------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+*.iml
+*.iws
+*.ipr
+.fleet/
+.zed/
+*.swp
+*.swo
+*~
+.history/
+
+# ---------------------------------------------------------------------------
+# OS
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------------------------------------------------------------------------
+# Local agent / tooling scratch
+# ---------------------------------------------------------------------------
+.claude/settings.local.json
