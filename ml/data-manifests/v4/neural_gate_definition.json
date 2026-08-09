@@ -1,0 +1,18 @@
+{
+  "max_strict_input_nuisance_over_prevalence": 0.2,
+  "max_artifact_structure_matched_over_prevalence": 0.15,
+  "max_version_only_matched": 0.75,
+  "min_behaviour_minus_strict_nuisance": 0.05,
+  "min_delta_behaviour_minus_delta_nuisance": 0.05,
+  "max_shuffled_pr_auc": 0.75,
+  "max_opaque_over_prevalence": 0.25,
+  "min_matched_samples": 250,
+  "min_pg_delta_positive": 100,
+  "min_pg_delta_negative": 100,
+  "min_pg_delta_test_pairs": 40,
+  "require_strict_input_no_identity": true,
+  "require_canonical_processing": true,
+  "raw_name_lexical_not_a_gate": true,
+  "source_only_not_a_gate": true,
+  "note": "Raw PACKAGE_NAME_LEXICAL may remain high as dataset bias. Gate requires identity absent from STRICT_SECURITY_VIEW and STRICT_INPUT_NUISANCE / DELTA_NUISANCE controlled."
+}

@@ -1,0 +1,42 @@
+{
+  "seededFrom": "v3",
+  "total": 1043,
+  "available": 992,
+  "available_labels": {
+    "MALICIOUS": 140,
+    "COMPROMISED": 138,
+    "EXPECTED_BENIGN": 714
+  },
+  "matched_samples": 305,
+  "matched_pairs_malicious": 104,
+  "unmatched_malicious": 168,
+  "pg_delta_usable_pairs": 280,
+  "pg_delta_positive": 160,
+  "pg_delta_negative": 120,
+  "pg_delta_split_counts": {
+    "train": 162,
+    "validation": 53,
+    "test": 65
+  },
+  "pg_delta_family_counts": {
+    "total": 58,
+    "train": 34,
+    "validation": 11,
+    "test": 13
+  },
+  "package_split": {
+    "train": 665,
+    "validation": 196,
+    "test": 131,
+    "holdout": 51
+  },
+  "hashes": {
+    "train": "7667aa06dce6ca4f2d815c00ee7a26e7c4058ca9fa4b3ea2abe2e75f0d868913",
+    "validation": "fe4f164b539acea3b83ce7566c40ff40b665d5b6dd6a5577d6ffe53716f7de32",
+    "test": "c799e5f2a37e4f71cffaea96763097e8a3266c92dded428d509546ccf32837ec",
+    "qualitative-holdouts": "e2d0f4b9891f072f23f45fa0223559ed6ad7bc7334e8c91e48951c0a91f485c5",
+    "split": "d83990a2ac199e5d65ffc73838594d738d30e0d69496cdfaff7631a3041a73c6"
+  },
+  "audit_passed": true,
+  "02_echo_holdout": true
+}

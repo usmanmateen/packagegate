@@ -1,0 +1,45 @@
+{
+  "runId": "20260809T185950Z-structured-v4",
+  "passed": true,
+  "reasons": [],
+  "observed": {
+    "matchedN": 305,
+    "matchedPrevalence": 0.3620689655172414,
+    "strictInputNuisance": 0.33124031339910576,
+    "artifactStructure": 0.4222098985581698,
+    "versionOnly": 0.5015844452777031,
+    "behaviour": 0.8434452568906352,
+    "behaviourMinusStrictNuisance": 0.5122049434915295,
+    "rawNameMatched": 0.8936447760546051,
+    "deltaBehaviour": 0.9823480097308067,
+    "deltaNuisance": 0.8910600804342546,
+    "pgDeltaTestPairs": 65,
+    "pgDeltaPos": 160,
+    "pgDeltaNeg": 120,
+    "shuffled": {
+      "pr_auc": 0.586515215341689,
+      "positivePrevalenceTest": 0.3620689655172414
+    },
+    "opaque": 0.21399107676730866,
+    "leakFlags": 0
+  },
+  "definition": {
+    "max_strict_input_nuisance_over_prevalence": 0.2,
+    "max_artifact_structure_matched_over_prevalence": 0.15,
+    "max_version_only_matched": 0.75,
+    "min_behaviour_minus_strict_nuisance": 0.05,
+    "min_delta_behaviour_minus_delta_nuisance": 0.05,
+    "max_shuffled_pr_auc": 0.75,
+    "max_opaque_over_prevalence": 0.25,
+    "min_matched_samples": 250,
+    "min_pg_delta_positive": 100,
+    "min_pg_delta_negative": 100,
+    "min_pg_delta_test_pairs": 40,
+    "require_strict_input_no_identity": true,
+    "require_canonical_processing": true,
+    "raw_name_lexical_not_a_gate": true,
+    "source_only_not_a_gate": true,
+    "note": "Raw PACKAGE_NAME_LEXICAL may remain high as dataset bias. Gate requires identity absent from STRICT_SECURITY_VIEW and STRICT_INPUT_NUISANCE / DELTA_NUISANCE controlled."
+  },
+  "frozenAt": "2026-08-09T18:59:50.619311+00:00"
+}

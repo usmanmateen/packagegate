@@ -80,6 +80,10 @@ def behaviour_delta_features(before: dict[str, Any], after: dict[str, Any]) -> d
     a = behaviour_features(after)
     keys = sorted(set(b) | set(a))
     out = {f"delta:{k}": float(a.get(k, 0.0) - b.get(k, 0.0)) for k in keys}
+    # Analysis completeness / coverage change is security-relevant (not release structure).
+    out["delta:coverageRatio"] = float(
+        after.get("coverageRatio", 0.0) - before.get("coverageRatio", 0.0)
+    )
     # Absolute post-state for a few high-signal behaviours
     for k in (
         "hasPreinstall",
