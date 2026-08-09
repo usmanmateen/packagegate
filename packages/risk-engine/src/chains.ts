@@ -21,6 +21,8 @@ export interface ResolvedChain {
 const STRONG_LINK_KINDS: ReadonlySet<ChainLink["kind"]> = new Set([
   "SHARED_BINDING",
   "ARGUMENT_FLOW",
+  "SHELL_PIPELINE",
+  "LIFECYCLE_INVOCATION",
 ]);
 
 const MEDIUM_LINK_KINDS: ReadonlySet<ChainLink["kind"]> = new Set([
@@ -91,6 +93,15 @@ export function resolveChainPattern(chain: BehaviourChain): {
   if (
     source === "REMOTE_DOWNLOAD" &&
     (sink === "DYNAMIC_EVALUATION" || sink === "PROCESS_EXECUTION")
+  ) {
+    return pattern("J3");
+  }
+
+  // Install-time remote download→shell/process execution (shell semantics).
+  if (
+    installRooted &&
+    source === "REMOTE_DOWNLOAD" &&
+    sink === "PROCESS_EXECUTION"
   ) {
     return pattern("J3");
   }
