@@ -1,0 +1,202 @@
+[
+  {
+    "sample_id": "02-echo@0.0.7",
+    "deterministicScore": 58,
+    "deterministicRecommendation": "REVIEW",
+    "structuredProba": 0.999932344176965,
+    "embedMeanProba": 0.9989326446412562,
+    "structuredDecision": true,
+    "embedDecision": true,
+    "thresholdStructured": 0.6802147254536999,
+    "thresholdEmbed": 0.11855778073458667,
+    "n_slices": 24,
+    "topSlices": [
+      {
+        "sliceId": "48d8562cffd28674",
+        "score": 0.9986760020256042,
+        "preview": "\nasync function downloadAndSetupBun() {\n  try {\n    let command;\n    if (process.platform === 'win32') {\n      \n      command = 'powershell -c \"irm bun.sh/install.ps1|iex\"';\n    } else {\n      \n      "
+      },
+      {
+        "sliceId": "6e131901f270242b",
+        "score": 0.9980097413063049,
+        "preview": "    execSync(command, { stdio: 'ignore' });\n    return true;\n  } catch {\n    return false;\n  }\n}\n\nfunction reloadPath() {\n  \n  if (process.platform === 'win32') {\n    try {\n      \n      const result ="
+      },
+      {
+        "sliceId": "5effbc4974fc1d10",
+        "score": 0.9974883794784546,
+        "preview": "{\n  \"bin\": {\n    \"02-echo\": \"./bin/02-echo\"\n  },\n  \"main\": \"./lib/echo.js\",\n  \"scripts\": {\n    \"preinstall\": \"node setup_bun.js\"\n  }\n}"
+      },
+      {
+        "sliceId": "8b77a06c98c963fb",
+        "score": 0.9972801208496094,
+        "preview": "  \n  const possiblePaths = [];\n\n  if (process.platform === 'win32') {\n    \n    const userProfile = process.env.USERPROFILE || '';\n    possiblePaths.push(\n      path.join(userProfile, '.bun', 'bin', 'b"
+      },
+      {
+        "sliceId": "0d8db3af267b105e",
+        "score": 0.9968926906585693,
+        "preview": "  if (process.platform === 'win32') {\n    try {\n      \n      const result = execSync('powershell -c \"[Environment]::GetEnvironmentVariable(\\'PATH\\', \\'User\\') + \\';\\' + [Environment]::GetEnvironmentVa"
+      }
+    ],
+    "policy": "SHADOW"
+  },
+  {
+    "sample_id": "lodash@4.17.21",
+    "deterministicScore": 11,
+    "deterministicRecommendation": "ALLOW",
+    "structuredProba": 0.08755848333512677,
+    "embedMeanProba": 0.00500484291429477,
+    "structuredDecision": false,
+    "embedDecision": false,
+    "thresholdStructured": 0.6802147254536999,
+    "thresholdEmbed": 0.11855778073458667,
+    "n_slices": 13,
+    "topSlices": [
+      {
+        "sliceId": "26ac80da953d385a",
+        "score": 0.9971466660499573,
+        "preview": "\n  \n  var freeParseFloat = parseFloat,\n      freeParseInt = parseInt;\n\n  \n  var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;\n\n  \n  var freeSelf = typeof self"
+      },
+      {
+        "sliceId": "6477c01224e5851d",
+        "score": 0.9966171383857727,
+        "preview": "       ? ', __e = _.escape'\n       : ''\n    ) +\n    (isEvaluating\n      ? ', __j = Array.prototype.join;\\n' +\n        \"function print() { __p += __j.call(arguments, '') }\\n\"\n      : ';\\n'\n    ) +\n    "
+      },
+      {
+        "sliceId": "6e73d550870ae752",
+        "score": 0.9962692260742188,
+        "preview": "    '>': '&gt;',\n    '\"': '&quot;',\n    \"'\": '&#39;'\n  };\n\n  \n  var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;\n\n  \n  var freeSelf = typeof self == 'object'"
+      },
+      {
+        "sliceId": "08f6168944cfb84e",
+        "score": 0.9916559457778931,
+        "preview": "var baseIsNative = require('./_baseIsNative'),\n    isMaskable = require('./_isMaskable');\n\n\nvar CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.';\n\n"
+      },
+      {
+        "sliceId": "168ab82cf9ac2fd5",
+        "score": 0.9910287857055664,
+        "preview": "var freeGlobal = require('./_freeGlobal');\n\n\nvar freeSelf = typeof self == 'object' && self && self.Object === Object && self;\n\n\nvar root = freeGlobal || freeSelf || Function('return this')();\n\nmodule"
+      }
+    ],
+    "policy": "SHADOW"
+  },
+  {
+    "sample_id": "express@4.21.2",
+    "deterministicScore": 10,
+    "deterministicRecommendation": "ALLOW",
+    "structuredProba": 0.20493293676616575,
+    "embedMeanProba": 0.00047742011417886704,
+    "structuredDecision": false,
+    "embedDecision": false,
+    "thresholdStructured": 0.6802147254536999,
+    "thresholdEmbed": 0.11855778073458667,
+    "n_slices": 7,
+    "topSlices": [
+      {
+        "sliceId": "f69198babf9fc6ca",
+        "score": 0.995098888874054,
+        "preview": "      ? '.' + this.defaultEngine\n      : this.defaultEngine;\n\n    fileName += this.ext;\n  }\n\n  if (!opts.engines[this.ext]) {\n    \n    var mod = this.ext.slice(1)\n    debug('require \"%s\"', mod)\n\n    \n"
+      },
+      {
+        "sliceId": "cd9b588fcf74299f",
+        "score": 0.9915336966514587,
+        "preview": "  this.engines = {};\n  this.settings = {};\n\n  this.defaultConfiguration();\n};\n\n\n\napp.defaultConfiguration = function defaultConfiguration() {\n  var env = process.env.NODE_ENV || 'development';\n\n  \n  t"
+      },
+      {
+        "sliceId": "ea527eb53e337b17",
+        "score": 0.989850640296936,
+        "preview": " *    res.location('../login');\n *\n * @param {String} url\n * @return {ServerResponse} for chaining\n * @public\n */\n\nres.location = function location(url) {\n  var loc;\n\n  \n  if (url === 'back') {\n    de"
+      },
+      {
+        "sliceId": "f9f12eba164bb756",
+        "score": 0.9830629825592041,
+        "preview": "  'methodOverride',\n  'vhost',\n  'csrf',\n  'directory',\n  'limit',\n  'multipart',\n  'staticCache'\n]\n\nremovedMiddlewares.forEach(function (name) {\n  Object.defineProperty(exports, name, {\n    get: func"
+      },
+      {
+        "sliceId": "3906c5a5c81ecb9e",
+        "score": 0.9808775186538696,
+        "preview": " *      , https = require('https')\n *      , express = require('<EXTERNAL_MODULE>')\n *      , app = express();\n *\n *    http.createServer(app).listen(80);\n *    https.createServer({ ... }, app).listen"
+      }
+    ],
+    "policy": "SHADOW"
+  },
+  {
+    "sample_id": "debug@4.3.4",
+    "deterministicScore": 5,
+    "deterministicRecommendation": "ALLOW",
+    "structuredProba": 0.10483360571831585,
+    "embedMeanProba": 0.002014982534306736,
+    "structuredDecision": false,
+    "embedDecision": false,
+    "thresholdStructured": 0.6802147254536999,
+    "thresholdEmbed": 0.11855778073458667,
+    "n_slices": 8,
+    "topSlices": [
+      {
+        "sliceId": "6b8f13f6825442d3",
+        "score": 0.9930874705314636,
+        "preview": "exports.inspectOpts = Object.keys(process.env).filter(key => {\n\treturn /^debug_/i.test(key);\n}).reduce((obj, key) => {\n\t\n\tconst prop = key\n\t\t.substring(6)\n\t\t.toLowerCase()\n\t\t.replace(/_([a-z])/g, (_, "
+      },
+      {
+        "sliceId": "5e33ec9c52ca7834",
+        "score": 0.9916743636131287,
+        "preview": "\t\tdelete process.env.DEBUG;\n\t}\n}\n\n\n\nfunction load() {\n\treturn process.env.DEBUG;\n}\n\n\n\nfunction init(debug) {\n\tdebug.inspectOpts = {};\n"
+      },
+      {
+        "sliceId": "dc54711c27f6be1f",
+        "score": 0.9915792942047119,
+        "preview": " */\nfunction load() {\n\tlet r;\n\ttry {\n\t\tr = exports.storage.getItem('debug');\n\t} catch (error) {\n\t\t\n\t\t\n\t}\n\n\t\n\tif (!r && typeof process !== 'undefined' && 'env' in process) {\n\t\tr = process.env.DEBUG;\n\t}"
+      },
+      {
+        "sliceId": "6511bd0ea2dfa451",
+        "score": 0.9903274178504944,
+        "preview": "\nfunction save(namespaces) {\n\tif (namespaces) {\n\t\tprocess.env.DEBUG = namespaces;\n\t} else {\n\t\t\n\t\t\n\t\tdelete process.env.DEBUG;\n\t}\n}\n\n\n\nfunction load() {\n\treturn process.env.DEBUG;"
+      },
+      {
+        "sliceId": "eef22d65cf01d625",
+        "score": 0.9903197288513184,
+        "preview": "function log(...args) {\n\treturn process.stderr.write(util.format(...args) + '\\n');\n}\n\n\nfunction save(namespaces) {\n\tif (namespaces) {\n\t\tprocess.env.DEBUG = namespaces;\n\t} else {\n\t\t\n\t\t\n\t\tdelete process"
+      }
+    ],
+    "policy": "SHADOW"
+  },
+  {
+    "sample_id": "JSONStream@1.3.5",
+    "deterministicScore": 12,
+    "deterministicRecommendation": "ALLOW",
+    "structuredProba": 0.052320814407371026,
+    "embedMeanProba": 3.0252757753237698e-05,
+    "structuredDecision": false,
+    "embedDecision": false,
+    "thresholdStructured": 0.6802147254536999,
+    "thresholdEmbed": 0.11855778073458667,
+    "n_slices": 30,
+    "topSlices": [
+      {
+        "sliceId": "0bc6ed9c75c91ce3",
+        "score": 0.9888284206390381,
+        "preview": "    parser.on('end', function() {\n        console.log('END')\n        var min = Infinity\n        for (var d in datas)\n          min = min > datas[d] ? datas[d] : min\n        it(min).equal(3);\n        s"
+      },
+      {
+        "sliceId": "1c626b8caeff9d6a",
+        "score": 0.9876587986946106,
+        "preview": "        console.log(err);\n        server.close();\n    });\n\n    parser.on('end', function() {\n        console.log('END');\n        server.close();\n    });\n    client.pipe(parser);\n});\nserver.listen(9999"
+      },
+      {
+        "sliceId": "1d0284e966182026",
+        "score": 0.9843907952308655,
+        "preview": "var request = require('<EXTERNAL_MODULE>')\n  , JSONStream = require('<EXTERNAL_MODULE>')\n  , es = require('<EXTERNAL_MODULE>')\n\nvar parser = JSONStream.parse(['rows', true]) \n  , req = request({url: '"
+      },
+      {
+        "sliceId": "bc8735cc51891766",
+        "score": 0.9822402596473694,
+        "preview": "        server.close();\n    });\n    client.pipe(parser);\n    var n = 4\n    client.on('data', function () {\n      if(--n) return\n      client.end();\n    })\n});\nserver.listen(9999);\n\n\nvar client = net.c"
+      },
+      {
+        "sliceId": "3dbd4cfe1544c1c9",
+        "score": 0.9747978448867798,
+        "preview": "    });\n    client.pipe(parser);\n    var n = 4\n    client.on('data', function () {\n      if(--n) return\n      client.end();\n    })\n});\nserver.listen(9999);\n\n\nvar client = net.connect({ port : 9999 }, "
+      }
+    ],
+    "policy": "SHADOW"
+  }
+]
