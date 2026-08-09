@@ -23,11 +23,16 @@ export function decidePolicy(input: PolicyEngineInput): PolicyDecision {
   const threat = input.threatIntelligence ?? "NONE";
   const reasons: PolicyReason[] = [];
 
-  if (threat === "KNOWN_MALICIOUS") {
+  if (threat === "KNOWN_MALICIOUS" || threat === "KNOWN_COMPROMISED") {
     reasons.push({
-      code: "KNOWN_MALICIOUS_INTELLIGENCE",
+      code:
+        threat === "KNOWN_MALICIOUS"
+          ? "KNOWN_MALICIOUS_INTELLIGENCE"
+          : "KNOWN_COMPROMISED_INTELLIGENCE",
       message:
-        "Trusted threat intelligence reports an exact malicious match for this package version.",
+        threat === "KNOWN_MALICIOUS"
+          ? "Trusted threat intelligence reports an exact malicious match for this package version."
+          : "Trusted threat intelligence reports this package version as compromised.",
     });
     return {
       behaviouralRecommendation: input.behaviouralRecommendation,

@@ -13,6 +13,7 @@ import { RiskRecommendationSchema } from "./risk.js";
 export const THREAT_INTELLIGENCE_STATUSES = [
   "NONE",
   "KNOWN_MALICIOUS",
+  "KNOWN_COMPROMISED",
   "KNOWN_VULNERABLE",
   "UNKNOWN",
 ] as const;
@@ -29,6 +30,7 @@ export const POLICY_REASON_CODES = [
   "DEGRADED_EXECUTABLE_ANALYSIS",
   "INSUFFICIENT_ANALYSIS",
   "KNOWN_MALICIOUS_INTELLIGENCE",
+  "KNOWN_COMPROMISED_INTELLIGENCE",
   "KNOWN_VULNERABILITY_CONTEXT",
 ] as const;
 export const PolicyReasonCodeSchema = z.enum(POLICY_REASON_CODES);

@@ -1,15 +1,16 @@
 import { z } from "zod";
+import { AnalysisCompletenessSchema } from "./completeness.js";
 import { BehaviourChainSchema } from "./chain.js";
 import { FindingSchema } from "./finding.js";
 import { LifecycleScriptSchema, ResolvedPackageSchema } from "./package.js";
+import { PolicyDecisionSchema } from "./policy.js";
+import { RiskRecommendationSchema } from "./risk.js";
 
 /**
  * Security-focused version comparison.
  *
  * The product question is not "what text changed" — that is what a diff tool is
  * for. It is "what can this version now do that the previous one could not".
- * A release that reformats 40,000 lines but introduces no new capability is
- * uninteresting; a release that adds four lines and a `postinstall` is not.
  */
 
 export const CHANGE_DIRECTIONS = [
@@ -21,7 +22,11 @@ export const CHANGE_DIRECTIONS = [
 export const ChangeDirectionSchema = z.enum(CHANGE_DIRECTIONS);
 export type ChangeDirection = z.infer<typeof ChangeDirectionSchema>;
 
-/** A lifecycle script that appeared, disappeared or changed between versions. */
+/** Significance of a *version change*, not a malware verdict. */
+export const CHANGE_SIGNIFICANCES = ["LOW", "MEDIUM", "HIGH", "CRITICAL"] as const;
+export const ChangeSignificanceSchema = z.enum(CHANGE_SIGNIFICANCES);
+export type ChangeSignificance = z.infer<typeof ChangeSignificanceSchema>;
+
 export const LifecycleScriptChangeSchema = z.object({
   name: z.string().min(1),
   direction: ChangeDirectionSchema,
@@ -30,18 +35,12 @@ export const LifecycleScriptChangeSchema = z.object({
 });
 export type LifecycleScriptChange = z.infer<typeof LifecycleScriptChangeSchema>;
 
-/**
- * A capability difference expressed in behavioural terms.
- *
- * Findings are matched across versions by rule and semantic location rather
- * than by line number, so that unrelated edits shifting a file do not present
- * as new behaviour.
- */
 export const BehaviourChangeSchema = z.object({
   direction: ChangeDirectionSchema,
-  /** Human-readable capability statement, e.g. "Process execution introduced". */
   label: z.string().min(1),
   category: z.string().min(1),
+  /** Stable semantic identity used for matching across versions. */
+  identity: z.string().min(1),
   findingsBefore: z.array(FindingSchema).default([]),
   findingsAfter: z.array(FindingSchema).default([]),
 });
@@ -49,6 +48,7 @@ export type BehaviourChange = z.infer<typeof BehaviourChangeSchema>;
 
 export const ChainChangeSchema = z.object({
   direction: ChangeDirectionSchema,
+  identity: z.string().min(1),
   chain: BehaviourChainSchema,
 });
 export type ChainChange = z.infer<typeof ChainChangeSchema>;
@@ -67,6 +67,68 @@ export const DependencyChangeSchema = z.object({
 });
 export type DependencyChange = z.infer<typeof DependencyChangeSchema>;
 
+export const OpaqueSourceChangeSchema = z.object({
+  path: z.string().min(1),
+  direction: ChangeDirectionSchema,
+  sizeBytes: z.number().int().min(0).optional(),
+});
+export type OpaqueSourceChange = z.infer<typeof OpaqueSourceChangeSchema>;
+
+export const DestinationChangeSchema = z.object({
+  destination: z.string().min(1),
+  direction: ChangeDirectionSchema,
+});
+export type DestinationChange = z.infer<typeof DestinationChangeSchema>;
+
+/**
+ * First-class security semantic diff between two investigated versions.
+ */
+export const SecurityDiffSchema = z.object({
+  packageName: z.string().min(1),
+  fromVersion: z.string().min(1),
+  toVersion: z.string().min(1),
+
+  lifecycleAdded: z.array(LifecycleScriptSchema).default([]),
+  lifecycleRemoved: z.array(LifecycleScriptSchema).default([]),
+
+  findingsAdded: z.array(FindingSchema).default([]),
+  findingsRemoved: z.array(FindingSchema).default([]),
+
+  chainsAdded: z.array(BehaviourChainSchema).default([]),
+  chainsRemoved: z.array(BehaviourChainSchema).default([]),
+
+  destinationsAdded: z.array(z.string()).default([]),
+  destinationsRemoved: z.array(z.string()).default([]),
+
+  opaqueSourcesAdded: z.array(OpaqueSourceChangeSchema).default([]),
+
+  completenessBefore: AnalysisCompletenessSchema,
+  completenessAfter: AnalysisCompletenessSchema,
+
+  riskBefore: z.object({
+    score: z.number().min(0).max(100),
+    recommendation: RiskRecommendationSchema,
+  }),
+  riskAfter: z.object({
+    score: z.number().min(0).max(100),
+    recommendation: RiskRecommendationSchema,
+  }),
+  riskDelta: z.number(),
+
+  policyBefore: PolicyDecisionSchema,
+  policyAfter: PolicyDecisionSchema,
+
+  changeSignificance: ChangeSignificanceSchema,
+  summary: z.string().min(1),
+
+  /** Detailed change lists for reporting. */
+  behaviourChanges: z.array(BehaviourChangeSchema).default([]),
+  chainChanges: z.array(ChainChangeSchema).default([]),
+  lifecycleScriptChanges: z.array(LifecycleScriptChangeSchema).default([]),
+});
+export type SecurityDiff = z.infer<typeof SecurityDiffSchema>;
+
+/** Legacy comparison envelope kept for API compatibility. */
 export const VersionComparisonSchema = z.object({
   comparisonId: z.string().min(1),
   base: ResolvedPackageSchema,
@@ -76,7 +138,6 @@ export const VersionComparisonSchema = z.object({
 
   baseScore: z.number().min(0).max(100),
   targetScore: z.number().min(0).max(100),
-  /** target − base. Negative means the new version is less risky. */
   riskDelta: z.number(),
 
   lifecycleScriptChanges: z.array(LifecycleScriptChangeSchema).default([]),
@@ -84,15 +145,13 @@ export const VersionComparisonSchema = z.object({
   chainChanges: z.array(ChainChangeSchema).default([]),
   dependencyChanges: z.array(DependencyChangeSchema).default([]),
 
-  /** Files present only in the target version, package-relative. */
   addedFiles: z.array(z.string()).default([]),
   removedFiles: z.array(z.string()).default([]),
-  /** Files present in both but with different content hashes. */
   modifiedFiles: z.array(z.string()).default([]),
 
-  /** Network destinations statically identifiable in target but not base. */
   newNetworkDestinations: z.array(z.string()).default([]),
 
   computedAt: z.string().datetime(),
+  securityDiff: SecurityDiffSchema.optional(),
 });
 export type VersionComparison = z.infer<typeof VersionComparisonSchema>;
