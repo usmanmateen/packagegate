@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { diffInvestigations } from "./diff.js";
+import { diffInvestigations, diffPackages } from "./diff.js";
 import { investigateSources } from "./investigate.js";
 import {
   MemoryThreatIntelProvider,
@@ -48,6 +48,15 @@ describe("security version diff", () => {
     const diff = diffInvestigations(before, after);
     expect(diff.findingsAdded).toHaveLength(0);
     expect(diff.findingsRemoved).toHaveLength(0);
+  });
+
+  it("resolves inert fixture names through diffPackages", async () => {
+    const { diff } = await diffPackages(
+      "version-diff-benign-v1",
+      "version-diff-remote-v2",
+    );
+    expect(diff.changeSignificance).toBe("CRITICAL");
+    expect(diff.packageName).toBe("version-diff-demo");
   });
 });
 

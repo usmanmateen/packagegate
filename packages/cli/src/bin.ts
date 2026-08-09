@@ -11,14 +11,13 @@
  *   packagegate --help
  */
 
-import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ScanError } from "@packagegate/shared";
 import { diffPackages } from "./diff.js";
 import { formatSecurityDiffReport } from "./diff-report.js";
 import { runEvaluation } from "./evaluate.js";
-import { investigateSources } from "./investigate.js";
+import { loadNamedFixture } from "./fixtures.js";
 import { formatInvestigationJson } from "./output/json.js";
 import { createTheme, shouldUseColor } from "./output/theme.js";
 import { formatInvestigationReport } from "./report.js";
@@ -59,6 +58,7 @@ function usage(): string {
     "Examples:",
     "  packagegate scan lodash@4.17.21",
     "  packagegate diff express@4.20.0 express@4.21.2",
+    "  packagegate diff version-diff-benign-v1 version-diff-remote-v2",
     "  packagegate fixture inert-install-curl-bash --color",
     "  packagegate evaluate --malware-root /tmp/packagegate-malware-eval",
     "",
@@ -162,55 +162,7 @@ function repoRoot(): string {
 }
 
 function runFixture(name: string): InvestigationResult {
-  const root = join(repoRoot(), "fixtures", name);
-  const manifestPath = join(root, "package.json");
-  const manifest = readFileSync(manifestPath, "utf8");
-  const parsed: unknown = JSON.parse(manifest);
-  const packageName =
-    parsed !== null &&
-    typeof parsed === "object" &&
-    "name" in parsed &&
-    typeof parsed.name === "string"
-      ? parsed.name
-      : name;
-  const version =
-    parsed !== null &&
-    typeof parsed === "object" &&
-    "version" in parsed &&
-    typeof parsed.version === "string"
-      ? parsed.version
-      : "0.0.0";
-  const scripts =
-    parsed !== null &&
-    typeof parsed === "object" &&
-    "scripts" in parsed &&
-    parsed.scripts !== null &&
-    typeof parsed.scripts === "object"
-      ? Object.fromEntries(
-          Object.entries(parsed.scripts as Record<string, unknown>).filter(
-            (entry): entry is [string, string] => typeof entry[1] === "string",
-          ),
-        )
-      : {};
-
-  const files: { path: string; content: string }[] = [
-    { path: "package.json", content: manifest },
-  ];
-  for (const entry of readdirSync(root)) {
-    if (!/\.(?:[cm]?js|jsx|[cm]?ts|tsx)$/i.test(entry)) continue;
-    files.push({
-      path: entry,
-      content: readFileSync(join(root, entry), "utf8"),
-    });
-  }
-
-  return investigateSources({
-    requestedSpec: `${packageName}@${version}`,
-    resolved: { name: packageName, version },
-    files,
-    scripts,
-    manifestText: manifest,
-  });
+  return loadNamedFixture(name);
 }
 
 async function main(argv: string[]): Promise<number> {

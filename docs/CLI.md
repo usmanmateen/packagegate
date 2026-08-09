@@ -15,6 +15,7 @@ pnpm packagegate scan-tarball ./preserved-package.tgz --sha256 <64-hex-digest>
 
 # Security semantic version diff (not a text diff)
 pnpm packagegate diff express@4.20.0 express@4.21.2 --color
+pnpm packagegate diff version-diff-benign-v1 version-diff-remote-v2 --color
 
 # Inert offline fixture (never executed)
 pnpm packagegate fixture inert-env-exfil --color
