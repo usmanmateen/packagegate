@@ -66,4 +66,12 @@ export default tseslint.config(
       "no-console": "off",
     },
   },
+  {
+    // CLI is allowed to write user-facing output; the rest of the monorepo
+    // still forbids console noise that would hide scan failures.
+    files: ["packages/cli/src/bin.ts", "packages/cli/src/report.ts"],
+    rules: {
+      "no-console": "off",
+    },
+  },
 );

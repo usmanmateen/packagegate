@@ -1,0 +1,7 @@
+{
+  "name": "inert-env-exfil",
+  "version": "1.0.0",
+  "description": "INERT fixture for PackageGate static analysis only. Never execute.",
+  "main": "index.js",
+  "private": true
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@packagegate/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "packagegate": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@packagegate/artifact-fetcher": "workspace:*",
+    "@packagegate/behaviour-engine": "workspace:*",
+    "@packagegate/npm-registry": "workspace:*",
+    "@packagegate/risk-engine": "workspace:*",
+    "@packagegate/shared": "workspace:*",
+    "@packagegate/static-analyser": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0"
+  }
+}

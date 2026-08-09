@@ -77,6 +77,31 @@ importers:
         specifier: ^26.2.0
         version: 26.2.0
 
+  packages/cli:
+    dependencies:
+      '@packagegate/artifact-fetcher':
+        specifier: workspace:*
+        version: link:../artifact-fetcher
+      '@packagegate/behaviour-engine':
+        specifier: workspace:*
+        version: link:../behaviour-engine
+      '@packagegate/npm-registry':
+        specifier: workspace:*
+        version: link:../npm-registry
+      '@packagegate/risk-engine':
+        specifier: workspace:*
+        version: link:../risk-engine
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@packagegate/static-analyser':
+        specifier: workspace:*
+        version: link:../static-analyser
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
   packages/npm-registry:
     dependencies:
       '@packagegate/shared':
