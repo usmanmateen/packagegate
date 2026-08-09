@@ -1,0 +1,28 @@
+[
+  {
+    "duplicate_group_id": "near:11",
+    "sample_ids": [
+      "@antv/g-lite@2.8.0",
+      "@antv/g-lite@2.7.0",
+      "@antv/g-lite@2.6.0"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "near:12",
+    "sample_ids": [
+      "@antv/g@6.4.1",
+      "@antv/g@6.3.1",
+      "@antv/g@6.3.0"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  }
+]

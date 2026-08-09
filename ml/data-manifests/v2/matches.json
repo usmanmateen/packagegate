@@ -1,0 +1,1820 @@
+{
+  "matches": [
+    {
+      "malicious_sample_id": "000webhost-analytics@999.9.9",
+      "matched_benign_sample_ids": [
+        "chromedriver@131.0.5"
+      ],
+      "matching_distance": 3.628435391570262,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 9.5,
+        "digit_count_name": 3.0,
+        "digit_fraction_name": 0.15,
+        "hyphen_count": 1.0,
+        "name_len": 20.0,
+        "scoped": 0.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 7.0,
+        "version_unusual_large": 1.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "0vulns-dependency-confusion-poc@1.0.0",
+      "matched_benign_sample_ids": [
+        "speed-measure-webpack-plugin@1.5.0",
+        "validate-npm-package-license@3.0.4"
+      ],
+      "matching_distance": 1.031118157788462,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.03225806451612903,
+        "hyphen_count": 3.0,
+        "name_len": 31.0,
+        "scoped": 0.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "0x-smart-contracts@99.99.99",
+      "matched_benign_sample_ids": [
+        "npm-check-updates@17.1.13",
+        "ssh2-sftp-client@11.0.0"
+      ],
+      "matching_distance": 1.2284650606252223,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 5.333333333333333,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "hyphen_count": 2.0,
+        "name_len": 18.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 8.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "0xmisoke@1.0.0",
+      "matched_benign_sample_ids": [
+        "through2@4.0.2",
+        "sqlite3@5.1.7"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 8.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.125,
+        "hyphen_count": 0.0,
+        "name_len": 8.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1231dai@1.0.0",
+      "matched_benign_sample_ids": [
+        "pa11y@8.0.0"
+      ],
+      "matching_distance": 2.7488639549635963,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.5714285714285714,
+        "hyphen_count": 0.0,
+        "name_len": 7.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1imit@1.0.3",
+      "matched_benign_sample_ids": [
+        "json5@2.2.3",
+        "parse5@7.2.1"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.2,
+        "hyphen_count": 0.0,
+        "name_len": 5.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1inch-p2p-sdk@0.1.0",
+      "matched_benign_sample_ids": [
+        "cli-table3@0.6.5",
+        "load-yaml-file@0.2.0"
+      ],
+      "matching_distance": 1.7759326492219403,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 3.6666666666666665,
+        "digit_count_name": 2.0,
+        "digit_fraction_name": 0.15384615384615385,
+        "hyphen_count": 2.0,
+        "name_len": 13.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1kzr@1.0.0",
+      "matched_benign_sample_ids": [
+        "ssh2@1.16.0",
+        "split2@4.2.0"
+      ],
+      "matching_distance": 0.6232447558870173,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 4.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.25,
+        "hyphen_count": 0.0,
+        "name_len": 4.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1password-sdk-examples@1.0.0",
+      "matched_benign_sample_ids": [
+        "eslint-plugin-security@3.0.1",
+        "normalize-package-data@7.0.0"
+      ],
+      "matching_distance": 0.973471682306987,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 6.666666666666667,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.045454545454545456,
+        "hyphen_count": 2.0,
+        "name_len": 22.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1password-sdk-exapmles@1.0.0",
+      "matched_benign_sample_ids": [
+        "http-proxy-middleware@3.0.3",
+        "is-installed-globally@1.0.0"
+      ],
+      "matching_distance": 0.9934262631001167,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 6.666666666666667,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.045454545454545456,
+        "hyphen_count": 2.0,
+        "name_len": 22.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1uniswapinterface@1.1.2",
+      "matched_benign_sample_ids": [
+        "agentkeepalive@4.6.0",
+        "libnpmpublish@10.0.0"
+      ],
+      "matching_distance": 1.8359581196925898,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 17.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.058823529411764705,
+        "hyphen_count": 0.0,
+        "name_len": 17.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "1unitest@1.0.1",
+      "matched_benign_sample_ids": [
+        "mysql2@3.12.0",
+        "htmlparser2@9.1.0"
+      ],
+      "matching_distance": 1.2695583158806274,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 8.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.125,
+        "hyphen_count": 0.0,
+        "name_len": 8.0,
+        "scoped": 0.0,
+        "segment_count": 1.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "2fa-exe@1.0.1",
+      "matched_benign_sample_ids": [
+        "neo4j-driver@5.27.0",
+        "ci-info@4.1.0"
+      ],
+      "matching_distance": 1.6288948499654263,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 3.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.14285714285714285,
+        "hyphen_count": 1.0,
+        "name_len": 7.0,
+        "scoped": 0.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "32red-admin@999.9.9",
+      "matched_benign_sample_ids": [
+        "aws-sdk@2.1692.0",
+        "snyk@1.1295.0"
+      ],
+      "matching_distance": 2.929579805985523,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 2.0,
+        "digit_fraction_name": 0.18181818181818182,
+        "hyphen_count": 1.0,
+        "name_len": 11.0,
+        "scoped": 0.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 7.0,
+        "version_unusual_large": 1.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "32red-api-client@999.9.9",
+      "matched_benign_sample_ids": [
+        "@aws-sdk/client-s3@3.721.0",
+        "@aws-sdk/client-s3@3.726.0"
+      ],
+      "matching_distance": 3.4736213338144037,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 4.666666666666667,
+        "digit_count_name": 2.0,
+        "digit_fraction_name": 0.125,
+        "hyphen_count": 2.0,
+        "name_len": 16.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 7.0,
+        "version_unusual_large": 1.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "3cx-call-control-apps@1.0.0",
+      "matched_benign_sample_ids": [
+        "mini-css-extract-plugin@2.9.2",
+        "find-yarn-workspace-root@2.0.0"
+      ],
+      "matching_distance": 1.0417264308135405,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 4.5,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.047619047619047616,
+        "hyphen_count": 3.0,
+        "name_len": 21.0,
+        "scoped": 0.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "4m-clean-shopify-app@9.0.1",
+      "matched_benign_sample_ids": [
+        "are-we-there-yet@4.0.2",
+        "file-uri-to-path@2.0.0"
+      ],
+      "matching_distance": 1.2037688561940196,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 4.25,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.05,
+        "hyphen_count": 3.0,
+        "name_len": 20.0,
+        "scoped": 0.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "7702-eoa-implementation@1.0.0",
+      "matched_benign_sample_ids": [
+        "better-sqlite3@11.7.0",
+        "spdx-expression-parse@4.0.0"
+      ],
+      "matching_distance": 3.284381466165731,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.17391304347826086,
+        "hyphen_count": 2.0,
+        "name_len": 23.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "7715-permissions-shared@2.0.0",
+      "matched_benign_sample_ids": [
+        "html-minifier-terser@7.2.0",
+        "is-unicode-supported@2.1.0"
+      ],
+      "matching_distance": 3.8918926906890854,
+      "matching_features": {
+        "at_count_in_name": 0.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.17391304347826086,
+        "hyphen_count": 2.0,
+        "name_len": 23.0,
+        "scoped": 0.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xengine/meow@1.2.5",
+      "matched_benign_sample_ids": [
+        "@prisma/client@6.1.0",
+        "@sendgrid/mail@8.1.4"
+      ],
+      "matching_distance": 1.160069127906677,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.07142857142857142,
+        "hyphen_count": 0.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xengine/xmlrpc@1.3.17",
+      "matched_benign_sample_ids": [
+        "@apollo/client@3.12.4",
+        "@changesets/cli@2.27.11"
+      ],
+      "matching_distance": 1.215315061875745,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.0625,
+        "hyphen_count": 0.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xme5war/apicli@10.9.8",
+      "matched_benign_sample_ids": [
+        "@antv/l7-component@2.25.10",
+        "@antv/l7-component@2.28.10"
+      ],
+      "matching_distance": 2.1234584223311472,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 2.0,
+        "digit_fraction_name": 0.125,
+        "hyphen_count": 0.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xobelisk/sui-cli@1.2.0-pre.3",
+      "matched_benign_sample_ids": [
+        "@antv/f2-graphic@5.0.0-alpha.1",
+        "@antv/ava-react@3.3.2-beta.0"
+      ],
+      "matching_distance": 1.310364293084993,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "hyphen_count": 1.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 5.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 11.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xzyo/confutionrce@1.0.0",
+      "matched_benign_sample_ids": [
+        "@antstackio/shelbysam@1.1.5",
+        "@antstackio/shelbysam@1.1.6"
+      ],
+      "matching_distance": 1.152389036680684,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 8.5,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.05263157894736842,
+        "hyphen_count": 0.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@0xzyo111/frontend-logger@0.0.1",
+      "matched_benign_sample_ids": [
+        "@antv/g2-extension-3d@0.2.0",
+        "@antv/f2-graphic@0.0.16"
+      ],
+      "matching_distance": 2.742957801702667,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.333333333333333,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.16,
+        "hyphen_count": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@3kali182/selenium-webdriver4@99.9.9",
+      "matched_benign_sample_ids": [
+        "@antv/g2-extension-3d@1.0.0"
+      ],
+      "matching_distance": 3.809404444404116,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 8.666666666666666,
+        "digit_count_name": 5.0,
+        "digit_fraction_name": 0.1724137931034483,
+        "hyphen_count": 1.0,
+        "name_len": 29.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@3stripes/api-client@999.0.3",
+      "matched_benign_sample_ids": [
+        "@aws-sdk/client-sts@3.726.0",
+        "@snyk/protect@1.1295.0"
+      ],
+      "matching_distance": 1.923530834403685,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.666666666666667,
+        "digit_count_name": 1.0,
+        "digit_fraction_name": 0.05,
+        "hyphen_count": 1.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 7.0,
+        "version_unusual_large": 1.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@42ailab/42cc-darwin-universal@0.8.3",
+      "matched_benign_sample_ids": [
+        "@antv/l7-composite-layers@0.17.1",
+        "@antv/g6-mobile@0.1.1"
+      ],
+      "matching_distance": 2.883694350556881,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.5,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.13333333333333333,
+        "hyphen_count": 2.0,
+        "name_len": 30.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@42ailab/42cc@0.7.15",
+      "matched_benign_sample_ids": [
+        "@antv/f6@0.0.19"
+      ],
+      "matching_distance": 3.5024876506089395,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.5,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.3076923076923077,
+        "hyphen_count": 0.0,
+        "name_len": 13.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@42ailab/42plugin@0.1.25",
+      "matched_benign_sample_ids": [
+        "@antv/g6-mobile@0.1.2",
+        "@antv/f6-core@0.0.1"
+      ],
+      "matching_distance": 3.86848675196543,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.5,
+        "digit_count_name": 4.0,
+        "digit_fraction_name": 0.23529411764705882,
+        "hyphen_count": 0.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@aa-techops-ui/ping-authentication@1.0.0",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-kakao-channel@1.0.0",
+        "@actbase/react-native-kakao-channel@1.0.1"
+      ],
+      "matching_distance": 0.14991629306167106,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.8,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 34.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@access-risk/browser-remedy-react@99.1.1",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-simple-video@1.0.11",
+        "@actbase/react-native-simple-video@1.0.12"
+      ],
+      "matching_distance": 0.14991629306167106,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.6,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 33.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@accessibility-insights/eslint-plugin@9.9.9",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-actionsheet@1.0.2",
+        "@ahmedhfarag/ngx-virtual-scroller@4.0.3"
+      ],
+      "matching_distance": 0.6667198227599788,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 8.25,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 37.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@account-portal/ui-toolkit-react@99.9.0",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-fast-image@8.5.11",
+        "@actbase/react-native-fast-image@8.5.12"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.4,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 32.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@acitons/artifact@4.0.17",
+      "matched_benign_sample_ids": [
+        "@fastify/static@8.0.3",
+        "@angular/core@19.0.5"
+      ],
+      "matching_distance": 0.8224799570231485,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@acme-types/acme-package@99.0.0",
+      "matched_benign_sample_ids": [
+        "@antv/gi-assets-algorithm@2.3.18",
+        "@antv/gi-assets-algorithm@2.3.19"
+      ],
+      "matching_distance": 0.16667995568999477,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 24.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@act-platform/app-sdk@99.9.1",
+      "matched_benign_sample_ids": [
+        "@antv/gi-assets-scene@2.2.20",
+        "@antv/gi-assets-scene@2.2.21"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.25,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@adac-fahrzeugplattform/ui@99.9.9",
+      "matched_benign_sample_ids": [
+        "@accordproject/concerto-types@3.24.0",
+        "@rollup/plugin-commonjs@28.0.2"
+      ],
+      "matching_distance": 0.5943379641846891,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@add-wallet-exchange/import-type@1.0.0",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-kakao-navi@2.0.2",
+        "@actbase/react-native-kakao-navi@2.0.3"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.4,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 32.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@add-wallet-exchange/reset@1.0.0",
+      "matched_benign_sample_ids": [
+        "@antstackio/json-to-graphql@1.0.1",
+        "@antstackio/json-to-graphql@1.0.2"
+      ],
+      "matching_distance": 0.16667995568999477,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@add-wallet-exchange/set-imported-csv-message@1.0.0",
+      "matched_benign_sample_ids": [
+        "@actbase/css-to-react-native-transform@1.0.1",
+        "@actbase/css-to-react-native-transform@1.0.2"
+      ],
+      "matching_distance": 1.5674619770376477,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.428571428571429,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 5.0,
+        "name_len": 45.0,
+        "scoped": 1.0,
+        "segment_count": 7.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@add-wallet-exchange/type-api-data@1.0.0",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-naver-login@1.0.0",
+        "@actbase/react-native-less-transformer@1.0.4"
+      ],
+      "matching_distance": 1.4263139386309533,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 4.0,
+        "name_len": 34.0,
+        "scoped": 1.0,
+        "segment_count": 6.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@ads-core/types@11.7.7",
+      "matched_benign_sample_ids": [
+        "@antv/f-engine@1.10.0",
+        "@grpc/grpc-js@1.12.5"
+      ],
+      "matching_distance": 0.19811265472822992,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@adsk-forks/jsonpath@1.0.0",
+      "matched_benign_sample_ids": [
+        "@google-cloud/pubsub@4.9.0",
+        "@aifabrix/miso-client@4.7.1"
+      ],
+      "matching_distance": 0.0,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@aetherz/auth-connections@1.0.2",
+      "matched_benign_sample_ids": [
+        "@antv/insight-component@1.0.0",
+        "@google-cloud/bigquery@7.9.1"
+      ],
+      "matching_distance": 0.39622530945645945,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.333333333333333,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@afg-ikea/ikea-family-registration-module@99.9.9",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-less-transformer@1.0.5",
+        "@accordproject/concerto-linter-default-ruleset@3.24.0"
+      ],
+      "matching_distance": 1.5685311693966066,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.833333333333333,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 4.0,
+        "name_len": 41.0,
+        "scoped": 1.0,
+        "segment_count": 6.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@afg-ikea/ikea-kiosk-related-components@99.9.9",
+      "matched_benign_sample_ids": [
+        "@ahmedhfarag/ngx-perfect-scrollbar@20.0.18",
+        "@ahmedhfarag/ngx-perfect-scrollbar@20.0.19"
+      ],
+      "matching_distance": 2.9868649930267113,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 4.0,
+        "name_len": 39.0,
+        "scoped": 1.0,
+        "segment_count": 6.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@afound/common@10.10.12",
+      "matched_benign_sample_ids": [
+        "@nestjs/core@10.4.15",
+        "@babel/core@7.26.0"
+      ],
+      "matching_distance": 0.8224799570231485,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 8.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@aftersale/react-eva@1.1.1",
+      "matched_benign_sample_ids": [
+        "@aifabrix/miso-client@4.8.0",
+        "@antv/data-samples@1.0.0"
+      ],
+      "matching_distance": 0.19811265472822967,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@ai-document-translation/ui-core@99.9.1",
+      "matched_benign_sample_ids": [
+        "@rollup/plugin-node-resolve@16.0.0",
+        "@actbase/react-daum-postcode@1.0.3"
+      ],
+      "matching_distance": 1.4733434006277328,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.4,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 32.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@airtel-web/clickstream@99.0.2",
+      "matched_benign_sample_ids": [
+        "@testing-library/react@16.1.0",
+        "@google-cloud/storage@7.15.0"
+      ],
+      "matching_distance": 0.19811265472822998,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@airtel-web/legos@99.0.1",
+      "matched_benign_sample_ids": [
+        "@actbase/node-server@1.1.17",
+        "@actbase/node-server@1.1.18"
+      ],
+      "matching_distance": 0.5943379641846894,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.666666666666667,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@al-ui/useappinsights@1.0.1",
+      "matched_benign_sample_ids": [
+        "@antv/data-samples@1.0.1",
+        "@testing-library/dom@10.4.0"
+      ],
+      "matching_distance": 0.5943379641846894,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@alaska-its/design-tokens@1.0.1",
+      "matched_benign_sample_ids": [
+        "@actbase/react-daum-postcode@1.0.4",
+        "@actbase/react-native-tiktok@1.1.1"
+      ],
+      "matching_distance": 0.5000398670699842,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.25,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@alexandrsarioglo/npm-ghost-htb@1.0.5",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-tiktok@1.1.2",
+        "@accordproject/template-engine@2.7.1"
+      ],
+      "matching_distance": 0.5000398670699843,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 6.75,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 31.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@alfa.life.mapp/app.web@99.0.11",
+      "matched_benign_sample_ids": [
+        "@azure/storage-blob@12.26.0",
+        "@supabase/supabase-js@2.47.10"
+      ],
+      "matching_distance": 2.1961503410143783,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 3.6,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 7.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@amazon-bedrock-agents-healthcare-lifesciences/docs@0.0.1",
+      "matched_benign_sample_ids": [
+        "@antstackio/eslint-config-antstack@0.0.1",
+        "@antstackio/eslint-config-antstack@0.0.2"
+      ],
+      "matching_distance": 3.3214273589177155,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 4.0,
+        "name_len": 51.0,
+        "scoped": 1.0,
+        "segment_count": 6.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@aml-ark/ark-experience-byteplus@18.3.0",
+      "matched_benign_sample_ids": [
+        "@mapbox/node-pre-gyp@1.0.11",
+        "@antv/g-device-api@1.6.12"
+      ],
+      "matching_distance": 2.038600579380677,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.4,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 32.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@amsterdam-local/forms-component-library@1.0.15",
+      "matched_benign_sample_ids": [
+        "@accordproject/template-engine@2.8.0",
+        "@antv/g-device-api@1.6.13"
+      ],
+      "matching_distance": 3.1463213300892345,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 7.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 40.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@aoflcorp/freighter@0.0.1",
+      "matched_benign_sample_ids": [
+        "@actbase/native@0.1.30",
+        "@actbase/native@0.1.31"
+      ],
+      "matching_distance": 1.2412054792004414,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 8.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apachesling/slingpackager@1.0.0",
+      "matched_benign_sample_ids": [
+        "@elastic/elasticsearch@8.17.0",
+        "conventional-changelog@6.0.0"
+      ],
+      "matching_distance": 1.2412054792004414,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 12.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apachesling/slingpost@1.0.0",
+      "matched_benign_sample_ids": [
+        "webidl-conversions@7.0.0",
+        "phantomjs-prebuilt@2.1.16"
+      ],
+      "matching_distance": 3.3978925933374784,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 10.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 0.0,
+        "name_len": 22.0,
+        "scoped": 1.0,
+        "segment_count": 2.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apiary-annex/meta@99.0.3",
+      "matched_benign_sample_ids": [
+        "@napi-rs/cli@2.18.4",
+        "@antv/g-lite@2.6.0"
+      ],
+      "matching_distance": 1.1886759283693789,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apiary-annex/title@99.0.3",
+      "matched_benign_sample_ids": [
+        "@antv/g-lite@2.7.0",
+        "@swc/core@1.10.1"
+      ],
+      "matching_distance": 1.5204001446824915,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.333333333333333,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 1.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "segment_count": 3.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@app-tray-ui/stencil-component@10.1.0",
+      "matched_benign_sample_ids": [
+        "validate-npm-package-name@6.0.0",
+        "fork-ts-checker-webpack-plugin@9.0.2"
+      ],
+      "matching_distance": 3.3402268934948367,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 30.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/authorize-payment@99.0.3",
+      "matched_benign_sample_ids": [
+        "@accordproject/markdown-it-cicero@0.17.2",
+        "@actbase/react-native-devtools@0.1.1"
+      ],
+      "matching_distance": 3.36546682090781,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.8,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 34.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/cancelled@99.0.3",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-devtools@0.1.2",
+        "@antv/gi-assets-xlab@0.1.29"
+      ],
+      "matching_distance": 3.135998104678754,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/check-apple-pay@99.0.2",
+      "matched_benign_sample_ids": [
+        "fs-write-stream-atomic@1.0.10"
+      ],
+      "matching_distance": 3.864939497476341,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.333333333333333,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 4.0,
+        "name_len": 32.0,
+        "scoped": 1.0,
+        "segment_count": 6.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/destroy@99.0.1",
+      "matched_benign_sample_ids": [
+        "@antv/gi-assets-xlab@0.1.30",
+        "@antv/dumi-theme-antv@0.8.4"
+      ],
+      "matching_distance": 3.0734427092119465,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.0,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 24.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/finish@99.0.2",
+      "matched_benign_sample_ids": [
+        "@antv/dumi-theme-antv@0.8.5",
+        "@koa/cors@5.0.0"
+      ],
+      "matching_distance": 3.0823850539805884,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.75,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/merchant-session@99.0.2",
+      "matched_benign_sample_ids": [
+        "@antstackio/graphql-body-parser@0.1.0",
+        "@accordproject/markdown-it-cicero@0.16.25"
+      ],
+      "matching_distance": 3.4014604400182895,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.6,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 33.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/start@99.0.2",
+      "matched_benign_sample_ids": [
+        "npm-registry-fetch@18.0.2",
+        "@alexcolls/nuxt-socket.io@0.0.6"
+      ],
+      "matching_distance": 3.2796585843195607,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 4.5,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 2.0,
+        "name_len": 22.0,
+        "scoped": 1.0,
+        "segment_count": 4.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    },
+    {
+      "malicious_sample_id": "@apple-pay-trust/validate-merchant@99.0.2",
+      "matched_benign_sample_ids": [
+        "@antstackio/express-graphql-proxy@0.2.6",
+        "@antstackio/express-graphql-proxy@0.2.7"
+      ],
+      "matching_distance": 3.422689139897456,
+      "matching_features": {
+        "at_count_in_name": 1.0,
+        "avg_segment_len": 5.8,
+        "digit_count_name": 0.0,
+        "digit_fraction_name": 0.0,
+        "hyphen_count": 3.0,
+        "name_len": 34.0,
+        "scoped": 1.0,
+        "segment_count": 5.0,
+        "underscore_count": 0.0,
+        "version_component_count": 3.0,
+        "version_is_zeroish": 0.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0
+      },
+      "notes": ""
+    }
+  ],
+  "unmatched_malicious": [
+    "000webhost-admin@999.9.9",
+    "000webhost-api-client@999.9.9",
+    "000webhost-api@999.9.9",
+    "000webhost-auth@999.9.9",
+    "000webhost-cache@999.9.9",
+    "000webhost-checkout@999.9.9",
+    "000webhost-cloud@999.9.9",
+    "000webhost-connect@999.9.9",
+    "000webhost-database@999.9.9",
+    "24712-pl3469@0.0.2",
+    "24712-pl5004@0.0.1",
+    "24712-pl5005@0.0.1",
+    "24712-pl5006@0.0.4",
+    "24712-plv2@0.0.2",
+    "24712-plv3@0.0.2",
+    "32red-analytics@999.9.9",
+    "32red-api@999.9.9",
+    "32red-auth@999.9.9",
+    "32red-cache@999.9.9",
+    "32red-checkout@999.9.9",
+    "32red-cloud@999.9.9",
+    "32red-connect@999.9.9",
+    "32red-database@999.9.9",
+    "511fola@99.99.99",
+    "52471254zqdl55@22.2.2",
+    "6sdgsd6s-control@9999.0.0",
+    "@3kali182/angular-1.6@9.1.1",
+    "@3stripes/auth@999.0.2",
+    "@3stripes/common@999.0.3",
+    "@3stripes/components@999.0.2",
+    "@3stripes/config@999.0.2",
+    "@3stripes/core@999.0.2",
+    "@3stripes/helpers@999.0.2",
+    "@3stripes/lib@999.0.2",
+    "@3stripes/sdk@999.0.2",
+    "@3stripes/shared@999.0.2",
+    "@3stripes/toolkit@999.0.2",
+    "@3stripes/ui@999.0.2",
+    "@3stripes/utils@999.0.2",
+    "@42ailab/42cc-win32-x64@0.4.0",
+    "@42ailab/42plugin-darwin-arm64@0.3.10",
+    "@42ailab/42plugin-darwin-x64@0.4.9",
+    "@42ailab/42plugin-linux-arm64@0.2.41",
+    "@42ailab/42plugin-linux-x64@0.4.18",
+    "@42ailab/42plugin-win32-x64@0.4.0",
+    "@abb-ux/commonux-web-components@100.0.0",
+    "@abdallaeg/sap_access@0.0.0",
+    "@abg-mec/fwk-fe-devcraft@1.999.8",
+    "@accesshsc/access-forms-engine@0.999.999",
+    "@activation_code/activate@99.0.3",
+    "@activation_code/error@99.0.4",
+    "@activation_code/success@99.0.2",
+    "@ai0x1337/budoux-extension@99.0.0",
+    "@allybank/ally-sdk@100.0.0",
+    "@allyfinancial/allyfinancial-api@100.0.0",
+    "@amiga-fwk-nodejs/log@331.0.0",
+    "@amiga-fwk-nodejs/metrics@331.0.0",
+    "@amigatechdocs/core@331.0.0",
+    "@aml-ark/demo-house@999.99.0",
+    "@angular_devkit/architect@99.1.1",
+    "@angular_devkit/build-webpack@99.1.1",
+    "@angular_devkit/build_angular@99.1.1",
+    "@angular_devkit/core@99.1.1",
+    "@antoncallahan/aws-user-helper@6767.67.72",
+    "@apple-pay-trust/check-apple-pay-result@99.0.2",
+    "@applicationbuildingcenter/xcube-schema@99.9.12",
+    "@asarioglo/ect-472839@1.23.464"
+  ]
+}
