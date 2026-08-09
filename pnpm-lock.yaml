@@ -55,6 +55,28 @@ importers:
         specifier: ^3.1.4
         version: 3.1.4
 
+  packages/behaviour-engine:
+    dependencies:
+      '@babel/parser':
+        specifier: ^8.0.4
+        version: 8.0.4
+      '@babel/traverse':
+        specifier: ^8.0.4
+        version: 8.0.4
+      '@babel/types':
+        specifier: ^8.0.4
+        version: 8.0.4
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@packagegate/static-analyser':
+        specifier: workspace:*
+        version: link:../static-analyser
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
   packages/npm-registry:
     dependencies:
       '@packagegate/shared':
@@ -73,6 +95,16 @@ importers:
       '@types/semver':
         specifier: ^7.8.0
         version: 7.8.0
+
+  packages/risk-engine:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
 
   packages/shared:
     dependencies:
