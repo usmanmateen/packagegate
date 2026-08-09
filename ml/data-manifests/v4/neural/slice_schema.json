@@ -1,0 +1,42 @@
+{
+  "sliceSchemaVersion": 2,
+  "name": "SliceSchemaV2",
+  "maxSlicesDefault": 32,
+  "contextLinesDefault": 12,
+  "maxPerCategoryDefault": 6,
+  "maxSliceChars": 2048,
+  "strictView": "STRICT_SECURITY_VIEW",
+  "fields": [
+    "sliceId",
+    "filePath",
+    "startLine",
+    "endLine",
+    "sourceText",
+    "lifecycleReachable",
+    "lifecycleHook",
+    "deterministicFindings",
+    "behaviourLabels",
+    "behaviourChainMembership",
+    "priority",
+    "opaqueSource",
+    "fullAstAvailable",
+    "windowType",
+    "sourceSizeBucket",
+    "contentHash",
+    "chainType",
+    "chainStepIndex"
+  ],
+  "forbiddenInModelInput": [
+    "packageName",
+    "version",
+    "datasetSource",
+    "label",
+    "familyGroup",
+    "sampleId",
+    "artifactPath",
+    "author",
+    "repository",
+    "attackCategory"
+  ],
+  "silverLabelsNote": "behaviourLabels are PackageGate silver labels, not malware GT"
+}

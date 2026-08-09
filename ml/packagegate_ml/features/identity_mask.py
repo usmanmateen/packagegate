@@ -187,10 +187,14 @@ def normalise_source_path(path: str, *, package_name: str | None = None, version
     # Drop leading package/ npm root
     if p.startswith("package/"):
         p = p[len("package/") :]
-    # Drop archive roots that embed package@version
+    bare = None
     if package_name:
         bare = package_name.split("/")[-1] if package_name.startswith("@") else package_name
-        # foo-1.2.3/ or @scope/foo-1.2.3/
+        # Strip self-package root directory (metrics/foo.js → foo.js)
+        parts = p.split("/")
+        if len(parts) > 1 and parts[0] == bare:
+            p = "/".join(parts[1:])
+        # Drop archive roots that embed package@version
         if version:
             for token in (
                 f"{package_name}-{version}/",
@@ -200,10 +204,9 @@ def normalise_source_path(path: str, *, package_name: str | None = None, version
             ):
                 if p.startswith(token):
                     p = p[len(token) :]
-        # leading package folder equal to package name
+        # leading package folder equal to package name before src/lib/...
         for token in (f"{package_name}/", f"{bare}/"):
             if p.startswith(token) and not any(h in token for h in ("lib/", "src/", "bin/")):
-                # only strip if next segment looks like source layout
                 rest = p[len(token) :]
                 if rest.startswith(("src/", "lib/", "dist/", "bin/", "scripts/", "index.")):
                     p = rest

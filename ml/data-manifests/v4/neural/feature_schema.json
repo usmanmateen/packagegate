@@ -1,0 +1,9 @@
+{
+  "featureSchemaVersion": 2,
+  "primaryStructured": "behaviour + security_completeness",
+  "strictInputNuisance": [
+    "fileCount",
+    "analysedExecutableBytes"
+  ],
+  "codeViewAvailabilityFlag": "codeViewAvailable"
+}

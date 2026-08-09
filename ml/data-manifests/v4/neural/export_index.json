@@ -1,0 +1,8 @@
+{
+  "exportRoot": "/tmp/packagegate-ml-data-v4/exports/v4-neural",
+  "strictFeatures": "/tmp/packagegate-ml-data-v4/exports/v4-neural/strict_features.jsonl",
+  "index": "/tmp/packagegate-ml-data-v4/exports/v4-neural/index.jsonl",
+  "datasetVersion": "v4",
+  "neuralExport": "v4-neural",
+  "splitsUnchangedFrom": "ml/data-manifests/v4/"
+}

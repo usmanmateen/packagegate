@@ -1,0 +1,61 @@
+{
+  "exported": 980,
+  "failed": 12,
+  "leakFlags": 0,
+  "sliceSchemaVersion": 2,
+  "config": {
+    "max_slices": 32,
+    "context_lines": 12,
+    "max_per_category": 6
+  },
+  "all": {
+    "n": 980,
+    "total_slices": 11034,
+    "mean": 11.259183673469387,
+    "median": 6,
+    "p90": 32,
+    "p95": 32,
+    "max": 32,
+    "ge1": 0.9938775510204082,
+    "ge2": 0.9285714285714286,
+    "buckets": {
+      "5-8": 185,
+      "1": 64,
+      "9-16": 130,
+      "2-4": 321,
+      "17-32": 274,
+      "0": 6
+    }
+  },
+  "matched": {
+    "n": 305,
+    "total_slices": 3562,
+    "mean": 11.678688524590164,
+    "median": 6,
+    "p90": 32,
+    "p95": 32,
+    "max": 32,
+    "ge1": 0.9901639344262295,
+    "ge2": 0.921311475409836,
+    "buckets": {
+      "9-16": 35,
+      "1": 21,
+      "5-8": 60,
+      "2-4": 95,
+      "17-32": 91,
+      "0": 3
+    }
+  },
+  "zeroReasons": {
+    "no_security_evidence_locations": 6
+  },
+  "coverageGate": {
+    "min_matched_ge1": 0.95,
+    "min_matched_ge2": 0.8,
+    "note": "Zero-slice packages remain in evaluation with codeViewAvailable=false; they are not excluded.",
+    "observed_matched_ge1": 0.9901639344262295,
+    "observed_matched_ge2": 0.921311475409836,
+    "passed": true,
+    "leakPass": true
+  }
+}

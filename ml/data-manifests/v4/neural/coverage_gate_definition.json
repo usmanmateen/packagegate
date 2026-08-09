@@ -1,0 +1,5 @@
+{
+  "min_matched_ge1": 0.95,
+  "min_matched_ge2": 0.8,
+  "note": "Zero-slice packages remain in evaluation with codeViewAvailable=false; they are not excluded."
+}

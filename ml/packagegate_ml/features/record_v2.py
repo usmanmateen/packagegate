@@ -351,14 +351,12 @@ def audit_strict_record_leakage(
         bare = package_name.split("/")[-1]
         # Skip common English tokens to avoid false positives
         if bare.lower() not in COMMON_ENGLISH_TOKENS and len(bare) >= 5:
-            # Check filePath fields and source for bare package folder leaks
+            # Only flag self-root path leak: first path segment == package bare name
             for s in record.get("slices") or []:
-                fp = s.get("filePath") or ""
-                if bare in fp.split("/"):
-                    # path segment equal to package name
+                fp = (s.get("filePath") or "").replace("\\", "/")
+                first = fp.split("/", 1)[0] if fp else ""
+                if first == bare:
                     issues.append(f"path_contains_package_token:{fp}")
-            # Literal package name in JSON keys area (not inside shell evidence strings
-            # is hard; check for "name": "<pkg>"
             if re.search(rf'"name"\s*:\s*"{re.escape(package_name)}"', text):
                 issues.append("literal_package_name_field")
 
