@@ -46,10 +46,39 @@ const MaintainerSchema = z.union([
  * discarding the whole manifest. Dependency maps in the historical corpus
  * contain nulls and numbers.
  */
+// `.optional()` is load-bearing: in Zod 4 a bare `z.unknown()` inside an object
+// is still required, so omitting it rejects every manifest that simply has no
+// `dependencies` key — which is most of the early corpus.
 const LooseStringRecord = z
-  .record(z.string(), z.unknown())
+  .unknown()
   .transform((raw) => {
     const out: Record<string, string> = {};
+    if (raw === null || typeof raw !== "object" || Array.isArray(raw)) return out;
+    for (const [key, value] of Object.entries(raw)) {
+      if (typeof value === "string") out[key] = value;
+    }
+    return out;
+  })
+  .optional();
+
+/**
+ * `engines` additionally appears as an array in older manifests —
+ * `"engines": ["node"]` was the convention before the object form, and lodash
+ * alone carries 44 versions in that shape. It means "runs on these engines"
+ * with no version constraint, so an unconstrained range is a faithful
+ * translation rather than invented data.
+ */
+const EnginesRecord = z
+  .unknown()
+  .transform((raw) => {
+    const out: Record<string, string> = {};
+    if (Array.isArray(raw)) {
+      for (const entry of raw) {
+        if (typeof entry === "string" && entry.length > 0) out[entry] = "*";
+      }
+      return out;
+    }
+    if (raw === null || typeof raw !== "object") return out;
     for (const [key, value] of Object.entries(raw)) {
       if (typeof value === "string") out[key] = value;
     }
@@ -84,7 +113,7 @@ export const VersionManifestSchema = z.object({
   devDependencies: LooseStringRecord,
   optionalDependencies: LooseStringRecord,
   peerDependencies: LooseStringRecord,
-  engines: LooseStringRecord,
+  engines: EnginesRecord,
   scripts: LooseStringRecord,
   /** Present in abbreviated metadata; a cheap signal that install scripts exist. */
   hasInstallScript: z.boolean().optional(),
