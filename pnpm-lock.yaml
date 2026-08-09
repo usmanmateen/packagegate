@@ -88,6 +88,9 @@ importers:
       '@packagegate/npm-registry':
         specifier: workspace:*
         version: link:../npm-registry
+      '@packagegate/policy-engine':
+        specifier: workspace:*
+        version: link:../policy-engine
       '@packagegate/risk-engine':
         specifier: workspace:*
         version: link:../risk-engine
@@ -121,6 +124,16 @@ importers:
         specifier: ^7.8.0
         version: 7.8.0
 
+  packages/policy-engine:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
   packages/risk-engine:
     dependencies:
       '@packagegate/shared':
@@ -137,6 +150,16 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
 
+  packages/shell-analyser:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
   packages/static-analyser:
     dependencies:
       '@babel/parser':
@@ -151,6 +174,9 @@ importers:
       '@packagegate/shared':
         specifier: workspace:*
         version: link:../shared
+      '@packagegate/shell-analyser':
+        specifier: workspace:*
+        version: link:../shell-analyser
     devDependencies:
       '@types/node':
         specifier: ^26.2.0
