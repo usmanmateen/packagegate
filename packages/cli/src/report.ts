@@ -337,16 +337,35 @@ export function formatInvestigationReport(
   );
   push(
     `  Threat intelligence:   ${
-      result.policy.threatIntelligence === "KNOWN_MALICIOUS"
-        ? theme.danger(result.policy.threatIntelligence)
-        : theme.muted(result.policy.threatIntelligence)
+      result.threatIntelligence.status === "KNOWN_MALICIOUS" ||
+      result.threatIntelligence.status === "KNOWN_COMPROMISED"
+        ? theme.danger(result.threatIntelligence.status)
+        : theme.muted(result.threatIntelligence.status)
     }`,
   );
+  if (result.threatIntelligence.matches[0]) {
+    const match = result.threatIntelligence.matches[0];
+    push(
+      `  Intel match:           ${theme.info(match.source)} (${match.matchedBy} / ${match.referenceId})`,
+    );
+  }
+  if (result.threatIntelligence.lookupFailed) {
+    push(
+      `  ${theme.warning("⚠ Threat intelligence lookup failed — behavioural result retained.")}`,
+    );
+  }
   push(
     `  Final action:          ${theme.colourRecommendation(result.policy.finalAction)}`,
   );
   for (const reason of result.policy.reasons) {
     push(`  ${theme.muted(`• ${reason.code}:`)} ${reason.message}`);
+  }
+  push("");
+
+  push(theme.heading("Decision"));
+  push(theme.muted("--------"));
+  for (const line of result.decisionExplanation) {
+    push(`  ${theme.muted("•")} ${line}`);
   }
   push("");
 

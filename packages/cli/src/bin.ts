@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 /**
- * PackageGate CLI — investigate a published npm package without executing it.
+ * PackageGate CLI — investigate published npm packages without executing them.
  *
  * Usage:
- *   packagegate scan <package[@version]> [--json] [--no-color]
- *   packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color]
- *   packagegate fixture <name> [--json] [--no-color]
+ *   packagegate scan <package[@version]> [--json] [--no-color] [--color]
+ *   packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color] [--color]
+ *   packagegate fixture <name> [--json] [--no-color] [--color]
+ *   packagegate diff <package@old> <package@new> [--json] [--no-color] [--color]
+ *   packagegate evaluate [--malware-root <path>] [--json]
  *   packagegate --help
  */
 
@@ -13,6 +15,9 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ScanError } from "@packagegate/shared";
+import { diffPackages } from "./diff.js";
+import { formatSecurityDiffReport } from "./diff-report.js";
+import { runEvaluation } from "./evaluate.js";
 import { investigateSources } from "./investigate.js";
 import { formatInvestigationJson } from "./output/json.js";
 import { createTheme, shouldUseColor } from "./output/theme.js";
@@ -25,6 +30,7 @@ interface CliFlags {
   readonly json: boolean;
   readonly color: boolean | undefined;
   readonly expectedSha256: string | undefined;
+  readonly malwareRoot: string | undefined;
 }
 
 function print(message: string): void {
@@ -47,26 +53,24 @@ function usage(): string {
     "  packagegate scan <package[@version]> [--json] [--no-color] [--color]",
     "  packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color] [--color]",
     "  packagegate fixture <name> [--json] [--no-color] [--color]",
+    "  packagegate diff <package@old> <package@new> [--json] [--no-color] [--color]",
+    "  packagegate evaluate [--malware-root <path>] [--json]",
     "",
     "Examples:",
     "  packagegate scan lodash@4.17.21",
-    "  packagegate scan express@^4.0.0",
-    "  packagegate scan @babel/parser --json",
-    "  packagegate scan-tarball ./preserved-package.tgz",
-    "  packagegate scan-tarball ./preserved-package.tgz --sha256 <hex>",
-    "  packagegate fixture inert-env-exfil",
+    "  packagegate diff express@4.20.0 express@4.21.2",
+    "  packagegate fixture inert-install-curl-bash --color",
+    "  packagegate evaluate --malware-root /tmp/packagegate-malware-eval",
     "",
     "Flags:",
-    "  --json              Machine-readable JSON (never includes ANSI colour)",
-    "  --sha256 <digest>   Expected SHA-256 for scan-tarball (mismatch aborts)",
-    "  --no-color          Disable ANSI colour even on a TTY",
-    "  --color             Force ANSI colour (useful when piping through a pager)",
-    "",
-    "Registry scans can verify npm-declared artifact integrity.",
-    "Local tarball scans hash the file but cannot claim registry integrity",
-    "unless --sha256 is supplied and matches.",
+    "  --json                 Machine-readable JSON (never includes ANSI colour)",
+    "  --sha256 <digest>      Expected SHA-256 for scan-tarball (mismatch aborts)",
+    "  --malware-root <path>  Explicit quarantine root for real-malware eval samples",
+    "  --no-color             Disable ANSI colour even on a TTY",
+    "  --color                Force ANSI colour (useful when piping through a pager)",
     "",
     "STATIC ANALYSIS ONLY. Package code is never executed.",
+    "Real malware is never auto-downloaded.",
     "Absence of findings is not evidence of safety.",
   ].join("\n");
 }
@@ -76,34 +80,38 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
   let json = false;
   let color: boolean | undefined;
   let expectedSha256: string | undefined;
+  let malwareRoot: string | undefined;
 
   for (let index = 0; index < args.length; index += 1) {
-    const arg = args[index];
-    if (arg === undefined) continue;
-
+    const arg = args[index]!;
     if (arg === "--json") {
       json = true;
       continue;
     }
-    if (arg === "--no-color" || arg === "--no-colour") {
+    if (arg === "--no-color") {
       color = false;
       continue;
     }
-    if (arg === "--color" || arg === "--colour") {
+    if (arg === "--color") {
       color = true;
       continue;
     }
     if (arg === "--sha256") {
-      const value = args[index + 1];
-      if (value === undefined || value.startsWith("-")) {
-        throw new Error("--sha256 requires a 64-character hex digest");
-      }
-      expectedSha256 = value;
+      expectedSha256 = args[index + 1];
       index += 1;
       continue;
     }
     if (arg.startsWith("--sha256=")) {
       expectedSha256 = arg.slice("--sha256=".length);
+      continue;
+    }
+    if (arg === "--malware-root") {
+      malwareRoot = args[index + 1];
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith("--malware-root=")) {
+      malwareRoot = arg.slice("--malware-root=".length);
       continue;
     }
     if (arg.startsWith("-")) {
@@ -112,13 +120,19 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
     positional.push(arg);
   }
 
-  return { positional, flags: { json, color, expectedSha256 } };
+  return {
+    positional,
+    flags: { json, color, expectedSha256, malwareRoot },
+  };
 }
 
-function resolveThemeEnabled(flag: boolean | undefined): boolean {
-  if (flag === false) return false;
-  if (flag === true) return true;
-  return shouldUseColor({ stream: process.stdout, env: process.env });
+function resolveColor(forceColor: boolean | undefined, stream: { isTTY?: boolean }): boolean {
+  if (forceColor === true) return true;
+  if (forceColor === false) return false;
+  return shouldUseColor({
+    stream,
+    env: process.env,
+  });
 }
 
 function emitResult(result: InvestigationResult, flags: CliFlags): void {
@@ -126,17 +140,13 @@ function emitResult(result: InvestigationResult, flags: CliFlags): void {
     printRaw(formatInvestigationJson(result));
     return;
   }
-  print(
-    formatInvestigationReport(result, {
-      color: resolveThemeEnabled(flags.color),
-    }),
-  );
+  const color = resolveColor(flags.color, process.stdout);
+  print(formatInvestigationReport(result, { color }));
 }
 
 function formatCliError(error: unknown): string {
   const theme = createTheme({
-    enabled: shouldUseColor({ stream: process.stderr, env: process.env }),
-    stream: process.stderr,
+    enabled: resolveColor(undefined, process.stderr),
   });
   const prefix = theme.errorPrefix("error");
 
@@ -148,7 +158,6 @@ function formatCliError(error: unknown): string {
 }
 
 function repoRoot(): string {
-  // dist/bin.js → packages/cli/dist → packages/cli → packages → repo root
   return join(dirname(fileURLToPath(import.meta.url)), "../../..");
 }
 
@@ -213,9 +222,59 @@ async function main(argv: string[]): Promise<number> {
 
   try {
     const { positional, flags } = parseFlags(args);
-    const [command, target] = positional;
+    const [command, target, target2] = positional;
 
-    if (command === undefined || target === undefined || positional.length !== 2) {
+    if (command === undefined) {
+      printError(usage());
+      return 1;
+    }
+
+    if (command === "evaluate") {
+      if (positional.length !== 1) {
+        printError(usage());
+        return 1;
+      }
+      if (flags.expectedSha256 !== undefined) {
+        throw new Error("--sha256 is only valid with scan-tarball");
+      }
+      const report = await runEvaluation({
+        ...(flags.malwareRoot === undefined
+          ? {}
+          : { malwareRoot: flags.malwareRoot }),
+        fixtureRoot: join(repoRoot(), "fixtures"),
+      });
+      if (flags.json) {
+        printRaw(`${JSON.stringify(report, null, 2)}\n`);
+      } else {
+        print(themeEvaluate(report, flags.color));
+      }
+      return 0;
+    }
+
+    if (command === "diff") {
+      if (target === undefined || target2 === undefined || positional.length !== 3) {
+        printError(usage());
+        return 1;
+      }
+      if (flags.expectedSha256 !== undefined) {
+        throw new Error("--sha256 is only valid with scan-tarball");
+      }
+      if (!flags.json) {
+        print(
+          `Comparing ${target} → ${target2} (static analysis only; never executed)…\n`,
+        );
+      }
+      const { diff } = await diffPackages(target, target2);
+      if (flags.json) {
+        printRaw(`${JSON.stringify(diff, null, 2)}\n`);
+      } else {
+        const color = resolveColor(flags.color, process.stdout);
+        print(formatSecurityDiffReport(diff, { color }));
+      }
+      return 0;
+    }
+
+    if (target === undefined || positional.length !== 2) {
       printError(usage());
       return 1;
     }
@@ -268,6 +327,51 @@ async function main(argv: string[]): Promise<number> {
     printError(formatCliError(error));
     return 2;
   }
+}
+
+function themeEvaluate(
+  report: Awaited<ReturnType<typeof runEvaluation>>,
+  forceColor: boolean | undefined,
+): string {
+  const theme = createTheme({
+    enabled: resolveColor(forceColor, process.stdout),
+  });
+  const lines: string[] = [];
+  lines.push(theme.heading("PACKAGEGATE EVALUATION"));
+  lines.push(theme.muted("======================"));
+  lines.push("");
+  for (const result of report.results) {
+    const status =
+      result.status === "COMPLETED"
+        ? theme.success(result.status)
+        : result.status === "SKIPPED"
+          ? theme.warning(result.status)
+          : theme.danger(result.status);
+    const action =
+      result.finalAction === undefined
+        ? ""
+        : ` → ${theme.colourRecommendation(result.finalAction)}`;
+    lines.push(`  ${result.id} [${result.label}] ${status}${action}`);
+    if (result.skipReason) lines.push(`    ${theme.muted(result.skipReason)}`);
+    if (result.failureReason) lines.push(`    ${theme.danger(result.failureReason)}`);
+  }
+  lines.push("");
+  lines.push(theme.heading("Intervention matrix"));
+  lines.push(
+    `  TP=${String(report.matrix.tp)} TN=${String(report.matrix.tn)} FP=${String(report.matrix.fp)} FN=${String(report.matrix.fn)} (n=${String(report.matrix.sampleCount)})`,
+  );
+  if (report.matrix.sampleCount > 0) {
+    lines.push(
+      `  precision=${fmt(report.matrix.precision)} recall=${fmt(report.matrix.recall)}`,
+    );
+  }
+  lines.push("");
+  lines.push(theme.muted(report.disclaimer));
+  return lines.join("\n");
+}
+
+function fmt(value: number | null): string {
+  return value === null ? "n/a" : value.toFixed(2);
 }
 
 const exitCode = await main(process.argv);

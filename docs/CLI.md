@@ -12,27 +12,31 @@ pnpm packagegate scan express@4.21.2 --json
 # Local preserved tarball — same investigation pipeline after secure extraction
 pnpm packagegate scan-tarball ./preserved-package.tgz
 pnpm packagegate scan-tarball ./preserved-package.tgz --sha256 <64-hex-digest>
-pnpm packagegate scan-tarball ./preserved-package.tgz --json
+
+# Security semantic version diff (not a text diff)
+pnpm packagegate diff express@4.20.0 express@4.21.2 --color
 
 # Inert offline fixture (never executed)
 pnpm packagegate fixture inert-env-exfil --color
+
+# Repeatable evaluation harness (real malware never auto-downloaded)
+pnpm packagegate evaluate --json
+pnpm packagegate evaluate --malware-root /tmp/packagegate-malware-eval
 ```
 
-## Integrity semantics
+## Investigation questions
 
-| Source | Registry integrity |
+1. **What does this package do?** → `scan` / `scan-tarball` / `fixture`
+2. **What changed between releases?** → `diff`
+3. **What should an analyst do?** → behavioural risk + completeness + threat intel + final policy
+
+## Integrity / intel semantics
+
+| Lane | Meaning |
 | --- | --- |
-| `scan` (npm registry) | Verified when the registry digest matches the downloaded bytes |
-| `scan-tarball` | **Not verified** — PackageGate hashes the file (SHA-256) but has no trusted registry digest unless you pass `--sha256` |
+| Behavioural risk | What the artefact appears to do |
+| Analysis completeness | How much executable source was fully analysed |
+| Threat intelligence | Exact known-bad / known-vulnerable records (offline `none` by default) |
+| Final policy | Deterministic combination of the lanes above |
 
-A local artifact is not automatically malicious. Unknown provenance is reported honestly; it does not invent behavioural risk.
-
-## Architecture
-
-```
-registry acquisition ──┐
-                       ├──▶ secure extraction ──▶ analyser ──▶ behaviour ──▶ risk ──▶ report
-local tarball ─────────┘
-```
-
-Acquisition differs. Investigation does not.
+Real malware evaluation requires an explicit `--malware-root`. PackageGate never auto-downloads malware.

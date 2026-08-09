@@ -49,21 +49,42 @@ function isProcessEnvNode(node: t.Node): boolean {
 
 function summariseFile(ast: t.File): FunctionSummary[] {
   const summaries: FunctionSummary[] = [];
+
+  const consider = (name: string, path: NodePath<t.Function>): void => {
+    let returnsEnv = false;
+    path.traverse({
+      ReturnStatement(returnPath) {
+        const arg = returnPath.node.argument;
+        if (arg && isProcessEnvNode(arg)) returnsEnv = true;
+      },
+    });
+    summaries.push({ name, returnsEnv });
+  };
+
   traverse(ast, {
     FunctionDeclaration(path: NodePath<t.FunctionDeclaration>) {
       const name = path.node.id?.name;
       if (name === undefined) return;
-      let returnsEnv = false;
-      path.traverse({
-        ReturnStatement(returnPath) {
-          const arg = returnPath.node.argument;
-          if (arg && isProcessEnvNode(arg)) returnsEnv = true;
-        },
-      });
-      summaries.push({ name, returnsEnv });
+      consider(name, path);
       if (summaries.length >= 32) path.stop();
     },
+    AssignmentExpression(path) {
+      if (summaries.length >= 32) return;
+      const { left, right } = path.node;
+      if (!t.isFunctionExpression(right) && !t.isArrowFunctionExpression(right)) return;
+      if (
+        !t.isMemberExpression(left) ||
+        !t.isIdentifier(left.property) ||
+        left.computed
+      ) {
+        return;
+      }
+      const name = left.property.name;
+      const fnPath = path.get("right");
+      if (fnPath.isFunction()) consider(name, fnPath);
+    },
   });
+
   return summaries;
 }
 
@@ -182,56 +203,117 @@ export function analyseCrossFileChains(args: {
             localNames.add(s.local.name);
           }
         }
-        if (localNames.size === 0) return;
-        if (!envCallReachesNetwork(ast, localNames)) return;
-
-        const envFinding = args.findings.find(
-          (f) =>
-            f.location.filePath === importedPath &&
-            (f.category === "ENVIRONMENT_ACCESS" ||
-              f.category === "CREDENTIAL_RELATED_ACCESS"),
+        maybeEmitCrossFileChain({
+          importerPath,
+          importedPath,
+          localNames,
+          envExporters,
+          ast,
+          findings: args.findings,
+          chains,
+          seen,
+        });
+      },
+      VariableDeclarator(path) {
+        // const { collect } = require("./collect.js")
+        const init = path.get("init");
+        if (!init.isCallExpression()) return;
+        if (!t.isIdentifier(init.node.callee, { name: "require" })) return;
+        const arg = init.node.arguments[0];
+        if (!arg || !t.isStringLiteral(arg)) return;
+        const spec = localSpecifier(arg.value);
+        if (spec === undefined) return;
+        const importedPath = resolveLocal(spec, filesByPath);
+        if (importedPath === undefined) return;
+        const envExporters = (summariesByFile.get(importedPath) ?? []).filter(
+          (s) => s.returnsEnv,
         );
-        const netFinding = args.findings.find(
-          (f) =>
-            f.location.filePath === importerPath &&
-            (f.category === "NETWORK_ACCESS" || f.category === "NETWORK_DESTINATION"),
-        );
-        if (envFinding === undefined || netFinding === undefined) return;
-
-        const id = createHash("sha256")
-          .update(`xf\0${importedPath}\0${importerPath}\0${envFinding.id}\0${netFinding.id}`)
-          .digest("hex")
-          .slice(0, 32);
-        if (seen.has(id)) return;
-        seen.add(id);
-
-        chains.push({
-          id,
-          source: "ENVIRONMENT_ACCESS",
-          transformations: [],
-          sink: "NETWORK_REQUEST",
-          confidence: "MEDIUM",
-          links: [
-            {
-              kind: "RETURN_VALUE",
-              via: envExporters[0]?.name,
-              description: `Function in ${importedPath} returns environment data`,
-              location: envFinding.location,
-            },
-            {
-              kind: "ARGUMENT_FLOW",
-              description: `Importer ${importerPath} passes that value to a network sink`,
-              location: netFinding.location,
-            },
-          ],
-          supportingFindingIds: [envFinding.id, netFinding.id],
-          filePaths: [importedPath, importerPath],
-          rationale: `Environment data returned from ${importedPath} reaches a network sink in ${importerPath}.`,
-          metadata: { chainType: "CROSS_FILE_ENV_TO_NETWORK", crossFile: true },
+        if (envExporters.length === 0) return;
+        if (!t.isObjectPattern(path.node.id)) return;
+        const localNames = new Set<string>();
+        for (const prop of path.node.id.properties) {
+          if (!t.isObjectProperty(prop)) continue;
+          const key = prop.key;
+          const value = prop.value;
+          if (!t.isIdentifier(key) || !t.isIdentifier(value)) continue;
+          if (envExporters.some((e) => e.name === key.name)) {
+            localNames.add(value.name);
+          }
+        }
+        maybeEmitCrossFileChain({
+          importerPath,
+          importedPath,
+          localNames,
+          envExporters,
+          ast,
+          findings: args.findings,
+          chains,
+          seen,
         });
       },
     });
   }
 
   return chains;
+}
+
+function maybeEmitCrossFileChain(args: {
+  importerPath: string;
+  importedPath: string;
+  localNames: Set<string>;
+  envExporters: FunctionSummary[];
+  ast: t.File;
+  findings: readonly Finding[];
+  chains: BehaviourChain[];
+  seen: Set<string>;
+}): void {
+  if (args.localNames.size === 0) return;
+  if (!envCallReachesNetwork(args.ast, args.localNames)) return;
+
+  const envFinding = args.findings.find(
+    (f) =>
+      f.location.filePath === args.importedPath &&
+      (f.category === "ENVIRONMENT_ACCESS" ||
+        f.category === "CREDENTIAL_RELATED_ACCESS"),
+  );
+  const netFinding = args.findings.find(
+    (f) =>
+      f.location.filePath === args.importerPath &&
+      (f.category === "NETWORK_ACCESS" || f.category === "NETWORK_DESTINATION"),
+  );
+  if (envFinding === undefined || netFinding === undefined) return;
+
+  const id = createHash("sha256")
+    .update(
+      `xf\0${args.importedPath}\0${args.importerPath}\0${envFinding.id}\0${netFinding.id}`,
+    )
+    .digest("hex")
+    .slice(0, 32);
+  if (args.seen.has(id)) return;
+  args.seen.add(id);
+
+  args.chains.push({
+    id,
+    source: "ENVIRONMENT_ACCESS",
+    transformations: [],
+    sink: "NETWORK_REQUEST",
+    confidence: "MEDIUM",
+    links: [
+      {
+        kind: "RETURN_VALUE",
+        via: args.envExporters[0]?.name,
+        description: `Function in ${args.importedPath} returns environment data`,
+        location: envFinding.location,
+      },
+      {
+        kind: "ARGUMENT_FLOW",
+        description: `Importer ${args.importerPath} passes that value to a network sink`,
+        location: netFinding.location,
+      },
+    ],
+    supportingFindingIds: [envFinding.id, netFinding.id],
+    filePaths: [args.importedPath, args.importerPath],
+    rationale: `Environment data returned from ${args.importedPath} reaches a network sink in ${args.importerPath}.`,
+    metadata: { chainType: "CROSS_FILE_ENV_TO_NETWORK", crossFile: true },
+  });
 }

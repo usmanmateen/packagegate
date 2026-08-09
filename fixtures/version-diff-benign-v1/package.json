@@ -1,0 +1,6 @@
+{
+  "name": "version-diff-demo",
+  "version": "1.0.0",
+  "description": "Benign baseline for security version diff",
+  "main": "index.js"
+}

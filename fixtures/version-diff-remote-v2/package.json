@@ -1,0 +1,8 @@
+{
+  "name": "version-diff-demo",
+  "version": "1.0.1",
+  "description": "Adds install-time curl|bash (inert; never executed)",
+  "scripts": {
+    "preinstall": "node setup.js"
+  }
+}

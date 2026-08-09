@@ -22,7 +22,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "packagegate": "pnpm --filter @packagegate/cli exec node ./dist/bin.js",
-    "scan": "pnpm --filter @packagegate/cli exec node ./dist/bin.js scan"
+    "scan": "pnpm --filter @packagegate/cli exec node ./dist/bin.js scan",
+    "eval": "pnpm --filter @packagegate/cli exec node ./dist/bin.js evaluate"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

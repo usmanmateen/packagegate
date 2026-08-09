@@ -36,7 +36,21 @@ const TOKEN_PATTERNS: ReadonlyArray<{ readonly name: string; readonly re: RegExp
   { name: "WebAssembly", re: /WebAssembly/ },
   { name: "Buffer.from", re: /Buffer\.from\s*\(/ },
   { name: "atob", re: /\batob\s*\(/ },
+  { name: "curl-pipe-shell", re: /\bcurl\b[^|\n]{0,200}\|\s*(?:bash|sh|zsh)\b/i },
+  { name: "irm-iex", re: /\birm\b[^|\n]{0,200}\|\s*iex\b/i },
+  { name: "spawn-bun", re: /\bbun\b/i },
 ];
+
+/** Bound windows over a preview for token triage (start / mid / end). */
+function previewWindows(text: string, windowBytes = 8_192): string[] {
+  if (text.length <= windowBytes) return [text];
+  const midStart = Math.max(0, Math.floor(text.length / 2) - Math.floor(windowBytes / 2));
+  return [
+    text.slice(0, windowBytes),
+    text.slice(midStart, midStart + windowBytes),
+    text.slice(Math.max(0, text.length - windowBytes)),
+  ];
+}
 
 function shannonEntropy(sample: string): number {
   if (sample.length === 0) return 0;
@@ -98,7 +112,9 @@ export function analyseOpaqueSource(input: OpaqueSourceInput): OpaqueSourceResul
   if (printable < 0.85 && previewText.length > 0) signals.push("low-printable-ratio");
 
   for (const pattern of TOKEN_PATTERNS) {
-    if (pattern.re.test(previewText)) signals.push(`token:${pattern.name}`);
+    if (previewWindows(previewText).some((window) => pattern.re.test(window))) {
+      signals.push(`token:${pattern.name}`);
+    }
   }
 
   if (/[A-Za-z0-9+/]{80,}={0,2}/.test(previewText)) {

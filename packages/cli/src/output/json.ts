@@ -57,11 +57,10 @@ export function investigationToJson(result: InvestigationResult): unknown {
     scoringBreakdown: result.scoringBreakdown,
     analysisCoverage: result.analysisCoverage,
     analysisCompleteness: result.analysisCompleteness,
-    threatIntelligence: {
-      status: result.policy.threatIntelligence,
-    },
+    threatIntelligence: result.threatIntelligence,
     finalPolicy: result.policy,
     policy: result.policy,
+    decisionExplanation: result.decisionExplanation,
     startedAt: result.startedAt,
     completedAt: result.completedAt,
     durationMs: result.durationMs,

@@ -1,68 +1,48 @@
-# PackageGate — Detection Engine v2 Evaluation
+# PackageGate — Evaluation Notes
 
-**Status:** qualitative validation after Detection Engine v2  
-**Date:** 2026-08-09  
-**Scope:** independently labelled malicious sample + controls + synthetic fixtures  
-**Not a detection-rate benchmark.**
+**Status:** qualitative + harnessed evaluation  
+**Last updated:** 2026-08-09  
 
 ## Grounding rules
 
-- PackageGate performed **static analysis only**. No package code was executed.
-- The Datadog label is **ground truth for evaluation**, not scanner input.
+- Static analysis only. Investigated packages are never executed.
+- Datadog labels are ground truth for evaluation, not scanner input.
 - Behavioural risk, analysis completeness, threat intelligence, and final policy remain separate lanes.
 
-## Independent malicious sample (same as v1)
+## Detection Engine history (02-echo@0.0.7)
 
-| Field | Value |
-| --- | --- |
-| Dataset | [DataDog/malicious-software-packages-dataset](https://github.com/DataDog/malicious-software-packages-dataset) |
-| Package | `02-echo@0.0.7` |
-| Evaluation artifact | Locally repacked npm-style `.tgz` (not original registry tarball) |
-
-## BEFORE vs AFTER
-
-| Metric | v1 (unchanged engine) | v2 (Detection Engine) |
-| --- | --- | --- |
-| Findings | 22 | 30 |
-| Behaviour chains | **0** | **1** (`INSTALL_TIME_REMOTE_EXECUTION`, HIGH) |
-| Analysis coverage | 85% (opaque file invisible) | ~67% (opaque file counted in denominator) |
-| Analysis completeness | *(scalar only)* | **DEGRADED** (`bun_environment.js` retention + opaque triage) |
-| Behavioural score | **19** | **58** |
-| Behavioural recommendation | **ALLOW** | **REVIEW** |
-| Final policy | *(same as behavioural)* | **REVIEW** |
-| vs Datadog label | False negative | True positive at intervention level (REVIEW) |
-
-### Why the result changed (evidence, not threshold tuning)
-
-1. **Shell semantics** — recoverable command strings at `child_process.execSync`, including binding-assigned constants (`command = "curl … \| bash"; execSync(command)`), are parsed as data. That produced `REMOTE_CODE_FETCH` / remote-content-to-shell evidence.
-2. **Lifecycle reachability** — `preinstall → node setup_bun.js` links the shell pipeline into an install-time chain with `LIFECYCLE_INVOCATION` + `ARGUMENT_FLOW` + `SHELL_PIPELINE` evidence.
-3. **Risk model** — the new evidenced `REMOTE_DOWNLOAD → PROCESS_EXECUTION` chain maps to existing pattern J3 (with install-time multiplier). Score rose because composition was evidenced, not because ALLOW/REVIEW thresholds were lowered.
-4. **Analysis completeness / policy** — `bun_environment.js` (~10 MiB) exceeds retention; opaque triage records `DEGRADED`. Final policy stays REVIEW for both behavioural REVIEW and degraded executable visibility. Behavioural score is not inflated with “incomplete analysis points.”
-
-Threat intelligence remained `NONE` (offline provider). No Datadog label was fed into the scanner.
-
-## Control scans (v2)
-
-| Sample | Findings | Chains | Score | Completeness | Final |
+| Engine | Findings | Chains | Completeness | Behavioural | Final |
 | --- | --- | --- | --- | --- | --- |
-| `lodash@4.17.21` | 9 | 0 | 3 | COMPLETE | ALLOW |
-| `express@4.21.2` | 6 | 0 | 2 | COMPLETE | ALLOW |
-| `debug@4.3.4` | — | 0 | 0 | COMPLETE | ALLOW |
-| `JSONStream@1.3.5` | — | 0 | 4 | COMPLETE | ALLOW |
-| `inert-env-exfil` | 2 | 1 | 32 | COMPLETE | REVIEW |
-| `inert-install-curl-bash` | 7 | 1 | 49 | COMPLETE | REVIEW |
-| `inert-shell-cooccurrence-negative` | 2 | 0 | 5 | COMPLETE | ALLOW |
-| `02-echo@0.0.7` | 30 | 1 | 58 | DEGRADED | **REVIEW** |
+| v1 | 22 | 0 | scalar ~85% | **19 ALLOW** | ALLOW |
+| v2 | 30 | 1 HIGH install-time remote execution | **DEGRADED** | **58 REVIEW** | **REVIEW** |
 
-## Remaining limitations (still true)
+V2 improved because PackageGate evidenced composition (shell semantics + lifecycle reachability + opaque completeness), **not** because thresholds were lowered.
 
-- The large Bun payload is still not fully AST-analysed (by design: bounded retention + opaque triage).
-- Cross-file dataflow remains a small conservative subset.
-- Threat-intel providers are wired but offline-default; exact malware matching is a separate lane.
-- Absence of findings is still not proof of safety.
+Threat intelligence was `NONE` in both runs. If a trusted exact malware match later produces `BLOCK`, report:
 
-## Safety notes
+- Behavioural: 58 REVIEW  
+- Threat intel: KNOWN_MALICIOUS  
+- Final: BLOCK  
 
-- Malware lived only under `/tmp/packagegate-malware-eval/`.
-- Nothing malicious was committed to the PackageGate repository.
-- No lifecycle/script/binary execution of investigated packages occurred.
+Do not rewrite history to claim behavioural analysis alone returned BLOCK.
+
+## Analyst Engine v3 additions
+
+- **Security version diff** (`packagegate diff`) — semantic capability delta between versions
+- **Threat-intel provider lane** — offline `none` by default; memory provider for tests; malware exact match → BLOCK without rewriting behavioural score
+- **Evaluation harness** (`packagegate evaluate`) — intervention-level TP/TN/FP/FN; real malware never auto-downloaded
+- **Decision explanation** — why final policy was chosen, with lanes kept separate
+
+## Controls (post-v3)
+
+| Sample | Score | Final |
+| --- | --- | --- |
+| lodash@4.17.21 | 3 | ALLOW |
+| express@4.21.2 | 2 | ALLOW |
+| inert-env-exfil | 32 | REVIEW |
+| inert-install-curl-bash | ~49 | REVIEW |
+| version-diff demo 1.0.0→1.0.1 | 0→49 CRITICAL | ALLOW→REVIEW |
+
+## Safety
+
+Malware artifacts stay under an explicit quarantine path. Nothing malicious is committed.

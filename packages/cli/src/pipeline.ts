@@ -18,8 +18,9 @@ import {
   isExecutableSourcePath,
   lifecycleReachablePaths,
 } from "./completeness.js";
+import { buildDecisionExplanation } from "./decision.js";
 import { parsePackageManifest } from "./manifest.js";
-import { defaultThreatIntelProvider } from "./threat-intel.js";
+import { getThreatIntelProvider } from "./threat-intel.js";
 import {
   SAFETY_DISCLAIMER,
   type AcquisitionInfo,
@@ -229,17 +230,35 @@ export function investigateExtractedPackage(
   const risk = assessRisk(riskInput);
   const scoringBreakdown = computeScoringBreakdown(riskInput);
 
-  const threat = defaultThreatIntelProvider.lookupPackageVersion({
-    name: metadata.name,
+  const threat = getThreatIntelProvider().lookup({
+    packageName: metadata.name,
     version: metadata.version,
     sha256: extracted.artifact.sha256,
   });
 
+  // Lookup failures must not invent malware; UNKNOWN does not BLOCK.
+  const threatStatus =
+    threat.lookupFailed && threat.status === "UNKNOWN" ? "NONE" : threat.status;
+
   const policy = decidePolicy({
     behaviouralRecommendation: risk.recommendation,
     analysisCompleteness,
-    threatIntelligence: threat.status,
+    threatIntelligence: threatStatus,
   });
+
+  const threatIntelligence = {
+    status: threat.status,
+    provider: threat.provider,
+    lookupFailed: threat.lookupFailed,
+    ...(threat.failureReason === undefined ? {} : { failureReason: threat.failureReason }),
+    matches: threat.matches.map((match) => ({
+      source: match.source,
+      classification: match.classification,
+      matchedBy: match.matchedBy,
+      referenceId: match.referenceId,
+      confidence: match.confidence,
+    })),
+  };
 
   const files: ScannedFile[] = [
     ...staticResult.files.map((file) => {
@@ -291,7 +310,7 @@ export function investigateExtractedPackage(
       : artifact;
 
   const completedAt = new Date();
-  return {
+  const partial: InvestigationResult = {
     requestedSpec: input.requestedSpec,
     resolved: {
       name: metadata.name,
@@ -309,12 +328,19 @@ export function investigateExtractedPackage(
     scoringBreakdown,
     analysisCoverage,
     analysisCompleteness,
+    threatIntelligence,
     policy,
+    decisionExplanation: [],
     startedAt: startedAt.toISOString(),
     completedAt: completedAt.toISOString(),
     durationMs: completedAt.getTime() - startedAt.getTime(),
     scannerVersion: SCANNER_VERSION,
     rulesVersion: risk.rulesVersion,
     disclaimer: SAFETY_DISCLAIMER,
+  };
+
+  return {
+    ...partial,
+    decisionExplanation: buildDecisionExplanation(partial),
   };
 }

@@ -85,6 +85,9 @@ importers:
       '@packagegate/behaviour-engine':
         specifier: workspace:*
         version: link:../behaviour-engine
+      '@packagegate/evaluation':
+        specifier: workspace:*
+        version: link:../evaluation
       '@packagegate/npm-registry':
         specifier: workspace:*
         version: link:../npm-registry
@@ -100,6 +103,22 @@ importers:
       '@packagegate/static-analyser':
         specifier: workspace:*
         version: link:../static-analyser
+      '@packagegate/threat-intel':
+        specifier: workspace:*
+        version: link:../threat-intel
+      '@packagegate/version-diff':
+        specifier: workspace:*
+        version: link:../version-diff
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
+  packages/evaluation:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
     devDependencies:
       '@types/node':
         specifier: ^26.2.0
@@ -177,6 +196,26 @@ importers:
       '@packagegate/shell-analyser':
         specifier: workspace:*
         version: link:../shell-analyser
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
+  packages/threat-intel:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^26.2.0
+        version: 26.2.0
+
+  packages/version-diff:
+    dependencies:
+      '@packagegate/shared':
+        specifier: workspace:*
+        version: link:../shared
     devDependencies:
       '@types/node':
         specifier: ^26.2.0

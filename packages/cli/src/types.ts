@@ -85,7 +85,21 @@ export interface InvestigationResult {
   /** @deprecated Prefer analysisCompleteness.coverageRatio */
   readonly analysisCoverage: number;
   readonly analysisCompleteness: AnalysisCompleteness;
+  readonly threatIntelligence: {
+    readonly status: PolicyDecision["threatIntelligence"];
+    readonly provider: string;
+    readonly lookupFailed: boolean;
+    readonly failureReason?: string;
+    readonly matches: readonly {
+      readonly source: string;
+      readonly classification: PolicyDecision["threatIntelligence"];
+      readonly matchedBy: "NAME_VERSION" | "SHA256";
+      readonly referenceId: string;
+      readonly confidence: "LOW" | "MEDIUM" | "HIGH";
+    }[];
+  };
   readonly policy: PolicyDecision;
+  readonly decisionExplanation: readonly string[];
   readonly startedAt: string;
   readonly completedAt: string;
   readonly durationMs: number;

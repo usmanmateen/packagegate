@@ -1,35 +1,41 @@
-import type { ThreatIntelligenceStatus } from "@packagegate/shared";
-
 /**
- * Offline threat-intelligence provider.
+ * CLI threat-intelligence wiring.
  *
- * Detection Engine v2 wires the interface and a none/offline implementation.
- * Behavioural evaluation must not be poisoned by hard-coded package labels.
+ * Defaults to the offline `none` provider. Set PACKAGEGATE_THREAT_INTEL=memory
+ * only in controlled test environments with an explicit record set.
  */
 
-export interface ThreatIntelLookup {
-  readonly name: string;
-  readonly version: string;
-  readonly sha256?: string;
+export type {
+  MemoryThreatRecord,
+  ThreatIntelLookup,
+  ThreatIntelMatch,
+  ThreatIntelProvider,
+  ThreatIntelResult,
+} from "@packagegate/threat-intel";
+export {
+  createThreatIntelProviderFromEnv,
+  FailingThreatIntelProvider,
+  MemoryThreatIntelProvider,
+  NoneThreatIntelProvider,
+  THREAT_INTEL_VERSION,
+} from "@packagegate/threat-intel";
+
+import {
+  createThreatIntelProviderFromEnv,
+  type ThreatIntelProvider,
+} from "@packagegate/threat-intel";
+
+let activeProvider: ThreatIntelProvider = createThreatIntelProviderFromEnv();
+
+export function getThreatIntelProvider(): ThreatIntelProvider {
+  return activeProvider;
 }
 
-export interface ThreatIntelResult {
-  readonly status: ThreatIntelligenceStatus;
-  readonly source?: string;
-  readonly matchedBy?: "NAME_VERSION" | "SHA256";
-  readonly reference?: string;
+/** Test-only override. Production CLI uses env-selected provider. */
+export function setThreatIntelProvider(provider: ThreatIntelProvider): void {
+  activeProvider = provider;
 }
 
-export interface ThreatIntelProvider {
-  lookupPackageVersion(query: ThreatIntelLookup): ThreatIntelResult;
+export function resetThreatIntelProvider(): void {
+  activeProvider = createThreatIntelProviderFromEnv();
 }
-
-/** Always returns NONE — safe default for offline scanner operation. */
-export class NoneThreatIntelProvider implements ThreatIntelProvider {
-  lookupPackageVersion(_query: ThreatIntelLookup): ThreatIntelResult {
-    return { status: "NONE" };
-  }
-}
-
-export const defaultThreatIntelProvider: ThreatIntelProvider =
-  new NoneThreatIntelProvider();

@@ -1,21 +1,23 @@
-import type {
-  ArtifactInfo,
-  PackageMetadata,
-} from "@packagegate/shared";
-import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
 import { decidePolicy, POLICY_ENGINE_VERSION } from "@packagegate/policy-engine";
 import {
   assessRisk,
   computeScoringBreakdown,
   WEIGHTS_VERSION,
 } from "@packagegate/risk-engine";
+import type {
+  ArtifactInfo,
+  PackageMetadata,
+  ScannedFile,
+} from "@packagegate/shared";
 import {
   analysePackage,
   RULES_VERSION as STATIC_RULES_VERSION,
 } from "@packagegate/static-analyser";
-import type { ScannedFile } from "@packagegate/shared";
+import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
 import { buildAnalysisCompleteness } from "./completeness.js";
+import { buildDecisionExplanation } from "./decision.js";
 import { SCANNER_VERSION } from "./pipeline.js";
+import { getThreatIntelProvider } from "./threat-intel.js";
 import {
   SAFETY_DISCLAIMER,
   type InvestigationResult,
@@ -27,7 +29,6 @@ export interface SourceInvestigationInput {
   readonly files: readonly { path: string; content: string }[];
   readonly scripts?: Readonly<Record<string, string>>;
   readonly manifestText?: string;
-  /** Optional artifact metadata for the report. */
   readonly artifact?: Partial<ArtifactInfo>;
   readonly metadata?: Partial<PackageMetadata>;
   readonly integrityVerified?: boolean;
@@ -35,7 +36,6 @@ export interface SourceInvestigationInput {
 
 /**
  * Run static analysis → behaviour chains → risk on in-memory sources.
- *
  * Used for inert fixtures and offline demos. Never executes package code.
  */
 export function investigateSources(
@@ -81,10 +81,18 @@ export function investigateSources(
 
   const risk = assessRisk(riskInput);
   const scoringBreakdown = computeScoringBreakdown(riskInput);
+
+  const threat = getThreatIntelProvider().lookup({
+    packageName: input.resolved.name,
+    version: input.resolved.version,
+  });
+  const threatStatus =
+    threat.lookupFailed && threat.status === "UNKNOWN" ? "NONE" : threat.status;
+
   const policy = decidePolicy({
     behaviouralRecommendation: risk.recommendation,
     analysisCompleteness,
-    threatIntelligence: "NONE",
+    threatIntelligence: threatStatus,
   });
 
   const files: ScannedFile[] = staticResult.files.map((file) => ({
@@ -123,7 +131,7 @@ export function investigateSources(
   };
 
   const completedAt = new Date();
-  return {
+  const partial: InvestigationResult = {
     requestedSpec: input.requestedSpec,
     resolved: input.resolved,
     metadata,
@@ -144,12 +152,33 @@ export function investigateSources(
     scoringBreakdown,
     analysisCoverage,
     analysisCompleteness,
+    threatIntelligence: {
+      status: threat.status,
+      provider: threat.provider,
+      lookupFailed: threat.lookupFailed,
+      ...(threat.failureReason === undefined
+        ? {}
+        : { failureReason: threat.failureReason }),
+      matches: threat.matches.map((match) => ({
+        source: match.source,
+        classification: match.classification,
+        matchedBy: match.matchedBy,
+        referenceId: match.referenceId,
+        confidence: match.confidence,
+      })),
+    },
     policy,
+    decisionExplanation: [],
     startedAt: startedAt.toISOString(),
     completedAt: completedAt.toISOString(),
     durationMs: completedAt.getTime() - startedAt.getTime(),
     scannerVersion: SCANNER_VERSION,
     rulesVersion: risk.rulesVersion,
     disclaimer: SAFETY_DISCLAIMER,
+  };
+
+  return {
+    ...partial,
+    decisionExplanation: buildDecisionExplanation(partial),
   };
 }
