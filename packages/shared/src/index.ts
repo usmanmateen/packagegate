@@ -17,5 +17,6 @@ export * from "./completeness.js";
 export * from "./policy.js";
 export * from "./scan.js";
 export * from "./comparison.js";
+export * from "./ml.js";
 export * from "./errors.js";
 export * from "./redaction.js";

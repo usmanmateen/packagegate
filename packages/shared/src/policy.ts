@@ -32,6 +32,8 @@ export const POLICY_REASON_CODES = [
   "KNOWN_MALICIOUS_INTELLIGENCE",
   "KNOWN_COMPROMISED_INTELLIGENCE",
   "KNOWN_VULNERABILITY_CONTEXT",
+  /** ML may escalate ALLOW→REVIEW only; never independent BLOCK in ML v1. */
+  "ML_REVIEW_ESCALATION",
 ] as const;
 export const PolicyReasonCodeSchema = z.enum(POLICY_REASON_CODES);
 export type PolicyReasonCode = z.infer<typeof PolicyReasonCodeSchema>;

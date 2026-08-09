@@ -160,6 +160,29 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # ---------------------------------------------------------------------------
+# PackageGate ML workspace (Python)
+#   Weights, caches, runs and external malware roots are never committed.
+# ---------------------------------------------------------------------------
+ml/.venv/
+ml/data/
+ml/checkpoints/
+ml/runs/
+ml/cache/
+ml/models/
+ml/**/*.safetensors
+ml/**/*.pt
+ml/**/*.bin
+ml/**/*.onnx
+ml/**/features/*.parquet
+ml/**/features/*.feather
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.python-version
+
+# ---------------------------------------------------------------------------
 # Local agent / tooling scratch
 # ---------------------------------------------------------------------------
 .claude/settings.local.json

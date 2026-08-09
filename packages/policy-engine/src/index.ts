@@ -13,6 +13,11 @@ export interface PolicyEngineInput {
   readonly behaviouralRecommendation: RiskRecommendation;
   readonly analysisCompleteness: AnalysisCompleteness;
   readonly threatIntelligence?: ThreatIntelligenceStatus;
+  /**
+   * When true and behavioural recommendation is ALLOW, policy may escalate to
+   * REVIEW. ML must never independently produce BLOCK in PackageGate ML v1.
+   */
+  readonly mlSupportsReviewEscalation?: boolean;
 }
 
 /**
@@ -93,6 +98,19 @@ export function decidePolicy(input: PolicyEngineInput): PolicyDecision {
     if (input.behaviouralRecommendation === "ALLOW") {
       finalAction = "REVIEW";
     }
+  }
+
+  if (
+    input.mlSupportsReviewEscalation === true &&
+    finalAction === "ALLOW" &&
+    input.behaviouralRecommendation === "ALLOW"
+  ) {
+    reasons.push({
+      code: "ML_REVIEW_ESCALATION",
+      message:
+        "Optional ML assessment exceeded the validated REVIEW threshold; behavioural score is unchanged. ML alone cannot BLOCK.",
+    });
+    finalAction = "REVIEW";
   }
 
   return {
