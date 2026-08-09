@@ -1,132 +1,57 @@
 # PackageGate — ML Evaluation
 
-**Status:** Dataset V2 deconfounding complete — neural gate **FAIL**  
+**Status:** Dataset V3 complete — neural gate **FAIL**  
 **Last updated:** 2026-08-09  
 
-See also: `ML_DATASET_V1.md`, `ML_DATASET_V2.md`.
+See `ML_DATASET_V1.md`, `ML_DATASET_V2.md`, `ML_DATASET_V3.md`.
 
-## Scientific question
+## Question
 
-Can learned models improve PackageGate over the deterministic engine under
-honest package-family holdout conditions?
+Can ML improve PackageGate under honest holdouts **after** controlling source,
+identity, and structure confounds?
 
-## A. Name-baseline audit (Dataset V1 “~0.97”)
+## Progress across datasets
 
-The V1 run key `shortcut_name_hash` was **misnamed**.
+| Diagnostic | V1 | V2 | V3 mixed | V3 matched |
+| --- | ---: | ---: | ---: | ---: |
+| Name lexical PR-AUC | 0.97 | 0.83 | 0.83 | 0.87 |
+| Artifact structure | — | 0.94† | **0.68** | **0.43** |
+| Generic metadata | ~0.87 | 0.97 | 0.81 | 0.82 |
+| Random ID | chance | 0.29 | 0.21 | — |
+| Shuffled labels | 0.32 | 0.35 | 0.50 | — |
+| Behaviour only | 0.95‡ | 0.91 | 0.89 | 0.85 |
+| Neural gate | FAIL | FAIL | — | **FAIL** |
 
-It was **PACKAGE_NAME_LEXICAL / sample_id morphology**, not a cryptographic hash:
+†V2 structure included lifecycle hooks (`hasPreinstall`).  
+‡V1 confounded — not semantic evidence.
 
-| Feature | Definition |
-| --- | --- |
-| `name_len` | `len(sample_id.split("@")[0])` (broken on scoped IDs) |
-| `version_len` | `len(sample_id.split("@")[-1])` |
-| `at_count` | `sample_id.count("@")` |
-| `digit_count` | digits in full `sample_id` |
+## V2 → V3 key audit finding
 
-**Verdict:** real **corpus identity bias** (Datadog scoped / digit-heavy names vs
-established benign controls), **not** opaque-ID leakage.
+GENERIC_METADATA / ARTIFACT_STRUCTURE shortcuts were driven primarily by
+**`hasPreinstall`** (malicious ~66% vs benign ~0.5%), plus name digits / scope
+and unusual version numbers. Lifecycle presence is security-relevant — V3 moves
+it into **BEHAVIOUR**, leaving structure nuisance as size/file/coverage only.
 
-Regression tests: `ml/tests/test_name_shortcut_audit.py`  
-Opaque random-ID baselines stay near prevalence; lexical morphology separates.
+## V3 gate (pre-registered)
 
-## Dataset V1 (frozen historical failure)
+FAIL reasons:
 
-| Item | Value |
-| --- | ---: |
-| Malicious / expected-benign available | 150 / 227 |
-| Feature rows | 373 |
-| Lexical name shortcut PR-AUC | **~0.97** |
-| Neural gate | **FAIL** |
+- name lexical on matched **0.87 > 0.80**
+- generic metadata on matched **0.82 > 0.80**
+- behaviour − metadata on matched **0.03 < 0.05**
 
-Do not overwrite `ml/data-manifests/v1/`.
+PASS: leakage, opaque ID, shuffled, canonicalisation, matched n=270,
+structure nuisance on matched (≈ prevalence), PG-Delta pair counts.
 
-## Dataset V2
+SOURCE_ONLY remains 1.0 by construction — **not a gate condition**.
 
-External root: `/tmp/packagegate-ml-data-v2`
+## PG-Delta
 
-| Item | Count |
-| --- | ---: |
-| Total metadata / available | 947 / 902 |
-| Malicious-intent available | 140 |
-| Compromised_lib available | 140 |
-| Expected-benign available | 622 |
-| Compromised-version controls (adjacent) | 100 |
-| Compromise pairs | 100 |
-| Morphology matches (malicious-intent) | 73 |
-| Near-dup groups | 75 |
-| Cross-label near-dup groups | 2 (`@antv/g*`) |
-| Train / Val / Test / Holdout | 603 / 174 / 125 / 45 |
-| Feature-exported / failures | 892 / 10 |
-| Leakage audit | **PASS** |
-| 02-echo | HOLDOUT ✓ |
+160 positive + 120 negative pairs with features. Test n=21 under family splits —
+perfect scores are **not** interpretable. Same-package behaviour classification
+looks strong on small n (treat cautiously).
 
-Export failures: mostly `LIMIT_EXCEEDED` (large native artefacts); not strongly
-label-skewed (5 MALICIOUS / 1 COMPROMISED / 4 EXPECTED_BENIGN).
+## Policy
 
-### Pre-registered V2 neural gate
-
-| Condition | Threshold | Observed | Result |
-| --- | --- | --- | --- |
-| Leakage audit | PASS | PASS | ✓ |
-| Opaque random-ID PR-AUC | ≤ prev+0.25 | 0.29 ≈ 0.31 | ✓ |
-| Shuffled-label PR-AUC | ≤ 0.75 | 0.35 | ✓ |
-| PACKAGE_NAME_LEXICAL | ≤ 0.80 | **0.83** | ✗ |
-| GENERIC_METADATA (no source) | ≤ 0.80 | **0.97** | ✗ |
-| BEHAVIOUR − nuisance | ≥ 0.05 | 0.91 − 0.97 | ✗ |
-| Compromised benchmark size | ≥ 40 | 240 | ✓ |
-| 02-echo holdout | excluded | yes | ✓ |
-
-**Neural training gate: FAIL** — no PyTorch / no pretrained downloads.
-
-### Shortcut decomposition (mixed test; prevalence ≈ 0.31)
-
-| Mode | PR-AUC |
-| --- | ---: |
-| PACKAGE_NAME_LEXICAL_ONLY | 0.83 |
-| V1_LEGACY_NAME_MORPHOLOGY | **0.75** (was ~0.97 on V1) |
-| VERSION_ONLY | 0.46 |
-| SOURCE_ONLY | **1.00** (Datadog vs npm — composition bias) |
-| ARTIFACT_STRUCTURE_ONLY | 0.94 |
-| GENERIC_METADATA_ONLY (no source) | 0.97 |
-| OPAQUE_RANDOM_ID | 0.29 |
-| BEHAVIOUR_ONLY | 0.91 |
-| Shuffled labels | 0.35 |
-
-### Benchmarks (behaviour-only logistic)
-
-| Benchmark | Name PR-AUC | Nuisance | Behaviour | Rules TP/FN |
-| --- | ---: | ---: | ---: | --- |
-| Compromised-version | 0.71 | ~1.0* | 1.0* | 10 / 4 |
-| Matched malicious-intent | **0.78** | 0.93 | 0.91 | 3 / 15 |
-| Mixed naturalistic | 0.83 | 0.97 | 0.91 | 14 / 24 |
-
-\*Small test slices / structure shortcuts — treat perfect scores as unreliable.
-
-### PG-Delta (security feature deltas on pairs)
-
-Test n=16 (8 pos / 8 neg): PR-AUC 1.0 — **too small to claim**; infrastructure only.
-
-## What improved vs V1
-
-- Legacy name morphology **0.97 → 0.75**
-- Opaque-ID / shuffled sanity checks pass
-- Compromised-version + matched-intent benchmarks exist
-- Source bias is now **explicit** (SOURCE_ONLY = 1.0)
-
-## What still blocks neural work
-
-1. Artifact-structure / metadata still separates classes too easily  
-2. Name lexical still slightly above the 0.80 gate on mixed  
-3. Behaviour does **not** beat source-free nuisance on mixed  
-4. All malware still comes from one distributor lane (Datadog) vs npm controls  
-
-## Next (Dataset V3 candidates)
-
-- Same-source or source-blind acquisition for both classes  
-- Stronger structure-matched hard negatives  
-- More compromised pairs with larger held-out families  
-- Exclude / specially handle cross-label near-dup clusters  
-
-## Product policy
-
-Unchanged: ML shadow / optional; never independent BLOCK; no auto weight download.
+Unchanged: ML optional/shadow; never independent BLOCK; no auto weight download.
+**Neural training is not scientifically justified yet.**

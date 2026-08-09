@@ -2,14 +2,16 @@
 
 Hybrid **structured features + optional code encoders** for PackageGate.
 
-## Current status (Dataset V2)
+## Current status (Dataset V3)
 
-- Dataset V1 frozen (`data-manifests/v1/`) — neural gate failed on name shortcuts
-- Dataset V2 built (`data-manifests/v2/`) — deconfounding benchmarks + shortcut
-  decomposition; **neural gate still FAIL** (structure/source confounds remain)
-- Do **not** install PyTorch / download GraphCodeBERT until the gate passes
+- V1/V2 frozen; V3 under `data-manifests/v3/` + `/tmp/packagegate-ml-data-v3`
+- Canonical evaluation archives for both classes; path-equivalence PASS
+- Compromise pairs expanded (160 pos / 120 neg); structure-matched n=270
+- **Neural gate: FAIL** (name/version morphology; behaviour not clearly above metadata)
+- Do **not** install PyTorch until the gate passes
 
-See `../docs/ML_EVALUATION.md`, `../docs/ML_DATASET_V1.md`, `../docs/ML_DATASET_V2.md`.
+See `../docs/ML_EVALUATION.md` and `../docs/ML_DATASET_V3.md`.
+
 
 
 ## Safety
