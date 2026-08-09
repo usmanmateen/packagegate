@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "workers/*"
+  - "evaluation"
+# esbuild is a build dependency of Vitest and needs its install script to link
+# the platform binary. This is PackageGate's own toolchain — packages that
+# PackageGate analyses are never installed and never run install scripts.
+allowBuilds:
+  esbuild: true

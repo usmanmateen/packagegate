@@ -1,0 +1,37 @@
+{
+  "name": "packagegate",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "npm supply-chain Trust & Safety investigation platform",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "eval": "pnpm --filter @packagegate/evaluation run eval",
+    "db:generate": "pnpm --filter @packagegate/api run db:generate",
+    "db:migrate": "pnpm --filter @packagegate/api run db:migrate",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.2.0",
+    "eslint": "^10.8.1",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.11",
+    "turbo": "^2.10.9",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.66.0",
+    "vitest": "^4.1.10"
+  }
+}
