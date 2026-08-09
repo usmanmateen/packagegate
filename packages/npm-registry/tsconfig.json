@@ -2,7 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    // Declared explicitly rather than relying on automatic @types discovery,
+    // which does not resolve reliably through pnpm's isolated node_modules.
+    // Only packages that genuinely perform I/O opt into Node types; @packagegate/shared
+    // deliberately compiles without them so the browser can import the domain model.
+    "types": ["node"]
   },
   "include": ["src/**/*"]
 }
