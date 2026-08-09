@@ -1,0 +1,110 @@
+{
+  "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+  ],
+  "results": [
+    {
+      "seed": 11,
+      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T194527Z-pg-slice-v1-seed11/best.pt",
+      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-8162ccbe42918171",
+      "packageRunId": "20260809T200611Z-pg-package-mil-v1",
+      "structuredPrAuc": 0.8434452568906352,
+      "embedMeanPrAuc": 0.8592962862842728,
+      "embedMeanRecallAt5": 0.6190476190476191,
+      "embedMeanF1": 0.7647058823529411,
+      "embedMeanBrier": 0.13332496316708684,
+      "deltaVsStructured": 0.015851029393637583
+    },
+    {
+      "seed": 22,
+      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T200616Z-pg-slice-v1-seed22/best.pt",
+      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-f58378a35e86dfb4",
+      "packageRunId": "20260809T201622Z-pg-package-mil-v1",
+      "structuredPrAuc": 0.8434452568906352,
+      "embedMeanPrAuc": 0.90796209038338,
+      "embedMeanRecallAt5": 0.6666666666666666,
+      "embedMeanF1": 0.09090909090909091,
+      "embedMeanBrier": 0.12854171712803206,
+      "deltaVsStructured": 0.06451683349274484
+    },
+    {
+      "seed": 33,
+      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T201627Z-pg-slice-v1-seed33/best.pt",
+      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-20a7ac6df167728e",
+      "packageRunId": "20260809T202631Z-pg-package-mil-v1",
+      "structuredPrAuc": 0.8434452568906352,
+      "embedMeanPrAuc": 0.8886483886483889,
+      "embedMeanRecallAt5": 0.7142857142857143,
+      "embedMeanF1": 0.0,
+      "embedMeanBrier": 0.12366917152538603,
+      "deltaVsStructured": 0.0452031317577537
+    },
+    {
+      "seed": 44,
+      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T202635Z-pg-slice-v1-seed44/best.pt",
+      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-29b12b05bacd822f",
+      "packageRunId": "20260809T203635Z-pg-package-mil-v1",
+      "structuredPrAuc": 0.8434452568906352,
+      "embedMeanPrAuc": 0.8633550062121493,
+      "embedMeanRecallAt5": 0.7142857142857143,
+      "embedMeanF1": 0.0,
+      "embedMeanBrier": 0.13250304377923575,
+      "deltaVsStructured": 0.019909749321514125
+    },
+    {
+      "seed": 55,
+      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T203640Z-pg-slice-v1-seed55/best.pt",
+      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-a07c0ccd19742497",
+      "packageRunId": "20260809T204632Z-pg-package-mil-v1",
+      "structuredPrAuc": 0.8434452568906352,
+      "embedMeanPrAuc": 0.8514205449079402,
+      "embedMeanRecallAt5": 0.6190476190476191,
+      "embedMeanF1": 0.09090909090909091,
+      "embedMeanBrier": 0.1496032565380058,
+      "deltaVsStructured": 0.00797528801730496
+    }
+  ],
+  "embedMeanPrAuc": {
+    "values": [
+      0.8592962862842728,
+      0.90796209038338,
+      0.8886483886483889,
+      0.8633550062121493,
+      0.8514205449079402
+    ],
+    "mean": 0.8741364632872262,
+    "std": 0.02101072413835902,
+    "min": 0.8514205449079402,
+    "max": 0.90796209038338
+  },
+  "deltaVsStructured": {
+    "values": [
+      0.015851029393637583,
+      0.06451683349274484,
+      0.0452031317577537,
+      0.019909749321514125,
+      0.00797528801730496
+    ],
+    "mean": 0.030691206396591043,
+    "std": 0.02101072413835902,
+    "min": 0.00797528801730496,
+    "max": 0.06451683349274484
+  },
+  "embedMeanRecallAt5": {
+    "values": [
+      0.6190476190476191,
+      0.6666666666666666,
+      0.7142857142857143,
+      0.7142857142857143,
+      0.6190476190476191
+    ],
+    "mean": 0.6666666666666667,
+    "std": 0.04259177099999599
+  },
+  "originalExp1EmbedPrAuc": 0.8974494768667705,
+  "originalRepresentative": false
+}

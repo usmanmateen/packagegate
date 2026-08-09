@@ -113,7 +113,8 @@ def evaluate(model, loader, device, labels) -> dict:
 def main() -> None:
     if not torch.cuda.is_available():
         raise SystemExit("CUDA unavailable — stop GPU training")
-    set_seed(42)
+    seed = int(os.environ.get("PG_SLICE_SEED", "42"))
+    set_seed(seed)
     device = torch.device("cuda")
     smoke = os.environ.get("PG_SLICE_SMOKE", "0") == "1"
 
@@ -161,7 +162,7 @@ def main() -> None:
     use_bf16 = torch.cuda.is_bf16_supported()
     scaler = torch.amp.GradScaler("cuda", enabled=not use_bf16)
 
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ-pg-slice-v1")
+    run_id = datetime.now(timezone.utc).strftime(f"%Y%m%dT%H%M%SZ-pg-slice-v1-seed{seed}")
     out_dir = MODELS / run_id
     out_dir.mkdir(parents=True, exist_ok=True)
     best_path = out_dir / "best.pt"
@@ -229,9 +230,9 @@ def main() -> None:
                 best_path,
             )
 
-    # Load best for test (once)
+    # Load best for test (once). Criterion buffers are not checkpointed.
     ckpt = torch.load(best_path, map_location=device, weights_only=False)
-    model.load_state_dict(ckpt["model_state"])
+    model.load_state_dict(ckpt["model_state"], strict=False)
     test_metrics = evaluate(model, test_loader, device, BEHAVIOUR_LABELS_V1)
     duration = time.time() - t0
     ckpt_hash = hashlib.sha256(best_path.read_bytes()).hexdigest()
@@ -264,7 +265,7 @@ def main() -> None:
         "cuda": torch.version.cuda,
         "gpu": torch.cuda.get_device_name(0),
         "transformers": __import__("transformers").__version__,
-        "seed": 42,
+        "seed": seed,
         "02echoExcluded": True,
     }
     run_dir = RUNS / run_id
