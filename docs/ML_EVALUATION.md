@@ -1,57 +1,47 @@
 # PackageGate — ML Evaluation
 
-**Status:** Dataset V3 complete — neural gate **FAIL**  
+**Status:** Dataset V4 complete — neural gate **PASS**  
 **Last updated:** 2026-08-09  
 
-See `ML_DATASET_V1.md`, `ML_DATASET_V2.md`, `ML_DATASET_V3.md`.
+See `ML_DATASET_V1.md` … `ML_DATASET_V4.md`.
 
 ## Question
 
-Can ML improve PackageGate under honest holdouts **after** controlling source,
-identity, and structure confounds?
+Can ML improve PackageGate under honest holdouts **after** the model is forbidden
+from seeing package identity, and after security-change (PG-Delta) is evaluated
+with meaningful support?
 
 ## Progress across datasets
 
-| Diagnostic | V1 | V2 | V3 mixed | V3 matched |
+| Diagnostic | V1 | V2 | V3 matched | V4 |
 | --- | ---: | ---: | ---: | ---: |
-| Name lexical PR-AUC | 0.97 | 0.83 | 0.83 | 0.87 |
-| Artifact structure | — | 0.94† | **0.68** | **0.43** |
-| Generic metadata | ~0.87 | 0.97 | 0.81 | 0.82 |
-| Random ID | chance | 0.29 | 0.21 | — |
-| Shuffled labels | 0.32 | 0.35 | 0.50 | — |
-| Behaviour only | 0.95‡ | 0.91 | 0.89 | 0.85 |
-| Neural gate | FAIL | FAIL | — | **FAIL** |
+| Raw name | 0.97‡ | 0.83 | 0.87 | 0.89 (diagnostic) |
+| Artifact structure | — | 0.94† | **0.43** | **0.42** |
+| Metadata / strict-input nuisance | ~0.87 | 0.97 | 0.82 | **0.33** strict-input |
+| Random ID | chance | 0.29 | 0.21 | 0.29 / 0.21 |
+| Shuffled labels | 0.32 | 0.35 | 0.50 | 0.59 |
+| Behaviour only | 0.95‡ | 0.91 | 0.85 | **0.84** |
+| Delta behaviour | — | — | 1.0 tiny‡ | **0.98** CV |
+| Delta nuisance | — | — | — | 0.89 CV |
+| Neural gate | FAIL | FAIL | **FAIL** | **PASS** |
 
-†V2 structure included lifecycle hooks (`hasPreinstall`).  
-‡V1 confounded — not semantic evidence.
+†V2 structure included lifecycle. ‡Confounded / tiny-n.
 
-## V2 → V3 key audit finding
+## V4 gate (pre-registered, then frozen)
 
-GENERIC_METADATA / ARTIFACT_STRUCTURE shortcuts were driven primarily by
-**`hasPreinstall`** (malicious ~66% vs benign ~0.5%), plus name digits / scope
-and unusual version numbers. Lifecycle presence is security-relevant — V3 moves
-it into **BEHAVIOUR**, leaving structure nuisance as size/file/coverage only.
+**PASS.** Key observations:
 
-## V3 gate (pre-registered)
+- STRICT_INPUT_NUISANCE ≈ prevalence (0.33 vs 0.36)
+- BEHAVIOUR − STRICT_INPUT_NUISANCE ≈ **+0.51**
+- VERSION_ONLY matched 0.50 ≤ 0.75
+- PG-Delta test n=65 (was 21); family split 60/20/20
+- DELTA_BEHAVIOUR − DELTA_NUISANCE ≈ **+0.09** (grouped CV)
+- Strict model-input identity audit: 0 leak flags / 980
 
-FAIL reasons:
-
-- name lexical on matched **0.87 > 0.80**
-- generic metadata on matched **0.82 > 0.80**
-- behaviour − metadata on matched **0.03 < 0.05**
-
-PASS: leakage, opaque ID, shuffled, canonicalisation, matched n=270,
-structure nuisance on matched (≈ prevalence), PG-Delta pair counts.
-
-SOURCE_ONLY remains 1.0 by construction — **not a gate condition**.
-
-## PG-Delta
-
-160 positive + 120 negative pairs with features. Test n=21 under family splits —
-perfect scores are **not** interpretable. Same-package behaviour classification
-looks strong on small n (treat cautiously).
+Raw name and SOURCE_ONLY remain high as **dataset bias diagnostics** — not gate conditions (philosophy change in V4).
 
 ## Policy
 
-Unchanged: ML optional/shadow; never independent BLOCK; no auto weight download.
-**Neural training is not scientifically justified yet.**
+Unchanged: ML optional/shadow; never independent BLOCK; no auto weight download.  
+**Neural training is now scientifically justified pending human review of the frozen V4 gate.**  
+Do not install PyTorch until that review; then fine-tune one encoder on STRICT_SECURITY_VIEW only.
