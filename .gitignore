@@ -181,6 +181,8 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .python-version
+!.python-version
+!ml/.python-version
 
 # ---------------------------------------------------------------------------
 # Local agent / tooling scratch

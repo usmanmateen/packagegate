@@ -1,0 +1,31 @@
+{
+  "holdout": [
+    "02-echo@0.0.7",
+    "JSONStream@1.3.5",
+    "debug@4.3.4",
+    "express@4.21.2",
+    "lodash@4.17.21",
+    "smoke-benign-a",
+    "smoke-benign-b",
+    "smoke-mal-a",
+    "smoke-mal-b",
+    "smoke-mal-c"
+  ],
+  "seed": 42,
+  "strategy": "grouped_package_family",
+  "test": [
+    "inert-env-exfil",
+    "inert-install-curl-bash"
+  ],
+  "train": [
+    "inert-normal-installer",
+    "inert-powershell-irm-iex",
+    "inert-shell-cooccurrence-negative",
+    "version-diff-line-shift-v1",
+    "version-diff-line-shift-v2",
+    "version-diff-remote-v2"
+  ],
+  "validation": [
+    "version-diff-benign-v1"
+  ]
+}

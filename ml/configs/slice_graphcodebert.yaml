@@ -1,0 +1,16 @@
+# GraphCodeBERT slice encoder — DO NOT download until dataset quality is verified.
+model_id: microsoft/graphcodebert-base
+model_revision: null
+task: multilabel_behaviour
+max_seq_length: 512
+max_slices_per_package: 64
+train_batch_size: 8
+eval_batch_size: 16
+grad_accum: 2
+learning_rate: 2.0e-5
+epochs: 3
+fp16: true
+seed: 42
+notes: >
+  HF model card currently lacks an explicit licence field — verify licence before
+  redistribution. Prefer smoke/structured baselines before fine-tuning.

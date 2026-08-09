@@ -1,0 +1,15 @@
+# Package-level MIL classifier (after slice encoder exists).
+architecture: gated_attention_mil
+max_slices: 64
+projection_dim: 256
+mlp_hidden: 128
+dropout: 0.1
+learning_rate: 1.0e-3
+epochs: 20
+batch_size: 16
+seed: 42
+structured_features: true
+review_threshold_fpr_target: 0.05
+block_from_ml: false
+notes: >
+  ML may escalate ALLOW→REVIEW only. Never independent BLOCK in PackageGate ML v1.

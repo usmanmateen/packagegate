@@ -1,0 +1,17 @@
+# CodeT5+ embedding / small encoder candidate.
+model_id: Salesforce/codet5p-110m-embedding
+alt_model_id: Salesforce/codet5p-220m
+task: multilabel_behaviour
+max_seq_length: 512
+max_slices_per_package: 64
+train_batch_size: 8
+eval_batch_size: 16
+grad_accum: 2
+learning_rate: 2.0e-5
+epochs: 3
+fp16: true
+seed: 42
+notes: >
+  Prefer codet5p-110m-embedding for classification heads. Training data used
+  permissive licence subset per Salesforce model card. Do not download until
+  structured baseline and dataset integrity checks pass.
