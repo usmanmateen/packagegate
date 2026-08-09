@@ -2,19 +2,20 @@
 
 Hybrid **structured features + optional code encoders** for PackageGate.
 
-Deterministic PackageGate answers: *what behaviour can we prove?*  
-ML answers: *does the package composition resemble malicious supply-chain patterns?*  
-Threat intel answers: *is this exact artifact independently known bad?*
+## Current status (Dataset V1 pilot)
 
-These lanes stay separate. ML **must not** invent URLs, dataflow edges, or
-deterministic findings. ML **must not** independently BLOCK in v1
-(ALLOW→REVIEW escalation only, when calibrated).
+- External pilot corpus acquired under `/tmp/packagegate-ml-data`
+- Family-grouped frozen splits in `data-manifests/v1/`
+- Structured logistic + tree baselines trained
+- **Neural training gate: FAIL** (package-name shortcut bias)
+
+See `../docs/ML_EVALUATION.md`.
 
 ## Safety
 
 - Never execute investigated packages.
 - Never commit malware or model weights.
-- External malware roots only (e.g. `/tmp/packagegate-ml-malware/`).
+- External data root only (`PACKAGEGATE_ML_DATA_ROOT`, default `/tmp/packagegate-ml-data`).
 - Default product path: `PACKAGEGATE_ML=disabled`.
 
 ## Setup
@@ -22,37 +23,35 @@ deterministic findings. ML **must not** independently BLOCK in v1
 ```bash
 cd ml
 uv sync --extra dev
-# Optional neural stack (large download):
-# uv sync --extra dev --extra torch
-```
-
-## Hardware snapshot
-
-```bash
 uv run python -m packagegate_ml.utils.system_info
 ```
 
-## Structured baseline (Experiment 0)
+## Dataset V1 commands
 
 ```bash
-# Export fixture ML records via PackageGate CLI, then:
-uv run python -m packagegate_ml.datasets.build_smoke_manifest
-uv run python -m packagegate_ml.features.build_from_exports
-uv run python -m packagegate_ml.training.train_structured
-uv run python -m packagegate_ml.evaluation.evaluate_structured
+# Acquire (downloads into external root; never into git):
+uv run python -m packagegate_ml.datasets.build_pilot_dataset
+
+# Or rebuild manifests from already-downloaded artefacts:
+uv run python -m packagegate_ml.datasets.rebuild_pilot_manifests
+
+# Leakage audit:
+uv run python -m packagegate_ml.datasets.audit_splits \
+  --records /tmp/packagegate-ml-data/manifests/dataset_v1_full.json \
+  --split /tmp/packagegate-ml-data/manifests/dataset_v1_split.json
+
+# Export PackageGate features (requires built CLI):
+uv run python -m packagegate_ml.features.export_pilot
+
+# Structured baselines:
+uv run python -m packagegate_ml.training.train_pilot_structured
 ```
 
-## Model candidates (verified IDs — do not download until ready)
+## Model candidates (not downloaded)
 
 | Candidate | HF ID | Notes |
 | --- | --- | --- |
-| GraphCodeBERT | `microsoft/graphcodebert-base` | RoBERTa/code; HF card lacks explicit licence metadata — review before production use |
-| CodeT5+ embedding | `Salesforce/codet5p-110m-embedding` | Smaller embedding encoder; permissive training subset |
-| CodeT5+ 220M | `Salesforce/codet5p-220m` | Encoder–decoder; prefer embedding/bimodal for classification heads |
+| GraphCodeBERT | `microsoft/graphcodebert-base` | Blocked until neural gate passes |
+| CodeT5+ embedding | `Salesforce/codet5p-110m-embedding` | Blocked until neural gate passes |
 
 Do **not** start with multi-billion-parameter coder LLMs.
-
-## Layout
-
-See `packagegate_ml/` for datasets, features, slicing, training, inference,
-calibration, and evaluation modules.
