@@ -70,7 +70,9 @@ const USER_AGENT = "packagegate-artifact-fetcher/0.1 (+security-research)";
  * wall-clock budget, `INTEGRITY_MISMATCH` when the bytes disagree with the
  * registry.
  */
-export async function downloadTarball(request: DownloadRequest): Promise<DownloadedTarball> {
+export async function downloadTarball(
+  request: DownloadRequest,
+): Promise<DownloadedTarball> {
   const limits = resolveLimits(request.limits);
   const url = safeUrl(request.url);
   const fetchImpl = request.fetch ?? defaultFetch;
@@ -146,7 +148,11 @@ async function readBody(
   for await (const chunk of response.body) {
     received += chunk.byteLength;
     if (received > limits.maxCompressedBytes) {
-      throw new LimitExceededError("compressedBytes", limits.maxCompressedBytes, received);
+      throw new LimitExceededError(
+        "compressedBytes",
+        limits.maxCompressedBytes,
+        received,
+      );
     }
     // Copied rather than viewed. A view over the transport's buffer is
     // correct only for as long as the transport promises not to reuse it, and

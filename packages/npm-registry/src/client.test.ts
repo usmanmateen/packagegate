@@ -36,7 +36,11 @@ const MINIMAL_PACKUMENT = JSON.stringify({
   "dist-tags": { latest: "1.1.0" },
   time: { "1.1.0": "2024-03-04T05:06:07.000Z" },
   versions: {
-    "1.0.0": { name: "demo", version: "1.0.0", dist: { tarball: "https://r.invalid/a.tgz" } },
+    "1.0.0": {
+      name: "demo",
+      version: "1.0.0",
+      dist: { tarball: "https://r.invalid/a.tgz" },
+    },
     "1.1.0": {
       name: "demo",
       version: "1.1.0",
@@ -55,7 +59,9 @@ describe("RegistryClient error mapping", () => {
   it("maps 404 to NOT_FOUND", async () => {
     const { fetchImpl } = stubFetch({ status: 404, body: '{"error":"Not found"}' });
     const client = new RegistryClient({ fetchImpl });
-    await expect(client.getPackument("nope")).rejects.toMatchObject({ code: "NOT_FOUND" });
+    await expect(client.getPackument("nope")).rejects.toMatchObject({
+      code: "NOT_FOUND",
+    });
   });
 
   it("maps 429 to a retryable upstream error", async () => {
@@ -133,7 +139,10 @@ describe("RegistryClient request shape", () => {
 
   it("honours a custom registry URL and strips trailing slashes", async () => {
     const { fetchImpl, urls } = stubFetch({ body: MINIMAL_PACKUMENT });
-    const client = new RegistryClient({ fetchImpl, registryUrl: "https://mirror.invalid/" });
+    const client = new RegistryClient({
+      fetchImpl,
+      registryUrl: "https://mirror.invalid/",
+    });
     await client.getPackument("demo");
     expect(urls[0]).toBe("https://mirror.invalid/demo");
   });
@@ -159,7 +168,9 @@ describe("toPackageMetadata — tolerating the historical corpus", () => {
       repository: "git://github.com/example/old.git",
       dist: { tarball: "https://r.invalid/old.tgz" },
     });
-    expect(toPackageMetadata(manifest).repositoryUrl).toBe("git://github.com/example/old.git");
+    expect(toPackageMetadata(manifest).repositoryUrl).toBe(
+      "git://github.com/example/old.git",
+    );
   });
 
   it("accepts repository as an object", () => {

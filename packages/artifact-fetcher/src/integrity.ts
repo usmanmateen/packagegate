@@ -17,7 +17,12 @@ import { createHash, timingSafeEqual } from "node:crypto";
  */
 
 /** Digest algorithms we will verify, strongest first. */
-export const SUPPORTED_INTEGRITY_ALGORITHMS = ["sha512", "sha384", "sha256", "sha1"] as const;
+export const SUPPORTED_INTEGRITY_ALGORITHMS = [
+  "sha512",
+  "sha384",
+  "sha256",
+  "sha1",
+] as const;
 export type IntegrityAlgorithm = (typeof SUPPORTED_INTEGRITY_ALGORITHMS)[number];
 
 const SUPPORTED = new Set<string>(SUPPORTED_INTEGRITY_ALGORITHMS);
@@ -102,7 +107,8 @@ export function parseIntegrity(raw: string | undefined): IntegrityDeclaration {
  */
 export class ArtifactDigester {
   readonly #sha256 = createHash("sha256");
-  readonly #extra: { algorithm: IntegrityAlgorithm; hash: ReturnType<typeof createHash> } | undefined;
+  readonly #extra:
+    { algorithm: IntegrityAlgorithm; hash: ReturnType<typeof createHash> } | undefined;
 
   constructor(expectation?: IntegrityExpectation) {
     if (expectation !== undefined && expectation.algorithm !== "sha256") {
@@ -131,7 +137,10 @@ export class ArtifactDigester {
 }
 
 /** Constant-time comparison of a computed digest against a declared one. */
-export function digestMatches(expectation: IntegrityExpectation, actual: Buffer): boolean {
+export function digestMatches(
+  expectation: IntegrityExpectation,
+  actual: Buffer,
+): boolean {
   if (actual.byteLength !== expectation.digest.byteLength) return false;
   return timingSafeEqual(actual, expectation.digest);
 }

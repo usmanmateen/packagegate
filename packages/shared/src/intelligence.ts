@@ -19,7 +19,13 @@ export const ADVISORY_KINDS = [
 export const AdvisoryKindSchema = z.enum(ADVISORY_KINDS);
 export type AdvisoryKind = z.infer<typeof AdvisoryKindSchema>;
 
-export const ADVISORY_SEVERITIES = ["LOW", "MODERATE", "HIGH", "CRITICAL", "UNKNOWN"] as const;
+export const ADVISORY_SEVERITIES = [
+  "LOW",
+  "MODERATE",
+  "HIGH",
+  "CRITICAL",
+  "UNKNOWN",
+] as const;
 export const AdvisorySeveritySchema = z.enum(ADVISORY_SEVERITIES);
 export type AdvisorySeverity = z.infer<typeof AdvisorySeveritySchema>;
 

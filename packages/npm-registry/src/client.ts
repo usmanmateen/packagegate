@@ -55,7 +55,10 @@ interface ResolvedOptions {
   readonly fetchImpl: FetchLike;
 }
 
-function upstreamError(message: string, details: Record<string, string | number>): ScanError {
+function upstreamError(
+  message: string,
+  details: Record<string, string | number>,
+): ScanError {
   return new ScanError("UPSTREAM_UNAVAILABLE", message, { details, retryable: true });
 }
 
@@ -129,7 +132,11 @@ export class RegistryClient {
   async getPackageMetadata(
     name: string,
     requestedVersion?: string,
-  ): Promise<{ metadata: PackageMetadata; resolution: VersionResolution; packument: Packument }> {
+  ): Promise<{
+    metadata: PackageMetadata;
+    resolution: VersionResolution;
+    packument: Packument;
+  }> {
     const packument = await this.getPackument(name);
     const resolution = resolveVersion(packument, requestedVersion);
     const manifest = packument.versions[resolution.version];
@@ -189,19 +196,27 @@ export class RegistryClient {
 
       const declaredLength = Number(response.headers.get("content-length") ?? "0");
       if (declaredLength > MAX_PACKUMENT_BYTES) {
-        throw new ScanError("LIMIT_EXCEEDED", "Registry response is too large to process", {
-          details: {
-            package: sanitiseInlineValue(name, 214),
-            declaredLength,
+        throw new ScanError(
+          "LIMIT_EXCEEDED",
+          "Registry response is too large to process",
+          {
+            details: {
+              package: sanitiseInlineValue(name, 214),
+              declaredLength,
+            },
           },
-        });
+        );
       }
 
       const text = await response.text();
       if (text.length > MAX_PACKUMENT_BYTES) {
-        throw new ScanError("LIMIT_EXCEEDED", "Registry response is too large to process", {
-          details: { package: sanitiseInlineValue(name, 214), bytes: text.length },
-        });
+        throw new ScanError(
+          "LIMIT_EXCEEDED",
+          "Registry response is too large to process",
+          {
+            details: { package: sanitiseInlineValue(name, 214), bytes: text.length },
+          },
+        );
       }
       return text;
     } catch (error) {

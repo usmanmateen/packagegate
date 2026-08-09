@@ -14,10 +14,19 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { LimitExceededError, ScanError, TraversalBlockedError } from "@packagegate/shared";
+import {
+  LimitExceededError,
+  ScanError,
+  TraversalBlockedError,
+} from "@packagegate/shared";
 import { extractTarball } from "./extract.js";
 import { resolveLimits, type ArtifactLimits } from "./limits.js";
-import { buildBomb, buildNpmTarball, buildTar, buildTarball } from "./testing/tarballs.js";
+import {
+  buildBomb,
+  buildNpmTarball,
+  buildTar,
+  buildTarball,
+} from "./testing/tarballs.js";
 
 /**
  * Extraction is tested against archives built to attack it, and every result
@@ -67,7 +76,10 @@ async function treeBytes(dir: string): Promise<number> {
   return total;
 }
 
-async function expectScanError(promise: Promise<unknown>, code: string): Promise<ScanError> {
+async function expectScanError(
+  promise: Promise<unknown>,
+  code: string,
+): Promise<ScanError> {
   try {
     await promise;
     expect.unreachable(`expected a ${code} ScanError`);
@@ -225,7 +237,9 @@ describe("links and special files are never created", () => {
 
     const result = await extractTarball(tarball, root, limits());
 
-    expect(result.skippedEntries).toEqual([{ path: "package/secrets", reason: "symlink" }]);
+    expect(result.skippedEntries).toEqual([
+      { path: "package/secrets", reason: "symlink" },
+    ]);
     await expect(lstat(join(root, "secrets"))).rejects.toThrow();
     expect(await tree(root)).toEqual(["index.js"]);
   });
@@ -239,7 +253,10 @@ describe("links and special files are never created", () => {
 
     const result = await extractTarball(tarball, root, limits());
 
-    expect(result.skippedEntries[0]).toEqual({ path: "package/escape", reason: "symlink" });
+    expect(result.skippedEntries[0]).toEqual({
+      path: "package/escape",
+      reason: "symlink",
+    });
     // `escape` became a real directory rather than a link, so the follow-up
     // entry lands inside the root instead of above it.
     expect(await readdir(parent)).toEqual(["root"]);
@@ -256,7 +273,9 @@ describe("links and special files are never created", () => {
 
     const result = await extractTarball(tarball, root, limits());
 
-    expect(result.skippedEntries).toEqual([{ path: "package/alias.js", reason: "hardlink" }]);
+    expect(result.skippedEntries).toEqual([
+      { path: "package/alias.js", reason: "hardlink" },
+    ]);
     await expect(lstat(join(root, "alias.js"))).rejects.toThrow();
     expect((await stat(join(root, "real.js"))).nlink).toBe(1);
   });
@@ -411,7 +430,10 @@ describe("malformed archives produce a structured error", () => {
   });
 
   it("rejects bytes that are not gzip at all", async () => {
-    const notGzip = Buffer.from("PK\u0003\u0004 this is a zip, or a jpeg, or nothing", "utf8");
+    const notGzip = Buffer.from(
+      "PK\u0003\u0004 this is a zip, or a jpeg, or nothing",
+      "utf8",
+    );
     await expectScanError(extractTarball(notGzip, root, limits()), "MALFORMED_ARCHIVE");
   });
 

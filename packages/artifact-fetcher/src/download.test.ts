@@ -1,5 +1,10 @@
 import { createHash } from "node:crypto";
-import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
+import {
+  createServer,
+  type IncomingMessage,
+  type Server,
+  type ServerResponse,
+} from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { LimitExceededError, ScanError } from "@packagegate/shared";
@@ -67,7 +72,10 @@ function ssri(algorithm: "sha512" | "sha256" | "sha1", bytes: Buffer): string {
   return `${algorithm}-${createHash(algorithm).update(bytes).digest("base64")}`;
 }
 
-async function expectScanError(promise: Promise<unknown>, code: string): Promise<ScanError> {
+async function expectScanError(
+  promise: Promise<unknown>,
+  code: string,
+): Promise<ScanError> {
   try {
     await promise;
     expect.unreachable(`expected a ${code} ScanError`);
@@ -281,7 +289,10 @@ describe("downloadTarball — limits are enforced while the body arrives", () =>
 
   it("rejects an empty body", async () => {
     serve(Buffer.alloc(0));
-    await expectScanError(downloadTarball({ url: `${origin}/empty.tgz` }), "UPSTREAM_UNAVAILABLE");
+    await expectScanError(
+      downloadTarball({ url: `${origin}/empty.tgz` }),
+      "UPSTREAM_UNAVAILABLE",
+    );
   });
 });
 
@@ -305,7 +316,10 @@ describe("downloadTarball — the fetch seam", () => {
       });
     };
 
-    const result = await downloadTarball({ url: "https://registry.example/x.tgz", fetch: stub });
+    const result = await downloadTarball({
+      url: "https://registry.example/x.tgz",
+      fetch: stub,
+    });
 
     expect(seen).toEqual(["https://registry.example/x.tgz"]);
     expect(result.bytes.equals(payload)).toBe(true);

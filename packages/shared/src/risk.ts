@@ -86,7 +86,8 @@ export const RiskAssessmentSchema = z
     computedAt: z.string().datetime(),
   })
   .refine(
-    (assessment) => assessment.classification !== "KNOWN_MALWARE" || assessment.knownMalware,
+    (assessment) =>
+      assessment.classification !== "KNOWN_MALWARE" || assessment.knownMalware,
     {
       message:
         "KNOWN_MALWARE classification requires knownMalware=true from an authoritative feed; heuristics alone must never produce it",
@@ -104,7 +105,10 @@ export function contributionsReconcile(
   contributions: readonly Pick<RiskContribution, "points">[],
   rawTotal: number,
 ): boolean {
-  const sum = contributions.reduce((total, contribution) => total + contribution.points, 0);
+  const sum = contributions.reduce(
+    (total, contribution) => total + contribution.points,
+    0,
+  );
   return Math.abs(sum - rawTotal) < 1e-9;
 }
 

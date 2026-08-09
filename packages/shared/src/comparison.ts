@@ -12,7 +12,12 @@ import { LifecycleScriptSchema, ResolvedPackageSchema } from "./package.js";
  * uninteresting; a release that adds four lines and a `postinstall` is not.
  */
 
-export const CHANGE_DIRECTIONS = ["INTRODUCED", "REMOVED", "MODIFIED", "UNCHANGED"] as const;
+export const CHANGE_DIRECTIONS = [
+  "INTRODUCED",
+  "REMOVED",
+  "MODIFIED",
+  "UNCHANGED",
+] as const;
 export const ChangeDirectionSchema = z.enum(CHANGE_DIRECTIONS);
 export type ChangeDirection = z.infer<typeof ChangeDirectionSchema>;
 
@@ -53,7 +58,12 @@ export const DependencyChangeSchema = z.object({
   direction: ChangeDirectionSchema,
   before: z.string().optional(),
   after: z.string().optional(),
-  kind: z.enum(["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"]),
+  kind: z.enum([
+    "dependencies",
+    "devDependencies",
+    "optionalDependencies",
+    "peerDependencies",
+  ]),
 });
 export type DependencyChange = z.infer<typeof DependencyChangeSchema>;
 

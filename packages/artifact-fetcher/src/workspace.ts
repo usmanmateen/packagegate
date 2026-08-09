@@ -63,9 +63,13 @@ async function remove(directory: string): Promise<void> {
   try {
     await rm(directory, { recursive: true, force: true, maxRetries: 3 });
   } catch (error) {
-    throw new ScanError("INTERNAL", "Failed to remove the temporary extraction directory", {
-      details: { code: errorCode(error) ?? "UNKNOWN" },
-    });
+    throw new ScanError(
+      "INTERNAL",
+      "Failed to remove the temporary extraction directory",
+      {
+        details: { code: errorCode(error) ?? "UNKNOWN" },
+      },
+    );
   }
 }
 

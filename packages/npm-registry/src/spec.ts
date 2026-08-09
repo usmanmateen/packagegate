@@ -112,7 +112,10 @@ export function parsePackageSpec(input: string): PackageSpec {
 
   if (name.length === 0) reject(input, "Package name is missing");
   if (name.length > MAX_PACKAGE_NAME_LENGTH) {
-    reject(input, `Package name exceeds npm's ${MAX_PACKAGE_NAME_LENGTH} character limit`);
+    reject(
+      input,
+      `Package name exceeds npm's ${MAX_PACKAGE_NAME_LENGTH} character limit`,
+    );
   }
   if (!PACKAGE_NAME_PATTERN.test(name)) {
     reject(input, "Not a valid npm package name");

@@ -60,7 +60,8 @@ export function resolveVersion(
 ): VersionResolution {
   const versions = availableVersions(packument);
   const distTags = packument["dist-tags"] ?? {};
-  const safeRequested = requested === undefined ? undefined : sanitiseInlineValue(requested, 80);
+  const safeRequested =
+    requested === undefined ? undefined : sanitiseInlineValue(requested, 80);
 
   if (versions.length === 0) {
     notFound("Package has no published versions available to analyse", {

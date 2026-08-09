@@ -37,14 +37,17 @@ export async function buildTar(entries: readonly TarEntry[]): Promise<Buffer> {
 
   for (const entry of entries) {
     const content =
-      typeof entry.content === "string" ? Buffer.from(entry.content, "utf8") : entry.content;
+      typeof entry.content === "string"
+        ? Buffer.from(entry.content, "utf8")
+        : entry.content;
     const header: TarHeaders = {
       name: entry.name,
       type: entry.type ?? "file",
       mode: entry.mode ?? 0o644,
-      size: entry.type === "directory" || entry.type === "symlink" || entry.type === "link"
-        ? 0
-        : (content?.byteLength ?? 0),
+      size:
+        entry.type === "directory" || entry.type === "symlink" || entry.type === "link"
+          ? 0
+          : (content?.byteLength ?? 0),
       ...(entry.linkname === undefined ? {} : { linkname: entry.linkname }),
     };
     await new Promise<void>((resolve, reject) => {

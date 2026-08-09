@@ -22,7 +22,9 @@ function manifest(extra: Record<string, unknown> = {}): unknown {
 describe("VersionManifestSchema — real-corpus shapes", () => {
   it("accepts engines as an array, the pre-object convention", () => {
     // lodash carries 44 versions with `"engines": ["node"]`.
-    const parsed = VersionManifestSchema.parse(manifest({ engines: ["node", "browser"] }));
+    const parsed = VersionManifestSchema.parse(
+      manifest({ engines: ["node", "browser"] }),
+    );
     // An array means "runs on these" with no version constraint, so an
     // unconstrained range is a faithful translation rather than invented data.
     expect(parsed.engines).toEqual({ node: "*", browser: "*" });
@@ -58,7 +60,9 @@ describe("VersionManifestSchema — real-corpus shapes", () => {
   });
 
   it("requires a tarball, which is the one field we genuinely cannot work without", () => {
-    expect(() => VersionManifestSchema.parse({ name: "x", version: "1.0.0", dist: {} })).toThrow();
+    expect(() =>
+      VersionManifestSchema.parse({ name: "x", version: "1.0.0", dist: {} }),
+    ).toThrow();
   });
 });
 
@@ -93,7 +97,11 @@ describe("PackumentSchema", () => {
     const parsed = PackumentSchema.parse({
       name: "demo",
       versions: {
-        "1.0.0": { name: "demo", version: "1.0.0", dist: { tarball: "https://r.invalid/1.tgz" } },
+        "1.0.0": {
+          name: "demo",
+          version: "1.0.0",
+          dist: { tarball: "https://r.invalid/1.tgz" },
+        },
       },
     });
     expect(parsed["dist-tags"]).toBeUndefined();

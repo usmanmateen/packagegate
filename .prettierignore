@@ -1,0 +1,18 @@
+# Build output and dependencies
+node_modules/
+dist/
+build/
+.next/
+coverage/
+pnpm-lock.yaml
+
+# Prose is written for humans and reviewed as prose. Prettier reflows markdown
+# tables and wraps deliberate line breaks, which produces large diffs that
+# obscure real documentation changes.
+docs/
+*.md
+
+# Fixture packages contain deliberately awkward inert source used as
+# static-analysis input. Their formatting is part of the test data.
+fixtures/
+**/__fixtures__/

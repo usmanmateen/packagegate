@@ -38,7 +38,10 @@ async function expectNoWorkspaceLeak(body: () => Promise<unknown>): Promise<unkn
   }
 }
 
-async function expectScanError(promise: Promise<unknown>, code: string): Promise<ScanError> {
+async function expectScanError(
+  promise: Promise<unknown>,
+  code: string,
+): Promise<ScanError> {
   try {
     await promise;
     expect.unreachable(`expected a ${code} ScanError`);
@@ -59,12 +62,15 @@ describe("withExtractedTarball", () => {
     });
 
     const artifact = await expectNoWorkspaceLeak(async () =>
-      withExtractedTarball({ bytes: tarball, tarballUrl: TARBALL_URL }, async (extracted) => {
-        // The tree exists for the lifetime of the callback and no longer.
-        expect((await stat(extracted.extractionRoot)).isDirectory()).toBe(true);
-        expect(await readdir(extracted.extractionRoot)).toContain("index.js");
-        return extracted.artifact;
-      }),
+      withExtractedTarball(
+        { bytes: tarball, tarballUrl: TARBALL_URL },
+        async (extracted) => {
+          // The tree exists for the lifetime of the callback and no longer.
+          expect((await stat(extracted.extractionRoot)).isDirectory()).toBe(true);
+          expect(await readdir(extracted.extractionRoot)).toContain("index.js");
+          return extracted.artifact;
+        },
+      ),
     );
 
     expect(artifact).toMatchObject({
@@ -133,7 +139,9 @@ describe("withExtractedTarball", () => {
       (extracted) => Promise.resolve(extracted.artifact),
     );
 
-    expect(artifact.skippedEntries).toEqual([{ path: "package/link", reason: "symlink" }]);
+    expect(artifact.skippedEntries).toEqual([
+      { path: "package/link", reason: "symlink" },
+    ]);
     expect(artifact.fileCount).toBe(1);
   });
 
@@ -243,9 +251,9 @@ describe("cleanup runs on every path", () => {
 
   it("propagates the caller's error rather than a cleanup error", async () => {
     const marker = new Error("the finding that matters");
-    await expect(
-      withTemporaryDirectory(() => Promise.reject(marker)),
-    ).rejects.toBe(marker);
+    await expect(withTemporaryDirectory(() => Promise.reject(marker))).rejects.toBe(
+      marker,
+    );
   });
 
   it("gives the callback a private directory and deletes it afterwards", async () => {
@@ -281,8 +289,13 @@ describe("withExtractedPackage — download and extract together", () => {
         return;
       }
       if (request.url === "/corrupt-1.0.0.tgz") {
-        const corrupt = Buffer.concat([gzipSync(Buffer.from("not a tar")), Buffer.alloc(0)]);
-        response.writeHead(200, { "content-type": "application/octet-stream" }).end(corrupt);
+        const corrupt = Buffer.concat([
+          gzipSync(Buffer.from("not a tar")),
+          Buffer.alloc(0),
+        ]);
+        response
+          .writeHead(200, { "content-type": "application/octet-stream" })
+          .end(corrupt);
         return;
       }
       response.writeHead(404).end();

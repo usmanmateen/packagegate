@@ -118,7 +118,10 @@ function splitComponents(name: string): string[] {
  * @throws {TraversalBlockedError} for a name that attempts to escape the root
  * @throws {LimitExceededError} for a name longer than the path budget
  */
-export function classifyEntryPath(rawName: string, maxPathLength: number): EntryPathDecision {
+export function classifyEntryPath(
+  rawName: string,
+  maxPathLength: number,
+): EntryPathDecision {
   // Checked before anything else: a NUL byte makes every downstream consumer
   // disagree about where the name ends, which is the whole point of putting
   // one there (T-LOG-01, node-tar CVE-2026-59875).
@@ -141,7 +144,11 @@ export function classifyEntryPath(rawName: string, maxPathLength: number): Entry
   // not depend on the extracting host to be the safe one.
   const unified = rawName.replaceAll("\\", "/");
 
-  if (unified.startsWith("/") || DRIVE_PREFIX.test(rawName) || rawName.startsWith("\\\\")) {
+  if (
+    unified.startsWith("/") ||
+    DRIVE_PREFIX.test(rawName) ||
+    rawName.startsWith("\\\\")
+  ) {
     throw new TraversalBlockedError(sanitiseInlineValue(rawName, ERROR_PATH_LIMIT));
   }
 

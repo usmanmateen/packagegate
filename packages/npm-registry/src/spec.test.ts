@@ -133,7 +133,9 @@ describe("encodePackageNameForUrl", () => {
 
 describe("formatPackageSpec", () => {
   it("round-trips a versioned spec", () => {
-    expect(formatPackageSpec(parsePackageSpec("@scope/pkg@1.2.0"))).toBe("@scope/pkg@1.2.0");
+    expect(formatPackageSpec(parsePackageSpec("@scope/pkg@1.2.0"))).toBe(
+      "@scope/pkg@1.2.0",
+    );
   });
 
   it("omits the version when none was requested", () => {

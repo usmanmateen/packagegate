@@ -97,10 +97,16 @@ export async function extractTarball(
   limits: ArtifactLimits,
 ): Promise<ExtractionResult> {
   if (tarball.byteLength === 0) {
-    throw new ScanError("MALFORMED_ARCHIVE", "Tarball is empty", { details: { reason: "empty" } });
+    throw new ScanError("MALFORMED_ARCHIVE", "Tarball is empty", {
+      details: { reason: "empty" },
+    });
   }
   if (tarball.byteLength > limits.maxCompressedBytes) {
-    throw new LimitExceededError("compressedBytes", limits.maxCompressedBytes, tarball.byteLength);
+    throw new LimitExceededError(
+      "compressedBytes",
+      limits.maxCompressedBytes,
+      tarball.byteLength,
+    );
   }
 
   const realRoot = await realpath(destinationRoot);
@@ -157,7 +163,9 @@ class ExtractionState {
     const source = Readable.from(chunked(tarball), { objectMode: false });
     const consumption = new StreamMeter((byteLength) => this.#onCompressed(byteLength));
     const gunzip = createGunzip();
-    const decompression = new StreamMeter((byteLength) => this.#onDecompressed(byteLength));
+    const decompression = new StreamMeter((byteLength) =>
+      this.#onDecompressed(byteLength),
+    );
     const archive = tarExtract();
 
     // The pipeline's rejection is captured rather than awaited directly: when
@@ -389,7 +397,9 @@ class ExtractionState {
         // declared size, because the header is attacker-supplied and PAX
         // overrides make it a poor source of truth (T-EXT-08).
         if (sizeBytes > this.#limits.maxFileBytes) {
-          this.#fail(new LimitExceededError("fileBytes", this.#limits.maxFileBytes, sizeBytes));
+          this.#fail(
+            new LimitExceededError("fileBytes", this.#limits.maxFileBytes, sizeBytes),
+          );
         }
         hash.update(chunk);
         await handle.write(chunk);
@@ -529,10 +539,15 @@ function classifyStreamError(error: unknown): ScanError {
     });
   }
 
-  const reason = error instanceof Error ? sanitiseInlineValue(error.message, 120) : "unknown";
-  return new ScanError("MALFORMED_ARCHIVE", "Archive could not be read as a gzip tarball", {
-    details: { reason, ...(code === undefined ? {} : { code }) },
-  });
+  const reason =
+    error instanceof Error ? sanitiseInlineValue(error.message, 120) : "unknown";
+  return new ScanError(
+    "MALFORMED_ARCHIVE",
+    "Archive could not be read as a gzip tarball",
+    {
+      details: { reason, ...(code === undefined ? {} : { code }) },
+    },
+  );
 }
 
 const FILESYSTEM_ERROR_CODES = new Set([

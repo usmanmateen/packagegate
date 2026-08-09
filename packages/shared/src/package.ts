@@ -16,9 +16,7 @@ import { z } from "zod";
 // The leading character must be alphanumeric, which is what excludes the
 // `.` and `_` prefixes the registry reserves.
 const NAME_SEGMENT = "[A-Za-z0-9](?:[A-Za-z0-9\\-._~]*)";
-export const PACKAGE_NAME_PATTERN = new RegExp(
-  `^(?:@${NAME_SEGMENT}/)?${NAME_SEGMENT}$`,
-);
+export const PACKAGE_NAME_PATTERN = new RegExp(`^(?:@${NAME_SEGMENT}/)?${NAME_SEGMENT}$`);
 
 /** Maximum npm package name length, per registry rules. */
 export const MAX_PACKAGE_NAME_LENGTH = 214;
@@ -135,8 +133,6 @@ export const ArtifactInfoSchema = z.object({
   /** Whether the registry-declared integrity matched what we downloaded. */
   integrityVerified: z.boolean().optional(),
   /** Archive entries skipped during extraction, with the reason. */
-  skippedEntries: z
-    .array(z.object({ path: z.string(), reason: z.string() }))
-    .default([]),
+  skippedEntries: z.array(z.object({ path: z.string(), reason: z.string() })).default([]),
 });
 export type ArtifactInfo = z.infer<typeof ArtifactInfoSchema>;

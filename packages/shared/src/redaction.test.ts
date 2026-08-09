@@ -18,7 +18,7 @@ const TRUNCATION_MARKER_LENGTH = 30;
 
 describe("sanitiseSnippet", () => {
   it("preserves ordinary source code untouched", () => {
-    const source = 'const arr = [1, 2, 3];\n\tconst re = /[a-z]+/g;\nexport { arr };';
+    const source = "const arr = [1, 2, 3];\n\tconst re = /[a-z]+/g;\nexport { arr };";
     expect(sanitiseSnippet(source)).toBe(source);
   });
 

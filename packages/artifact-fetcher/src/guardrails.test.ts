@@ -41,7 +41,10 @@ function stripComments(text: string): string {
 }
 
 async function productionSources(): Promise<SourceFile[]> {
-  const entries = await readdir(SOURCE_DIRECTORY, { withFileTypes: true, recursive: true });
+  const entries = await readdir(SOURCE_DIRECTORY, {
+    withFileTypes: true,
+    recursive: true,
+  });
   const files: SourceFile[] = [];
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.endsWith(".ts")) continue;
@@ -49,7 +52,11 @@ async function productionSources(): Promise<SourceFile[]> {
     const path = join(entry.parentPath, entry.name);
     if (path.startsWith(join(SOURCE_DIRECTORY, "testing"))) continue;
     const text = await readFile(path, "utf8");
-    files.push({ name: path.slice(SOURCE_DIRECTORY.length), text, code: stripComments(text) });
+    files.push({
+      name: path.slice(SOURCE_DIRECTORY.length),
+      text,
+      code: stripComments(text),
+    });
   }
   return files;
 }
@@ -95,7 +102,9 @@ describe("the package cannot create a link, a device or a FIFO", () => {
     const sources = await productionSources();
     // The lookbehind lets a private method be called `#writeFile` while still
     // catching the `fs` function of the same name.
-    const writers = sources.filter((file) => /(?<![#\w])writeFile(?:Sync)?\s*\(/.test(file.code));
+    const writers = sources.filter((file) =>
+      /(?<![#\w])writeFile(?:Sync)?\s*\(/.test(file.code),
+    );
     expect(writers.map((file) => file.name)).toEqual([]);
 
     const extract = sources.find((file) => file.name === "extract.ts");
@@ -119,7 +128,13 @@ describe("the package never executes what it downloads", () => {
     // with no network and no credentials. If `extract.ts` ever imports a
     // client, that separation is gone.
     const sources = await productionSources();
-    const networkless = ["extract.ts", "paths.ts", "verify.ts", "workspace.ts", "limits.ts"];
+    const networkless = [
+      "extract.ts",
+      "paths.ts",
+      "verify.ts",
+      "workspace.ts",
+      "limits.ts",
+    ];
     for (const name of networkless) {
       const file = sources.find((candidate) => candidate.name === name);
       expect(file, `${name} should exist`).toBeDefined();

@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { ScanError } from "@packagegate/shared";
 import { PackumentSchema, type Packument } from "./schemas.js";
-import { availableVersions, previousPublishedVersion, resolveVersion } from "./resolve.js";
+import {
+  availableVersions,
+  previousPublishedVersion,
+  resolveVersion,
+} from "./resolve.js";
 
 function makePackument(
   versions: string[],

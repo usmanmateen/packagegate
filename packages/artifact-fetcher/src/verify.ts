@@ -83,15 +83,23 @@ export function verifyDigest(
     // Only reachable if a digester was built without the expectation it is now
     // being asked about. That is a wiring fault in our own code, not a
     // statement about the package, so it must not be reported as tampering.
-    throw new ScanError("INTERNAL", "Integrity digest was not computed for the declared algorithm", {
-      details: { algorithm: expectation.algorithm },
-    });
+    throw new ScanError(
+      "INTERNAL",
+      "Integrity digest was not computed for the declared algorithm",
+      {
+        details: { algorithm: expectation.algorithm },
+      },
+    );
   }
 
   if (!digestMatches(expectation, actual)) {
-    throw new ScanError("INTEGRITY_MISMATCH", "Downloaded tarball did not match the integrity declared by the registry", {
-      details: { algorithm: expectation.algorithm, sha256: digester.sha256Hex() },
-    });
+    throw new ScanError(
+      "INTEGRITY_MISMATCH",
+      "Downloaded tarball did not match the integrity declared by the registry",
+      {
+        details: { algorithm: expectation.algorithm, sha256: digester.sha256Hex() },
+      },
+    );
   }
 
   return { status: "verified", algorithm: expectation.algorithm };
@@ -107,5 +115,8 @@ export function verifyBytes(
     declaration.kind === "expectation" ? declaration.expectation : undefined,
   );
   digester.update(bytes);
-  return { sha256: digester.sha256Hex(), report: verifyDigest(digester, declaredIntegrity) };
+  return {
+    sha256: digester.sha256Hex(),
+    report: verifyDigest(digester, declaredIntegrity),
+  };
 }
