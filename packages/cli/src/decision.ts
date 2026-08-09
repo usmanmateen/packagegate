@@ -62,6 +62,24 @@ export function buildDecisionExplanation(result: InvestigationResult): string[] 
     );
   }
 
+  if (result.ml.status === "DISABLED") {
+    lines.push("ML assessment: DISABLED");
+  } else if (result.ml.status === "ERROR") {
+    lines.push(
+      `ML assessment: ERROR${result.ml.errorMessage ? ` — ${result.ml.errorMessage}` : ""}`,
+    );
+  } else {
+    const prob =
+      result.ml.calibratedProbability ?? result.ml.maliciousProbability;
+    lines.push(
+      `ML assessment: AVAILABLE` +
+        (prob === undefined ? "" : ` (malicious-pattern p=${prob.toFixed(2)})`) +
+        (result.ml.supportsReviewEscalation
+          ? "; supports REVIEW escalation"
+          : ""),
+    );
+  }
+
   for (const reason of result.policy.reasons) {
     lines.push(`Policy: ${reason.code} — ${reason.message}`);
   }

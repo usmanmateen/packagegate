@@ -4,6 +4,7 @@ import type {
   BehaviourChain,
   Finding,
   LifecycleScript,
+  MlAssessment,
   PackageMetadata,
   ParseFailure,
   PolicyDecision,
@@ -98,6 +99,8 @@ export interface InvestigationResult {
       readonly confidence: "LOW" | "MEDIUM" | "HIGH";
     }[];
   };
+  /** Optional learned assessment; never merges into behaviouralRisk score. */
+  readonly ml: MlAssessment;
   readonly policy: PolicyDecision;
   readonly decisionExplanation: readonly string[];
   readonly startedAt: string;

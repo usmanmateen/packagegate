@@ -30,6 +30,7 @@ interface CliFlags {
   readonly color: boolean | undefined;
   readonly expectedSha256: string | undefined;
   readonly malwareRoot: string | undefined;
+  readonly ml: boolean;
 }
 
 function print(message: string): void {
@@ -49,14 +50,16 @@ function usage(): string {
     "PackageGate — npm package Trust & Safety investigation",
     "",
     "Usage:",
-    "  packagegate scan <package[@version]> [--json] [--no-color] [--color]",
-    "  packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--no-color] [--color]",
-    "  packagegate fixture <name> [--json] [--no-color] [--color]",
+    "  packagegate scan <package[@version]> [--json] [--ml] [--no-color] [--color]",
+    "  packagegate scan-tarball <path> [--sha256 <digest>] [--json] [--ml] [--no-color] [--color]",
+    "  packagegate fixture <name> [--json] [--ml] [--no-color] [--color]",
     "  packagegate diff <package@old> <package@new> [--json] [--no-color] [--color]",
     "  packagegate evaluate [--malware-root <path>] [--json]",
+    "  packagegate ml-export <fixture-or-report-path> [--json]",
     "",
     "Examples:",
     "  packagegate scan lodash@4.17.21",
+    "  packagegate scan lodash@4.17.21 --ml",
     "  packagegate diff express@4.20.0 express@4.21.2",
     "  packagegate diff version-diff-benign-v1 version-diff-remote-v2",
     "  packagegate fixture inert-install-curl-bash --color",
@@ -64,6 +67,7 @@ function usage(): string {
     "",
     "Flags:",
     "  --json                 Machine-readable JSON (never includes ANSI colour)",
+    "  --ml                   Enable optional ML assessment (PACKAGEGATE_ML=local)",
     "  --sha256 <digest>      Expected SHA-256 for scan-tarball (mismatch aborts)",
     "  --malware-root <path>  Explicit quarantine root for real-malware eval samples",
     "  --no-color             Disable ANSI colour even on a TTY",
@@ -71,6 +75,7 @@ function usage(): string {
     "",
     "STATIC ANALYSIS ONLY. Package code is never executed.",
     "Real malware is never auto-downloaded.",
+    "ML is disabled by default and cannot independently BLOCK.",
     "Absence of findings is not evidence of safety.",
   ].join("\n");
 }
@@ -81,11 +86,16 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
   let color: boolean | undefined;
   let expectedSha256: string | undefined;
   let malwareRoot: string | undefined;
+  let ml = false;
 
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index]!;
     if (arg === "--json") {
       json = true;
+      continue;
+    }
+    if (arg === "--ml") {
+      ml = true;
       continue;
     }
     if (arg === "--no-color") {
@@ -122,7 +132,7 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
 
   return {
     positional,
-    flags: { json, color, expectedSha256, malwareRoot },
+    flags: { json, color, expectedSha256, malwareRoot, ml },
   };
 }
 
@@ -240,7 +250,7 @@ async function main(argv: string[]): Promise<number> {
           `Investigating ${target} (static analysis only; package is not executed)…\n`,
         );
       }
-      const result = await scanPackage(target);
+      const result = await scanPackage(target, { ml: flags.ml });
       emitResult(result, flags);
       return 0;
     }
@@ -255,6 +265,7 @@ async function main(argv: string[]): Promise<number> {
         ...(flags.expectedSha256 === undefined
           ? {}
           : { expectedSha256: flags.expectedSha256 }),
+        ml: flags.ml,
       });
       emitResult(result, flags);
       return 0;
@@ -269,7 +280,32 @@ async function main(argv: string[]): Promise<number> {
           `Investigating fixture ${target} (static analysis only; never executed)…\n`,
         );
       }
-      emitResult(runFixture(target), flags);
+      let result = runFixture(target);
+      if (flags.ml) {
+        const { withMlAssessment } = await import("./ml/apply.js");
+        const { loadNamedFixtureSources } = await import("./fixtures.js");
+        const sources = loadNamedFixtureSources(target);
+        result = await withMlAssessment(result, {
+          enabled: true,
+          sourceByPath: sources,
+        });
+      }
+      emitResult(result, flags);
+      return 0;
+    }
+
+    if (command === "ml-export") {
+      if (target === undefined || positional.length !== 2) {
+        printError(usage());
+        return 1;
+      }
+      const { exportPackageGateMlRecord } = await import("./ml/export.js");
+      const { loadNamedFixtureSources } = await import("./fixtures.js");
+      const result = runFixture(target);
+      const record = exportPackageGateMlRecord(result, {
+        sourceByPath: loadNamedFixtureSources(target),
+      });
+      printRaw(`${JSON.stringify(record, null, 2)}\n`);
       return 0;
     }
 

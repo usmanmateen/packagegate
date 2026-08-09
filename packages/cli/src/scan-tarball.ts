@@ -12,6 +12,7 @@ import type { InvestigationResult } from "./types.js";
 export interface ScanTarballOptions {
   /** Optional expected SHA-256 of the artifact bytes. Mismatch aborts. */
   readonly expectedSha256?: string;
+  readonly ml?: boolean;
 }
 
 function digestsEqual(actualHex: string, expectedHex: string): boolean {
@@ -67,40 +68,51 @@ export async function scanLocalTarball(
         // the caller supplied --sha256 (checked above before extraction work
         // beyond hashing). Passing undefined keeps integrityVerified absent.
       },
-      (extracted) =>
-        Promise.resolve(
-          investigateExtractedPackage({
-            extracted: {
-              ...extracted,
-              artifact: {
-                ...extracted.artifact,
-                sha256,
-              },
+      async (extracted) => {
+        const result = investigateExtractedPackage({
+          extracted: {
+            ...extracted,
+            artifact: {
+              ...extracted.artifact,
+              sha256,
             },
-            requestedSpec: `file:${local.displayPath}`,
-            acquisition: {
-              source: "LOCAL",
-              localPath: local.displayPath,
-              registryIntegrity: {
-                status: "NOT_APPLICABLE",
-                reason:
-                  "Local artifact has no trusted registry integrity reference",
-              },
-              ...(suppliedMatched
-                ? {
-                    suppliedDigest: {
-                      expectedSha256: expectedSha256,
-                      matched: true,
-                    },
-                  }
-                : {}),
+          },
+          requestedSpec: `file:${local.displayPath}`,
+          acquisition: {
+            source: "LOCAL",
+            localPath: local.displayPath,
+            registryIntegrity: {
+              status: "NOT_APPLICABLE",
+              reason:
+                "Local artifact has no trusted registry integrity reference",
             },
-            startedAt,
-            requireManifest: true,
-            // M1 only when the caller supplied a digest that matched.
-            integrityVerifiedForRisk: suppliedMatched,
+            ...(suppliedMatched
+              ? {
+                  suppliedDigest: {
+                    expectedSha256: expectedSha256,
+                    matched: true,
+                  },
+                }
+              : {}),
+          },
+          startedAt,
+          requireManifest: true,
+          // M1 only when the caller supplied a digest that matched.
+          integrityVerifiedForRisk: suppliedMatched,
+        });
+
+        if (options.ml !== true) return result;
+
+        const { withMlAssessment } = await import("./ml/apply.js");
+        const { decodeContent } = await import("./pipeline.js");
+        const sourceByPath = new Map(
+          extracted.files.flatMap((file) => {
+            if (file.content === undefined) return [];
+            return [[file.path, decodeContent(file.content, file.path)] as const];
           }),
-        ),
+        );
+        return withMlAssessment(result, { enabled: true, sourceByPath });
+      },
     );
   } catch (error) {
     throw toScanError(error, "Local tarball investigation failed");

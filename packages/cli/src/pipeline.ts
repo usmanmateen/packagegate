@@ -8,6 +8,7 @@ import {
   WEIGHTS_VERSION,
 } from "@packagegate/risk-engine";
 import type { Finding, PackageMetadata, ScannedFile } from "@packagegate/shared";
+import { disabledMlAssessment } from "@packagegate/shared";
 import {
   analyseOpaqueSource,
   analysePackage,
@@ -329,6 +330,7 @@ export function investigateExtractedPackage(
     analysisCoverage,
     analysisCompleteness,
     threatIntelligence,
+    ml: disabledMlAssessment(),
     policy,
     decisionExplanation: [],
     startedAt: startedAt.toISOString(),

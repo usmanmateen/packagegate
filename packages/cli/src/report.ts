@@ -326,6 +326,44 @@ export function formatInvestigationReport(
   );
   push("");
 
+  push(theme.heading("ML analysis"));
+  push(theme.muted("-----------"));
+  if (result.ml.status === "DISABLED") {
+    push(theme.muted("  Status: DISABLED (deterministic lanes only)"));
+  } else if (result.ml.status === "ERROR") {
+    push(`  Status: ${theme.warning("ERROR")}`);
+    if (result.ml.errorMessage) {
+      push(`  ${theme.muted(result.ml.errorMessage)}`);
+    }
+  } else {
+    push(`  Status: ${theme.info(result.ml.status)}`);
+    if (result.ml.modelId) {
+      push(`  Model:  ${theme.info(result.ml.modelId)}${result.ml.modelVersion ? ` (${result.ml.modelVersion})` : ""}`);
+    }
+    const prob =
+      result.ml.calibratedProbability ?? result.ml.maliciousProbability;
+    if (prob !== undefined) {
+      push(
+        `  Malicious-pattern probability: ${theme.info((prob * 100).toFixed(0) + "%")}${
+          result.ml.calibratedProbability !== undefined
+            ? theme.muted(" (calibrated)")
+            : ""
+        }`,
+      );
+    }
+    push(
+      theme.muted(
+        "  ML ranks suspicious composition; it does not invent deterministic evidence.",
+      ),
+    );
+    for (const slice of result.ml.topSlices.slice(0, 3)) {
+      push(
+        `  • ${theme.info(slice.file)}:${String(slice.startLine)}–${String(slice.endLine)} (score ${(slice.score * 100).toFixed(0)}%)`,
+      );
+    }
+  }
+  push("");
+
   push(theme.heading("Final policy"));
   push(theme.muted("------------"));
   push(

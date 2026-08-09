@@ -12,6 +12,8 @@ export { SCANNER_VERSION };
 
 export interface ScanOptions {
   readonly registry?: RegistryClientOptions;
+  /** Enable optional ML assessment lane (PACKAGEGATE_ML=local or --ml). */
+  readonly ml?: boolean;
 }
 
 /**
@@ -52,7 +54,7 @@ export async function scanPackage(
         url: dist.tarball,
         ...(dist.integrity === undefined ? {} : { integrity: dist.integrity }),
       },
-      (extracted) => {
+      async (extracted) => {
         const integrityVerified = extracted.artifact.integrityVerified === true;
         let registryIntegrity;
         if (integrityVerified) {
@@ -73,20 +75,30 @@ export async function scanPackage(
           };
         }
 
-        return Promise.resolve(
-          investigateExtractedPackage({
-            extracted,
-            requestedSpec: spec.raw,
-            acquisition: {
-              source: "REGISTRY",
-              registryIntegrity,
-            },
-            startedAt,
-            fallbackMetadata,
-            requireManifest: false,
-            integrityVerifiedForRisk: integrityVerified,
+        const result = investigateExtractedPackage({
+          extracted,
+          requestedSpec: spec.raw,
+          acquisition: {
+            source: "REGISTRY",
+            registryIntegrity,
+          },
+          startedAt,
+          fallbackMetadata,
+          requireManifest: false,
+          integrityVerifiedForRisk: integrityVerified,
+        });
+
+        if (options.ml !== true) return result;
+
+        const { withMlAssessment } = await import("./ml/apply.js");
+        const { decodeContent } = await import("./pipeline.js");
+        const sourceByPath = new Map(
+          extracted.files.flatMap((file) => {
+            if (file.content === undefined) return [];
+            return [[file.path, decodeContent(file.content, file.path)] as const];
           }),
         );
+        return withMlAssessment(result, { enabled: true, sourceByPath });
       },
     );
   } catch (error) {

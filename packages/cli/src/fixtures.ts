@@ -69,6 +69,26 @@ export function loadNamedFixture(name: string): InvestigationResult {
 }
 
 /**
+ * Source map for a fixture — used for ML slice export without re-reading labels.
+ */
+export function loadNamedFixtureSources(
+  name: string,
+): Map<string, string> {
+  const root = join(fixturesRoot(), name);
+  const manifestPath = join(root, "package.json");
+  if (!existsSync(manifestPath)) {
+    throw new Error(`Unknown fixture: ${name}`);
+  }
+  const files = new Map<string, string>();
+  files.set("package.json", readFileSync(manifestPath, "utf8"));
+  for (const entry of readdirSync(root)) {
+    if (!/\.(?:[cm]?js|jsx|[cm]?ts|tsx)$/i.test(entry)) continue;
+    files.set(entry, readFileSync(join(root, entry), "utf8"));
+  }
+  return files;
+}
+
+/**
  * Resolve a diff/scan target: `fixture:<name>`, bare fixture directory name,
  * or a published package spec via the registry pipeline.
  */

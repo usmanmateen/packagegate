@@ -9,6 +9,7 @@ import type {
   PackageMetadata,
   ScannedFile,
 } from "@packagegate/shared";
+import { disabledMlAssessment } from "@packagegate/shared";
 import {
   analysePackage,
   RULES_VERSION as STATIC_RULES_VERSION,
@@ -167,6 +168,7 @@ export function investigateSources(
         confidence: match.confidence,
       })),
     },
+    ml: disabledMlAssessment(),
     policy,
     decisionExplanation: [],
     startedAt: startedAt.toISOString(),
