@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 from zipfile import ZipFile
 
+from packagegate_ml.datasets.compromise_pairs import datadog_name_to_npm
 from packagegate_ml.datasets.paths import malware_root, scratch_root
 from packagegate_ml.datasets.schema import (
     MALWARE_QUALITATIVE_HOLDOUT_IDS,
@@ -141,6 +142,7 @@ def acquire_datadog_pilot(
     max_per_family: int = 1,
     seed: int = 42,
     prefer_categories: tuple[str, ...] = ("compromised_lib", "malicious_intent"),
+    category_quotas: dict[str, int] | None = None,
 ) -> list[DatasetRecord]:
     rng = random.Random(seed)
     records: list[DatasetRecord] = []
@@ -191,16 +193,25 @@ def acquire_datadog_pilot(
     )
 
     acquired = 0
+    acquired_by_category: dict[str, int] = {}
     skipped: list[dict[str, str]] = []
     for entry in candidates:
         if acquired >= max_samples:
             break
+        category = entry["category"]
+        if category_quotas is not None:
+            quota = category_quotas.get(category)
+            if quota is not None and acquired_by_category.get(category, 0) >= quota:
+                continue
         package_name = entry["package_name"]
         version = entry["version"]
-        sid = sample_id_for(package_name, version)
+        npm_name = datadog_name_to_npm(package_name)
+        sid = sample_id_for(npm_name, version)
         if sid in MALWARE_QUALITATIVE_HOLDOUT_IDS:
             continue
-        family = family_group_for(package_name)
+        # Keep datadog-encoded id as alias note if different
+        datadog_sid = sample_id_for(package_name, version)
+        family = family_group_for(npm_name)
         if seen_families.get(family, 0) >= max_per_family:
             continue
 
@@ -222,12 +233,20 @@ def acquire_datadog_pilot(
         if m:
             observed = m.group(1)
 
+        label = (
+            SampleLabel.COMPROMISED
+            if category == "compromised_lib"
+            else SampleLabel.MALICIOUS
+        )
+        alias_note = ""
+        if datadog_sid != sid:
+            alias_note = f"; datadog_id={datadog_sid}"
         records.append(
             DatasetRecord(
                 sample_id=sid,
-                package_name=package_name,
+                package_name=npm_name,
                 version=version,
-                label=SampleLabel.MALICIOUS,
+                label=label,
                 label_source="datadog-malicious-software-packages-dataset",
                 label_reference=entry["path"],
                 family_group=family,
@@ -235,14 +254,23 @@ def acquire_datadog_pilot(
                 artifact_sha256=sha,
                 artifact_path=str(out_tgz),
                 artifact_path_external=str(out_tgz),
-                package_name_hash=hash_package_name(package_name),
+                package_name_hash=hash_package_name(npm_name),
                 dataset_source="datadog",
                 observed_date=observed,
-                notes=f"category={entry['category']}; static tgz rebuilt from Datadog zip",
+                attack_category=category,
+                benchmark_tags=(
+                    ("compromised_version",)
+                    if category == "compromised_lib"
+                    else ("malicious_intent",)
+                ),
+                notes=(
+                    f"category={category}; static tgz rebuilt from Datadog zip{alias_note}"
+                ),
             )
         )
         seen_families[family] = seen_families.get(family, 0) + 1
         acquired += 1
+        acquired_by_category[category] = acquired_by_category.get(category, 0) + 1
         if acquired % 10 == 0:
             print(json.dumps({"datadog_progress": acquired, "latest": sid}))
 

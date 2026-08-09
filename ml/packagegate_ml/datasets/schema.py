@@ -56,6 +56,9 @@ class DatasetRecord:
     dataset_source: str | None = None
     hard_negative_category: str | None = None
     duplicate_group_id: str | None = None
+    # Datadog / analysis metadata — NEVER use as model input features.
+    attack_category: str | None = None
+    benchmark_tags: tuple[str, ...] = ()
     notes: str = ""
 
     def to_public_dict(self, *, include_package_name: bool = False) -> dict[str, Any]:
@@ -63,10 +66,10 @@ class DatasetRecord:
         data = asdict(self)
         if not include_package_name:
             data.pop("package_name", None)
-        # Prefer artifact_path_external alias for older smoke manifests.
         if data.get("artifact_path") is None and data.get("artifact_path_external"):
             data["artifact_path"] = data["artifact_path_external"]
         data["label"] = self.label.value
+        data["benchmark_tags"] = list(self.benchmark_tags)
         return data
 
     def binary_positive(self) -> bool | None:
@@ -79,6 +82,41 @@ class DatasetRecord:
         if self.label == SampleLabel.EXPECTED_BENIGN:
             return False
         return None
+
+
+@dataclass(frozen=True)
+class CompromisePair:
+    """Paired clean vs compromised versions of the same package family."""
+
+    pair_id: str
+    family_group: str
+    clean_sample_id: str
+    compromised_sample_id: str
+    clean_version: str
+    compromised_version: str
+    clean_artifact_sha256: str | None
+    compromised_artifact_sha256: str | None
+    label: str = "COMPROMISE_INTRODUCED"
+    notes: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class MatchRecord:
+    """Malicious-intent sample matched to expected-benign hard negatives."""
+
+    malicious_sample_id: str
+    matched_benign_sample_ids: tuple[str, ...]
+    matching_distance: float
+    matching_features: dict[str, float]
+    notes: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        data = asdict(self)
+        data["matched_benign_sample_ids"] = list(self.matched_benign_sample_ids)
+        return data
 
 
 @dataclass

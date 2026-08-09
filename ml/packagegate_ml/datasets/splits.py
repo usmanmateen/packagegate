@@ -147,6 +147,8 @@ def load_records(path: Path) -> list[DatasetRecord]:
                 dataset_source=item.get("dataset_source"),
                 hard_negative_category=item.get("hard_negative_category"),
                 duplicate_group_id=item.get("duplicate_group_id"),
+                attack_category=item.get("attack_category"),
+                benchmark_tags=tuple(item.get("benchmark_tags") or ()),
                 notes=item.get("notes", ""),
             )
         )

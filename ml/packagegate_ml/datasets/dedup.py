@@ -10,7 +10,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
-from packagegate_ml.datasets.schema import DatasetRecord
+from packagegate_ml.datasets.schema import DatasetRecord, family_group_for
 
 
 @dataclass
@@ -166,20 +166,53 @@ def apply_duplicate_groups(
     records: list[DatasetRecord],
     report: DuplicateReport,
 ) -> list[DatasetRecord]:
+    """
+    Attach duplicate IDs and unify split families.
+
+    All versions of a package plus any near/exact duplicate cluster members
+    must share one family_group so they never cross train/test.
+    """
+    # Union-find over package identity + duplicate clusters
+    parent: dict[str, str] = {}
+
+    def find(x: str) -> str:
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a: str, b: str) -> None:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    pkg_family: dict[str, str] = {}
+    for record in records:
+        if record.package_name:
+            pkg_family[record.sample_id] = family_group_for(record.package_name)
+        else:
+            pkg_family[record.sample_id] = record.family_group
+
+    for sid, fam in pkg_family.items():
+        union(sid, f"pkg::{fam}")
+
+    for sid, gid in report.sample_to_duplicate_group.items():
+        union(sid, f"dup::{gid}")
+        for other, og in report.sample_to_duplicate_group.items():
+            if og == gid:
+                union(sid, other)
+
     updated: list[DatasetRecord] = []
     for record in records:
         gid = report.sample_to_duplicate_group.get(record.sample_id)
-        if gid is None:
-            updated.append(record)
-            continue
-        # All members of a duplicate cluster share one family key so they stay
-        # in the same train/val/test split.
+        root = find(record.sample_id)
         updated.append(
             DatasetRecord(
                 **{
                     **record.__dict__,
                     "duplicate_group_id": gid,
-                    "family_group": f"dupcluster::{gid}",
+                    "family_group": f"fam::{root}",
                 }
             )
         )
