@@ -8,9 +8,16 @@ import { z } from "zod";
  * Unscoped: `lodash`, `some-pkg.name_1`
  * Scoped:   `@scope/name`
  */
-const UNSCOPED_NAME = "[a-z0-9](?:[a-z0-9-._~]*)";
+// Uppercase is permitted because the registry still serves packages published
+// before it was disallowed — `JSONStream` and friends are real and must remain
+// scannable. New-package naming rules are the registry's problem, not ours; our
+// job is to address anything already published.
+//
+// The leading character must be alphanumeric, which is what excludes the
+// `.` and `_` prefixes the registry reserves.
+const NAME_SEGMENT = "[A-Za-z0-9](?:[A-Za-z0-9\\-._~]*)";
 export const PACKAGE_NAME_PATTERN = new RegExp(
-  `^(?:@${UNSCOPED_NAME}/)?${UNSCOPED_NAME}$`,
+  `^(?:@${NAME_SEGMENT}/)?${NAME_SEGMENT}$`,
 );
 
 /** Maximum npm package name length, per registry rules. */
@@ -73,9 +80,19 @@ export type LifecycleScript = z.infer<typeof LifecycleScriptSchema>;
  * Registry metadata for a specific published version.
  *
  * Almost every field is optional because the registry genuinely omits them.
- * `dist.integrity` in particular is absent on versions published before it was
- * introduced. Missing metadata is not evidence of maliciousness and must never
- * be scored as such.
+ *
+ * Verified against the live registry rather than assumed: `integrity` and
+ * `shasum` are present even on 2010–2012 era versions — npm backfilled the
+ * historical corpus — so their absence is rare rather than routine. They stay
+ * optional for tolerance, not because we expect them missing. The fields that
+ * really are commonly absent are `fileCount` and `unpackedSize`, missing on the
+ * large majority of pre-2016 versions.
+ *
+ * Consumers must never default an absent numeric to zero: `unpackedSize ?? 0`
+ * would render every old package as empty. Absent means unknown.
+ *
+ * Missing metadata is not evidence of maliciousness and must never be scored
+ * as such.
  */
 export const PackageMetadataSchema = z.object({
   name: PackageNameSchema,

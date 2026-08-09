@@ -69,8 +69,20 @@ export type IntelligenceResult = z.infer<typeof IntelligenceResultSchema>;
  * Both directions of over-claiming are wrong, so the states are explicit and
  * the UI is required to render them honestly.
  */
+/**
+ * Note the deliberate absence of a `VERIFIED` state. PackageGate does not
+ * perform Sigstore bundle or certificate-chain verification in v1, so claiming
+ * "provenance verified" would be a lie of exactly the kind this product exists
+ * to avoid. `ATTESTATION_PUBLISHED` says precisely what we checked: the
+ * registry served an attestation for this version.
+ *
+ * `NOT_FOUND` is also weaker than it looks — the attestations endpoint returns
+ * an identical 404 for "this version has no provenance" and "this package does
+ * not exist", so the state is corroborated against the packument rather than
+ * inferred from the 404 alone.
+ */
 export const PROVENANCE_STATES = [
-  "AVAILABLE",
+  "ATTESTATION_PUBLISHED",
   "NOT_FOUND",
   "LOOKUP_FAILED",
   "NOT_CHECKED",
@@ -86,6 +98,14 @@ export const ProvenanceRecordSchema = z.object({
   sourceRepository: z.string().optional(),
   /** Build workflow/runner asserted by the attestation, if present. */
   buildWorkflow: z.string().optional(),
+  /**
+   * True when the attestation's subject digest matches the artifact we actually
+   * downloaded. This is a genuine check we can perform without Sigstore
+   * verification: it binds the bytes we analysed to the bytes the attestation
+   * describes. It does **not** establish that the attestation is authentic —
+   * only that it refers to this artifact.
+   */
+  subjectDigestMatchesArtifact: z.boolean().optional(),
   failureReason: z.string().optional(),
 });
 export type ProvenanceRecord = z.infer<typeof ProvenanceRecordSchema>;
