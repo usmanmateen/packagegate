@@ -38,9 +38,10 @@ Do not rewrite history to claim behavioural analysis alone returned BLOCK.
 See `docs/ML_EVALUATION.md`. Optional `--ml` lane is separate from behavioural
 risk. ML may escalate ALLOW→REVIEW only; never independent BLOCK.
 
-Dataset V1 pilot (external corpus + structured baselines) is in place. The
-**neural training gate failed** on package-name shortcut bias — do not treat
-strong structured PR-AUC as proof that ML learns malware behaviour yet.
+Dataset V1 failed the neural gate on package-name lexical shortcuts (~0.97).
+Dataset V2 adds compromised-version pairs, matched malicious-intent controls,
+and shortcut decomposition — gate still **FAIL** (structure/source confounds).
+Do not treat strong structured PR-AUC as behavioural learning yet.
 
 ## Controls (post-v3)
 

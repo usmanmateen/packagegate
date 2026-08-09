@@ -2,14 +2,15 @@
 
 Hybrid **structured features + optional code encoders** for PackageGate.
 
-## Current status (Dataset V1 pilot)
+## Current status (Dataset V2)
 
-- External pilot corpus acquired under `/tmp/packagegate-ml-data`
-- Family-grouped frozen splits in `data-manifests/v1/`
-- Structured logistic + tree baselines trained
-- **Neural training gate: FAIL** (package-name shortcut bias)
+- Dataset V1 frozen (`data-manifests/v1/`) — neural gate failed on name shortcuts
+- Dataset V2 built (`data-manifests/v2/`) — deconfounding benchmarks + shortcut
+  decomposition; **neural gate still FAIL** (structure/source confounds remain)
+- Do **not** install PyTorch / download GraphCodeBERT until the gate passes
 
-See `../docs/ML_EVALUATION.md`.
+See `../docs/ML_EVALUATION.md`, `../docs/ML_DATASET_V1.md`, `../docs/ML_DATASET_V2.md`.
+
 
 ## Safety
 
@@ -26,25 +27,15 @@ uv sync --extra dev
 uv run python -m packagegate_ml.utils.system_info
 ```
 
-## Dataset V1 commands
+## Dataset V2 commands
 
 ```bash
-# Acquire (downloads into external root; never into git):
-uv run python -m packagegate_ml.datasets.build_pilot_dataset
-
-# Or rebuild manifests from already-downloaded artefacts:
-uv run python -m packagegate_ml.datasets.rebuild_pilot_manifests
-
-# Leakage audit:
-uv run python -m packagegate_ml.datasets.audit_splits \
-  --records /tmp/packagegate-ml-data/manifests/dataset_v1_full.json \
-  --split /tmp/packagegate-ml-data/manifests/dataset_v1_split.json
-
-# Export PackageGate features (requires built CLI):
-uv run python -m packagegate_ml.features.export_pilot
-
-# Structured baselines:
-uv run python -m packagegate_ml.training.train_pilot_structured
+export PACKAGEGATE_ML_DATA_ROOT=/tmp/packagegate-ml-data-v2
+uv run python -m packagegate_ml.datasets.build_dataset_v2
+# or rebuild from downloaded artefacts:
+uv run python -m packagegate_ml.datasets.rebuild_dataset_v2
+uv run python -m packagegate_ml.features.export_v2
+uv run python -m packagegate_ml.training.train_v2_structured
 ```
 
 ## Model candidates (not downloaded)

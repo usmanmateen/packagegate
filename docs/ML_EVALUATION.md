@@ -1,143 +1,132 @@
 # PackageGate — ML Evaluation
 
-**Status:** Dataset V1 pilot + structured baselines (neural gate **FAIL**)  
+**Status:** Dataset V2 deconfounding complete — neural gate **FAIL**  
 **Last updated:** 2026-08-09  
+
+See also: `ML_DATASET_V1.md`, `ML_DATASET_V2.md`.
 
 ## Scientific question
 
 Can learned models improve PackageGate over the deterministic engine under
 honest package-family holdout conditions?
 
-## Baseline (product, no ML)
+## A. Name-baseline audit (Dataset V1 “~0.97”)
 
-| Sample | Behavioural | Final |
-| --- | --- | --- |
-| lodash@4.17.21 | 3 ALLOW | ALLOW |
-| express@4.21.2 | 2 ALLOW | ALLOW |
-| debug@4.3.4 | 0 ALLOW | ALLOW |
-| JSONStream@1.3.5 | 4 ALLOW | ALLOW |
-| inert-install-curl-bash | ~49 REVIEW | REVIEW |
-| 02-echo@0.0.7 (holdout) | 58 REVIEW | REVIEW |
+The V1 run key `shortcut_name_hash` was **misnamed**.
 
-## Dataset V1 (pilot)
+It was **PACKAGE_NAME_LEXICAL / sample_id morphology**, not a cryptographic hash:
 
-External root: `/tmp/packagegate-ml-data` (never committed).
+| Feature | Definition |
+| --- | --- |
+| `name_len` | `len(sample_id.split("@")[0])` (broken on scoped IDs) |
+| `version_len` | `len(sample_id.split("@")[-1])` |
+| `at_count` | `sample_id.count("@")` |
+| `digit_count` | digits in full `sample_id` |
+
+**Verdict:** real **corpus identity bias** (Datadog scoped / digit-heavy names vs
+established benign controls), **not** opaque-ID leakage.
+
+Regression tests: `ml/tests/test_name_shortcut_audit.py`  
+Opaque random-ID baselines stay near prevalence; lexical morphology separates.
+
+## Dataset V1 (frozen historical failure)
+
+| Item | Value |
+| --- | ---: |
+| Malicious / expected-benign available | 150 / 227 |
+| Feature rows | 373 |
+| Lexical name shortcut PR-AUC | **~0.97** |
+| Neural gate | **FAIL** |
+
+Do not overwrite `ml/data-manifests/v1/`.
+
+## Dataset V2
+
+External root: `/tmp/packagegate-ml-data-v2`
 
 | Item | Count |
 | --- | ---: |
-| Total metadata records | 426 |
-| Available artefacts | 381 |
-| Malicious available (Datadog) | 150 |
-| Expected-benign available | 227 |
-| Synthetic suspicious fixtures | 4 |
-| OpenSSF metadata-only | 40 |
-| Exact duplicate group IDs | 12 (57 member samples) |
-| Near-duplicate `dupcluster::*` families | 12 |
-| Train / Val / Test (split IDs) | 275 / 52 / 54 |
-| Feature-exported rows | 373 |
-| Export failures (final) | 8 |
-| 02-echo in train/val | **No** (holdout ✓) |
+| Total metadata / available | 947 / 902 |
+| Malicious-intent available | 140 |
+| Compromised_lib available | 140 |
+| Expected-benign available | 622 |
+| Compromised-version controls (adjacent) | 100 |
+| Compromise pairs | 100 |
+| Morphology matches (malicious-intent) | 73 |
+| Near-dup groups | 75 |
+| Cross-label near-dup groups | 2 (`@antv/g*`) |
+| Train / Val / Test / Holdout | 603 / 174 / 125 / 45 |
+| Feature-exported / failures | 892 / 10 |
 | Leakage audit | **PASS** |
+| 02-echo | HOLDOUT ✓ |
 
-### Sources
+Export failures: mostly `LIMIT_EXCEEDED` (large native artefacts); not strongly
+label-skewed (5 MALICIOUS / 1 COMPROMISED / 4 EXPECTED_BENIGN).
 
-- **Malicious:** Datadog `malicious-software-packages-dataset` (Apache-2.0). ZIPs
-  downloaded to quarantine, password `infected`, rebuilt to npm-style `.tgz`,
-  scanned statically only.
-- **Expected-benign:** curated hard-negative catalogue via npm registry tarball
-  HTTP download (never `npm install`).
-- **OpenSSF:** metadata-only labels (no auto malware download).
-- **Synthetic:** PackageGate inert fixtures.
+### Pre-registered V2 neural gate
 
-### Hard-negative categories
+| Condition | Threshold | Observed | Result |
+| --- | --- | --- | --- |
+| Leakage audit | PASS | PASS | ✓ |
+| Opaque random-ID PR-AUC | ≤ prev+0.25 | 0.29 ≈ 0.31 | ✓ |
+| Shuffled-label PR-AUC | ≤ 0.75 | 0.35 | ✓ |
+| PACKAGE_NAME_LEXICAL | ≤ 0.80 | **0.83** | ✗ |
+| GENERIC_METADATA (no source) | ≤ 0.80 | **0.97** | ✗ |
+| BEHAVIOUR − nuisance | ≥ 0.05 | 0.91 − 0.97 | ✗ |
+| Compromised benchmark size | ≥ 40 | 240 | ✓ |
+| 02-echo holdout | excluded | yes | ✓ |
 
-`network_libraries`, `build_tools`, `native_installers`, `binary_downloaders`,
-`frameworks`, `cli_tools`, `bundlers`, `package_managers`, `database_clients`,
-`cloud_sdks`, `test_tools`.
+**Neural training gate: FAIL** — no PyTorch / no pretrained downloads.
 
-### Split / dedup
+### Shortcut decomposition (mixed test; prevalence ≈ 0.31)
 
-- Grouped by package family + duplicate cluster
-- Exact artifact SHA-256 clustering
-- Near-duplicate via normalised JS/TS content hash + SimHash (empty sources ignored)
-- Frozen manifests under `ml/data-manifests/v1/` (metadata only)
+| Mode | PR-AUC |
+| --- | ---: |
+| PACKAGE_NAME_LEXICAL_ONLY | 0.83 |
+| V1_LEGACY_NAME_MORPHOLOGY | **0.75** (was ~0.97 on V1) |
+| VERSION_ONLY | 0.46 |
+| SOURCE_ONLY | **1.00** (Datadog vs npm — composition bias) |
+| ARTIFACT_STRUCTURE_ONLY | 0.94 |
+| GENERIC_METADATA_ONLY (no source) | 0.97 |
+| OPAQUE_RANDOM_ID | 0.29 |
+| BEHAVIOUR_ONLY | 0.91 |
+| Shuffled labels | 0.35 |
 
-## Structured baseline (run `20260809T171903Z-structured-v1`)
+### Benchmarks (behaviour-only logistic)
 
-Feature-covered evaluation sets:
+| Benchmark | Name PR-AUC | Nuisance | Behaviour | Rules TP/FN |
+| --- | ---: | ---: | ---: | --- |
+| Compromised-version | 0.71 | ~1.0* | 1.0* | 10 / 4 |
+| Matched malicious-intent | **0.78** | 0.93 | 0.91 | 3 / 15 |
+| Mixed naturalistic | 0.83 | 0.97 | 0.91 | 14 / 24 |
 
-| Split | n | positives | negatives |
-| --- | ---: | ---: | ---: |
-| Train | 271 | 117 | 154 |
-| Validation | 50 | 12 | 38 |
-| Test | 52 | 20 | 32 |
+\*Small test slices / structure shortcuts — treat perfect scores as unreliable.
 
-| System | PR-AUC | Recall (val thr) | FPR | Recall@~5% FPR | Brier |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Rules-only (intervention) | — | 5/20 TP | 3 FP | — | — |
-| Logistic regression | **0.945** | 0.55 | 0.031 | **0.95** | 0.096 |
-| HistGradientBoosting | **0.952** | 0.00* | 0.00* | **0.90** | 0.035 |
+### PG-Delta (security feature deltas on pairs)
 
-\*HGB validation threshold chosen for ≤5% FPR landed near 0.996 (over-conservative
-at that single operating point). PR-AUC / recall@5% FPR remain informative.
+Test n=16 (8 pos / 8 neg): PR-AUC 1.0 — **too small to claim**; infrastructure only.
 
-### Sanity / leakage
+## What improved vs V1
 
-| Check | Result |
-| --- | --- |
-| Shuffled-label logistic PR-AUC | **0.32** (chance-like ✓) |
-| Package-name shortcut PR-AUC | **0.97** (**FAIL** — severe name/version bias) |
-| Trivial metadata shortcut PR-AUC | **0.87** (warning — size/count shortcuts) |
-| Split leakage audit | PASS |
-| 02-echo holdout exclusion | PASS |
+- Legacy name morphology **0.97 → 0.75**
+- Opaque-ID / shuffled sanity checks pass
+- Compromised-version + matched-intent benchmarks exist
+- Source bias is now **explicit** (SOURCE_ONLY = 1.0)
 
-### False positives (logistic, highest scores on expected-benign test IDs)
+## What still blocks neural work
 
-Examples: `turbo` (build_tools), `vue` (frameworks), small CLI colour packages
-(`has-flag`, `wrap-ansi`, `boxen`). These are hard-negative candidates for v2.
+1. Artifact-structure / metadata still separates classes too easily  
+2. Name lexical still slightly above the 0.80 gate on mixed  
+3. Behaviour does **not** beat source-free nuisance on mixed  
+4. All malware still comes from one distributor lane (Datadog) vs npm controls  
 
-### False negatives
+## Next (Dataset V3 candidates)
 
-Several Datadog samples score mid/high but below the chosen REVIEW threshold;
-rules-only also misses most of this pilot malware set (15/20 FN at intervention),
-suggesting many labelled samples lack strong install-time behavioural composition
-visible to current deterministic rules.
+- Same-source or source-blind acquisition for both classes  
+- Stronger structure-matched hard negatives  
+- More compromised pairs with larger held-out families  
+- Exclude / specially handle cross-label near-dup clusters  
 
-## Neural training gate
+## Product policy
 
-**FAIL** — reason: `package_name_shortcut_pr_auc_too_high`.
-
-Datadog malicious package identities (weird scopes, `999.9.9` versions, etc.)
-are too separable from established benign names. Structured metrics look strong
-but are **not trustworthy** for claiming semantic malware detection yet.
-
-**No PyTorch install. No pretrained weight download. No GraphCodeBERT/CodeT5+
-fine-tune in this milestone.**
-
-## Product integration (unchanged policy)
-
-- ML remains optional / shadow-capable
-- Heuristic smoke worker ≠ trained model
-- ML must not independently BLOCK
-- No automatic model download in normal CLI
-
-## Does ML currently demonstrate measurable value?
-
-**Not yet — not honestly.**
-
-The pilot proves the *experiment infrastructure* works (external corpus, family
-splits, dedup, leakage audits, PackageGate exports, structured baselines).
-
-It does **not** yet prove that learned representations beat PackageGate under
-conditions free of identity shortcuts. Next dataset iteration must:
-
-1. Name-mask / identity-ablate more aggressively in evaluation
-2. Diversify malicious samples beyond easy naming tells
-3. Expand hard negatives that look “scary” but are legitimate
-4. Re-run structured baselines before any neural work
-
-## Next steps
-
-1. Dataset V2 with stronger identity controls
-2. Re-evaluate structured baselines under name-masked protocols
-3. Only then revisit neural training gate
+Unchanged: ML shadow / optional; never independent BLOCK; no auto weight download.
