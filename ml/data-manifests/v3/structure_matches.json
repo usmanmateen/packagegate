@@ -1,0 +1,2460 @@
+{
+  "matches": [
+    {
+      "malicious_sample_id": "0x-smart-contracts@99.99.99",
+      "matched_benign_sample_ids": [
+        "npm-audit-resolver@3.0.0-7",
+        "release-it@17.11.0"
+      ],
+      "matching_distance": 2.7244685341162453,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1874.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 18.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "segment_count": 3.0,
+        "version_len": 8.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "0xmisoke@1.0.0",
+      "matched_benign_sample_ids": [
+        "turbo@2.3.3",
+        "n@10.1.0"
+      ],
+      "matching_distance": 1.5452018603629136,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 0.0,
+        "coverageRatio": 0.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 8.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.125,
+        "segment_count": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1231dai@1.0.0",
+      "matched_benign_sample_ids": [
+        "pa11y@8.0.0"
+      ],
+      "matching_distance": 3.1819302565516594,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 993.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 7.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.5714285714285714,
+        "segment_count": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1imit@1.0.3",
+      "matched_benign_sample_ids": [
+        "json5@2.2.3",
+        "split2@4.2.0"
+      ],
+      "matching_distance": 0.3875229787803721,
+      "matching_features": {
+        "fileCount": 12.0,
+        "analysedExecutableBytes": 14822.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 5.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.2,
+        "segment_count": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1inch-p2p-sdk@0.1.0",
+      "matched_benign_sample_ids": [
+        "cli-table3@0.6.5",
+        "load-yaml-file@0.2.0"
+      ],
+      "matching_distance": 1.2107560860209716,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 50.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 13.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.15384615384615385,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "1password-sdk-examples@1.0.0",
+      "matched_benign_sample_ids": [
+        "is-installed-globally@1.0.0",
+        "rollup-plugin-terser@7.0.2"
+      ],
+      "matching_distance": 2.409320920831941,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1218.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 22.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.045454545454545456,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1password-sdk-exapmles@1.0.0",
+      "matched_benign_sample_ids": [
+        "spdx-expression-parse@4.0.0",
+        "is-unicode-supported@2.1.0"
+      ],
+      "matching_distance": 2.417356838318079,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 2020.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 22.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.045454545454545456,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1uniswapinterface@1.1.2",
+      "matched_benign_sample_ids": [
+        "jsonwebtoken@9.0.2",
+        "configstore@7.0.0"
+      ],
+      "matching_distance": 0.9757317422707512,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 3561.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 0.0,
+        "name_len": 17.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.058823529411764705,
+        "segment_count": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "1unitest@1.0.1",
+      "matched_benign_sample_ids": [
+        "through2@4.0.2",
+        "parse5@7.2.1"
+      ],
+      "matching_distance": 0.5679905520515912,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1906.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 0.0,
+        "name_len": 8.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.125,
+        "segment_count": 1.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "2fa-exe@1.0.1",
+      "matched_benign_sample_ids": [
+        "del-cli@6.0.0",
+        "find-up@7.0.0"
+      ],
+      "matching_distance": 1.7211403158039584,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 3513.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 7.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.14285714285714285,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "3cx-call-control-apps@1.0.0",
+      "matched_benign_sample_ids": [
+        "find-yarn-workspace-root@2.0.0",
+        "file-uri-to-path@2.0.0"
+      ],
+      "matching_distance": 2.4452351385065905,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 2020.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 21.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.047619047619047616,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "7702-eoa-implementation@1.0.0",
+      "matched_benign_sample_ids": [
+        "parcel-bundler@1.12.5",
+        "geckodriver@4.5.1"
+      ],
+      "matching_distance": 3.1148558724878024,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 2228.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 23.0,
+        "scoped": 0.0,
+        "digit_fraction_name": 0.17391304347826086,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xengine/meow@1.2.5",
+      "matched_benign_sample_ids": [
+        "@sendgrid/mail@8.1.4",
+        "@fastify/static@8.0.3"
+      ],
+      "matching_distance": 0.9650561886351848,
+      "matching_features": {
+        "fileCount": 10.0,
+        "analysedExecutableBytes": 318960.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 3.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.07142857142857142,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xengine/xmlrpc@1.3.17",
+      "matched_benign_sample_ids": [
+        "@babel/core@7.26.0",
+        "@actbase/node-server@1.1.15"
+      ],
+      "matching_distance": 1.0200000814333785,
+      "matching_features": {
+        "fileCount": 14.0,
+        "analysedExecutableBytes": 44231.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0625,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xme5war/apicli@10.9.8",
+      "matched_benign_sample_ids": [
+        "@napi-rs/cli@2.18.4"
+      ],
+      "matching_distance": 2.965302992522722,
+      "matching_features": {
+        "fileCount": 1.0,
+        "analysedExecutableBytes": 0.0,
+        "coverageRatio": 0.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 3.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.125,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xobelisk/sui-cli@1.2.0-pre.3",
+      "matched_benign_sample_ids": [
+        "multer@1.4.5-lts.1",
+        "nexe@4.0.0-rc.6"
+      ],
+      "matching_distance": 3.270164447314581,
+      "matching_features": {
+        "fileCount": 35.0,
+        "analysedExecutableBytes": 120919.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 10.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "segment_count": 3.0,
+        "version_len": 11.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xzyo/confutionrce@1.0.0",
+      "matched_benign_sample_ids": [
+        "@antstackio/shelbysam@1.1.3",
+        "@koa/cors@5.0.0"
+      ],
+      "matching_distance": 0.6857338397144065,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1355.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.05263157894736842,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@0xzyo111/frontend-logger@0.0.1",
+      "matched_benign_sample_ids": [
+        "@antv/g2-extension-3d@0.1.5",
+        "@antv/f2-graphic@0.0.14"
+      ],
+      "matching_distance": 2.912306473215897,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 106.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.16,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@3kali182/selenium-webdriver4@99.9.9",
+      "matched_benign_sample_ids": [
+        "@swc/core@1.10.1",
+        "@nestjs/core@10.4.15"
+      ],
+      "matching_distance": 3.3771183212383677,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 2946.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 29.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.1724137931034483,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@3stripes/api-client@999.0.3",
+      "matched_benign_sample_ids": [
+        "@aws-sdk/client-sts@3.726.0",
+        "@snyk/protect@1.1295.0"
+      ],
+      "matching_distance": 2.847277910247131,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 5083.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.05,
+        "segment_count": 3.0,
+        "version_len": 7.0,
+        "version_unusual_large": 1.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@42ailab/42cc@0.7.15",
+      "matched_benign_sample_ids": [
+        "@antv/f6@0.0.17",
+        "@antv/g6-pc@0.8.22"
+      ],
+      "matching_distance": 3.2973197738797935,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 5581.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 0.0,
+        "name_len": 13.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.3076923076923077,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@42ailab/42plugin@0.1.25",
+      "matched_benign_sample_ids": [
+        "@actbase/native@0.1.28",
+        "@antv/algorithm@0.1.24"
+      ],
+      "matching_distance": 2.860196597689995,
+      "matching_features": {
+        "fileCount": 29.0,
+        "analysedExecutableBytes": 172221.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 6.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.23529411764705882,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@aa-techops-ui/ping-authentication@1.0.0",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-simple-video@1.0.9",
+        "@actbase/react-native-kakao-navi@2.0.0"
+      ],
+      "matching_distance": 0.05059215203372462,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 484.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 34.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 5.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@abdallaeg/sap_access@0.0.0",
+      "matched_benign_sample_ids": [
+        "@antv/data-samples@0.1.1",
+        "@antv/dumi-theme-antv@0.8.2"
+      ],
+      "matching_distance": 2.424901287629067,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 300.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accessibility-insights/eslint-plugin@9.9.9",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-less-transformer@1.0.2",
+        "@actbase/react-daum-postcode@1.0.1"
+      ],
+      "matching_distance": 2.502221755957757,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 790.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 37.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accordproject/concerto-linter-default-ruleset@3.24.1",
+      "matched_benign_sample_ids": [
+        "@accordproject/concerto-linter-default-ruleset@3.23.0",
+        "@ahmedhfarag/ngx-perfect-scrollbar@20.0.16"
+      ],
+      "matching_distance": 2.3490374573331168,
+      "matching_features": {
+        "fileCount": 85.0,
+        "analysedExecutableBytes": 67108.0,
+        "coverageRatio": 0.9795918367346939,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 46.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 5.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accordproject/concerto-metamodel@3.12.5",
+      "matched_benign_sample_ids": [
+        "@accordproject/concerto-metamodel@3.12.4",
+        "@accordproject/concerto-types@3.23.0"
+      ],
+      "matching_distance": 2.4056437300984648,
+      "matching_features": {
+        "fileCount": 40.0,
+        "analysedExecutableBytes": 37992.0,
+        "coverageRatio": 0.9090909090909091,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 15.0,
+        "name_len": 33.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accordproject/concerto-types@3.24.1",
+      "matched_benign_sample_ids": [
+        "@rollup/plugin-commonjs@28.0.2",
+        "@rollup/plugin-node-resolve@16.0.0"
+      ],
+      "matching_distance": 2.4684108863040164,
+      "matching_features": {
+        "fileCount": 33.0,
+        "analysedExecutableBytes": 45820.0,
+        "coverageRatio": 0.9565217391304348,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 29.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accordproject/markdown-it-cicero@0.16.26",
+      "matched_benign_sample_ids": [
+        "@accordproject/markdown-it-cicero@0.16.23",
+        "@actbase/react-kakaosdk@0.9.22"
+      ],
+      "matching_distance": 2.4597386115877486,
+      "matching_features": {
+        "fileCount": 12.0,
+        "analysedExecutableBytes": 17287.0,
+        "coverageRatio": 0.875,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 8.0,
+        "name_len": 33.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 7.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@accordproject/template-engine@2.7.2",
+      "matched_benign_sample_ids": [
+        "@accordproject/template-engine@2.6.7",
+        "@google-cloud/bigquery@7.9.1"
+      ],
+      "matching_distance": 2.5465616480468896,
+      "matching_features": {
+        "fileCount": 12.0,
+        "analysedExecutableBytes": 150672.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 13.0,
+        "name_len": 30.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@acme-types/acme-package@99.0.0",
+      "matched_benign_sample_ids": [
+        "@mapbox/node-pre-gyp@1.0.11",
+        "@antv/gi-assets-scene@2.2.18"
+      ],
+      "matching_distance": 0.739944145867982,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 50.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 24.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@act-platform/app-sdk@99.9.1",
+      "matched_benign_sample_ids": [
+        "@testing-library/dom@10.4.0",
+        "@testing-library/react@16.1.0"
+      ],
+      "matching_distance": 2.7739100382187503,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 5179.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/css-to-react-native-transform@1.0.3",
+      "matched_benign_sample_ids": [
+        "fork-ts-checker-webpack-plugin@9.0.2"
+      ],
+      "matching_distance": 3.427064259222762,
+      "matching_features": {
+        "fileCount": 27.0,
+        "analysedExecutableBytes": 179097.0,
+        "coverageRatio": 0.9565217391304348,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 7.0,
+        "name_len": 38.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 6.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/native@0.1.32",
+      "matched_benign_sample_ids": [
+        "esbuild-wasm@0.24.2",
+        "neon-cli@0.10.1"
+      ],
+      "matching_distance": 3.237100192364818,
+      "matching_features": {
+        "fileCount": 98.0,
+        "analysedExecutableBytes": 182688.0,
+        "coverageRatio": 0.9841269841269841,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 5.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/node-server@1.1.19",
+      "matched_benign_sample_ids": [
+        "@changesets/cli@2.27.11",
+        "@antv/ava-react@3.3.1"
+      ],
+      "matching_distance": 2.8610470220511193,
+      "matching_features": {
+        "fileCount": 42.0,
+        "analysedExecutableBytes": 107510.0,
+        "coverageRatio": 0.96,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 5.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/react-absolute@0.8.3",
+      "matched_benign_sample_ids": [
+        "@actbase/react-native-devtools@0.0.4",
+        "@antstackio/express-graphql-proxy@0.2.4"
+      ],
+      "matching_distance": 2.8016599280831325,
+      "matching_features": {
+        "fileCount": 18.0,
+        "analysedExecutableBytes": 7865.0,
+        "coverageRatio": 0.8181818181818182,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 5.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/react-daum-postcode@1.0.5",
+      "matched_benign_sample_ids": [
+        "@aifabrix/miso-client@4.6.0",
+        "speed-measure-webpack-plugin@1.5.0"
+      ],
+      "matching_distance": 3.080270774305602,
+      "matching_features": {
+        "fileCount": 19.0,
+        "analysedExecutableBytes": 29494.0,
+        "coverageRatio": 0.9,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 6.0,
+        "name_len": 28.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/react-kakaosdk@0.9.27",
+      "matched_benign_sample_ids": [
+        "source-map-support@0.5.21",
+        "package-manager-detector@0.2.8"
+      ],
+      "matching_distance": 3.3568303068559238,
+      "matching_features": {
+        "fileCount": 38.0,
+        "analysedExecutableBytes": 33363.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 6.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@actbase/react-native-tiktok@1.1.3",
+      "matched_benign_sample_ids": [
+        "validate-npm-package-license@3.0.4",
+        "validate-npm-package-name@6.0.0"
+      ],
+      "matching_distance": 3.329931466256479,
+      "matching_features": {
+        "fileCount": 109.0,
+        "analysedExecutableBytes": 9489.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 4.0,
+        "name_len": 28.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@activation_code/activate@99.0.3",
+      "matched_benign_sample_ids": [
+        "jest-environment-jsdom@29.7.0",
+        "@supabase/supabase-js@2.47.10"
+      ],
+      "matching_distance": 3.1644760963042633,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1773.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@activation_code/error@99.0.4",
+      "matched_benign_sample_ids": [
+        "webpack-bundle-analyzer@4.10.2",
+        "fs-write-stream-atomic@1.0.10"
+      ],
+      "matching_distance": 3.2319685921862082,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1773.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 22.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@activation_code/success@99.0.2",
+      "matched_benign_sample_ids": [
+        "make-fetch-happen@14.0.3",
+        "ssh2-sftp-client@11.0.0"
+      ],
+      "matching_distance": 3.3416454473525445,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1773.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 24.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@adac-fahrzeugplattform/ui@99.9.9",
+      "matched_benign_sample_ids": [
+        "@antv/gi-assets-algorithm@2.3.16",
+        "npm-registry-fetch@18.0.2"
+      ],
+      "matching_distance": 3.416350847912925,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1067.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@add-wallet-exchange/reset@1.0.0",
+      "matched_benign_sample_ids": [
+        "@prisma/client@6.1.0"
+      ],
+      "matching_distance": 3.1743473451927495,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1525.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@ads-core/types@11.7.7",
+      "matched_benign_sample_ids": [
+        "get-bin-path@11.0.0",
+        "read-pkg-up@11.0.0"
+      ],
+      "matching_distance": 3.1645097723184663,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1093.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@adsk-forks/jsonpath@1.0.0",
+      "matched_benign_sample_ids": [
+        "strip-json-comments@5.0.1",
+        "npm-registry-client@8.6.0"
+      ],
+      "matching_distance": 3.1455907887521195,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1039.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@aetherz/auth-connections@1.0.2",
+      "matched_benign_sample_ids": [
+        "conventional-changelog@6.0.0",
+        "https-proxy-agent@7.0.6"
+      ],
+      "matching_distance": 2.29189463307197,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 7244.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@afound/common@10.10.12",
+      "matched_benign_sample_ids": [
+        "yarn@1.22.22",
+        "autoprefixer@10.4.20"
+      ],
+      "matching_distance": 3.158256369479996,
+      "matching_features": {
+        "fileCount": 3.0,
+        "analysedExecutableBytes": 2182.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 8.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@aftersale/react-eva@1.1.1",
+      "matched_benign_sample_ids": [
+        "@antv/f-engine@1.8.2",
+        "write-json-file@6.0.0"
+      ],
+      "matching_distance": 3.1963158191201293,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 1033.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@aifabrix/miso-client@4.7.2",
+      "matched_benign_sample_ids": [
+        "@grpc/grpc-js@1.12.5",
+        "@google-cloud/pubsub@4.9.0"
+      ],
+      "matching_distance": 1.5866653996122015,
+      "matching_features": {
+        "fileCount": 446.0,
+        "analysedExecutableBytes": 802442.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 12.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@airtel-web/clickstream@99.0.2",
+      "matched_benign_sample_ids": [
+        "sort-package-json@2.12.0",
+        "electron-builder@25.1.8"
+      ],
+      "matching_distance": 3.3461355607891003,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 772.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@airtel-web/legos@99.0.1",
+      "matched_benign_sample_ids": [
+        "prettier-eslint@16.3.0",
+        "apollo-server@3.13.0"
+      ],
+      "matching_distance": 3.27173825706536,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 582.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@al-ui/useappinsights@1.0.1",
+      "matched_benign_sample_ids": [
+        "write-file-atomic@5.0.1",
+        "init-package-json@6.0.3"
+      ],
+      "matching_distance": 3.2274919515855816,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 92.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@alaska-its/design-tokens@1.0.1",
+      "matched_benign_sample_ids": [
+        "are-we-there-yet@4.0.2",
+        "normalize-package-data@7.0.0"
+      ],
+      "matching_distance": 3.3797704733014684,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 93.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 2.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@alexcolls/nuxt-ux@0.6.2",
+      "matched_benign_sample_ids": [
+        "reflect-metadata@0.2.2"
+      ],
+      "matching_distance": 3.445205423008242,
+      "matching_features": {
+        "fileCount": 113.0,
+        "analysedExecutableBytes": 26764.0,
+        "coverageRatio": 0.9130434782608695,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 12.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@angular_devkit/architect@99.1.1",
+      "matched_benign_sample_ids": [
+        "electron@33.2.1"
+      ],
+      "matching_distance": 3.448720999212647,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 3435.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@angular_devkit/core@99.1.1",
+      "matched_benign_sample_ids": [
+        "puppeteer@23.11.1"
+      ],
+      "matching_distance": 3.2349454734169485,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 3435.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 20.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antstackio/shelbysam@1.1.7",
+      "matched_benign_sample_ids": [
+        "copy-concurrently@1.0.5",
+        "move-concurrently@1.0.1"
+      ],
+      "matching_distance": 3.2105186821333866,
+      "matching_features": {
+        "fileCount": 19.0,
+        "analysedExecutableBytes": 28057.0,
+        "coverageRatio": 0.9230769230769231,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/algorithm@0.3.26",
+      "matched_benign_sample_ids": [
+        "@antv/data-set@0.11.5",
+        "corepack@0.30.0"
+      ],
+      "matching_distance": 2.8530422155727346,
+      "matching_features": {
+        "fileCount": 165.0,
+        "analysedExecutableBytes": 1121825.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 15.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/ava-react@3.5.2",
+      "matched_benign_sample_ids": [
+        "@antv/g-device-api@1.6.10",
+        "@elastic/elasticsearch@8.17.0"
+      ],
+      "matching_distance": 2.8705253379638753,
+      "matching_features": {
+        "fileCount": 356.0,
+        "analysedExecutableBytes": 1030053.0,
+        "coverageRatio": 0.9971751412429378,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 12.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/ava@3.6.1",
+      "matched_benign_sample_ids": [
+        "fastify@5.2.0",
+        "nightwatch@3.9.0"
+      ],
+      "matching_distance": 3.3428699127452837,
+      "matching_features": {
+        "fileCount": 535.0,
+        "analysedExecutableBytes": 1814187.0,
+        "coverageRatio": 0.9943714821763602,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 16.0,
+        "name_len": 9.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/data-samples@1.2.1",
+      "matched_benign_sample_ids": [
+        "@google-cloud/storage@7.15.0",
+        "webpack-dev-server@5.2.0"
+      ],
+      "matching_distance": 3.0167439694185,
+      "matching_features": {
+        "fileCount": 262.0,
+        "analysedExecutableBytes": 595074.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 17.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/f-engine@1.11.0",
+      "matched_benign_sample_ids": [
+        "@apollo/client@3.12.4",
+        "azure-storage@2.10.7"
+      ],
+      "matching_distance": 3.0903942622917375,
+      "matching_features": {
+        "fileCount": 307.0,
+        "analysedExecutableBytes": 2595063.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/f2-graphic@0.2.16",
+      "matched_benign_sample_ids": [
+        "node-pre-gyp@0.17.0",
+        "express-graphql@0.12.0"
+      ],
+      "matching_distance": 3.371782933563697,
+      "matching_features": {
+        "fileCount": 170.0,
+        "analysedExecutableBytes": 854514.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0625,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/g-device-api@1.7.13",
+      "matched_benign_sample_ids": [
+        "@azure/storage-blob@12.26.0",
+        "eslint-plugin-import@2.31.0"
+      ],
+      "matching_distance": 2.9476446682384188,
+      "matching_features": {
+        "fileCount": 181.0,
+        "analysedExecutableBytes": 1784623.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 18.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/gi-assets-scene@2.3.21",
+      "matched_benign_sample_ids": [
+        "better-npm-audit@3.11.0",
+        "npm-package-arg@12.0.1"
+      ],
+      "matching_distance": 3.462832095896016,
+      "matching_features": {
+        "fileCount": 184.0,
+        "analysedExecutableBytes": 1042333.0,
+        "coverageRatio": 0.9936708860759493,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 11.0,
+        "name_len": 21.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/gpt-vis@1.1.0",
+      "matched_benign_sample_ids": [
+        "socket.io-client@4.8.1",
+        "cassandra-driver@4.7.2"
+      ],
+      "matching_distance": 3.213683341377355,
+      "matching_features": {
+        "fileCount": 150.0,
+        "analysedExecutableBytes": 1049244.0,
+        "coverageRatio": 0.9931506849315068,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 11.0,
+        "name_len": 13.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/insight-component@1.1.0",
+      "matched_benign_sample_ids": [
+        "html-webpack-plugin@5.6.3",
+        "http-proxy-middleware@3.0.3"
+      ],
+      "matching_distance": 3.3377025737406587,
+      "matching_features": {
+        "fileCount": 159.0,
+        "analysedExecutableBytes": 1077116.0,
+        "coverageRatio": 0.948051948051948,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 20.0,
+        "name_len": 23.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/l7-component@2.27.10",
+      "matched_benign_sample_ids": [
+        "npm-check-updates@17.1.13"
+      ],
+      "matching_distance": 3.375436277761615,
+      "matching_features": {
+        "fileCount": 153.0,
+        "analysedExecutableBytes": 975365.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 7.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "segment_count": 3.0,
+        "version_len": 7.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/l7-draw@3.2.5",
+      "matched_benign_sample_ids": [
+        "prisma@6.1.0"
+      ],
+      "matching_distance": 3.4216441640570676,
+      "matching_features": {
+        "fileCount": 236.0,
+        "analysedExecutableBytes": 2524230.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 15.0,
+        "name_len": 13.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.07692307692307693,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@antv/lite-insight@2.2.1",
+      "matched_benign_sample_ids": [
+        "ioredis-mock@8.9.0"
+      ],
+      "matching_distance": 3.41724666667454,
+      "matching_features": {
+        "fileCount": 272.0,
+        "analysedExecutableBytes": 1589460.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 15.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@aoflcorp/freighter@0.0.1",
+      "matched_benign_sample_ids": [
+        "import-global@0.1.0",
+        "os-browserify@0.3.0"
+      ],
+      "matching_distance": 3.2186768091425892,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 21.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@apachesling/slingpackager@1.0.0",
+      "matched_benign_sample_ids": [
+        "webidl-conversions@7.0.0",
+        "commander-version@2.0.0"
+      ],
+      "matching_distance": 2.3172508983552205,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 50.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 26.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@apachesling/slingpost@1.0.0",
+      "matched_benign_sample_ids": [
+        "homedir-polyfill@1.0.3",
+        "prebuild-install@7.1.2"
+      ],
+      "matching_distance": 2.209361685758615,
+      "matching_features": {
+        "fileCount": 2.0,
+        "analysedExecutableBytes": 50.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 22.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@apiary-annex/meta@99.0.3",
+      "matched_benign_sample_ids": [
+        "express-session@1.18.1",
+        "license-checker@25.0.1"
+      ],
+      "matching_distance": 3.305399455158054,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1773.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@apiary-annex/title@99.0.3",
+      "matched_benign_sample_ids": [
+        "readline-sync@1.4.10",
+        "package-json@10.0.1"
+      ],
+      "matching_distance": 3.330490068798617,
+      "matching_features": {
+        "fileCount": 4.0,
+        "analysedExecutableBytes": 1773.0,
+        "coverageRatio": 1.0,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@art-ws/common@2.0.28",
+      "matched_benign_sample_ids": [
+        "appium@2.12.1",
+        "protobufjs@7.4.0"
+      ],
+      "matching_distance": 3.0416858009576626,
+      "matching_features": {
+        "fileCount": 66.0,
+        "analysedExecutableBytes": 50885.0,
+        "coverageRatio": 0.9846153846153847,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@art-ws/openapi@0.1.9",
+      "matched_benign_sample_ids": [
+        "esbuild@0.24.2"
+      ],
+      "matching_distance": 3.4158030768234737,
+      "matching_features": {
+        "fileCount": 6.0,
+        "analysedExecutableBytes": 1135.0,
+        "coverageRatio": 0.8,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 1.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 15.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/bundler@0.6.6",
+      "matched_benign_sample_ids": [
+        "iconv-lite@0.6.3",
+        "esbuild-jest@0.5.0"
+      ],
+      "matching_distance": 3.4591890094725635,
+      "matching_features": {
+        "fileCount": 20.0,
+        "analysedExecutableBytes": 36702.0,
+        "coverageRatio": 0.9375,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 12.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/converter@1.6.4",
+      "matched_benign_sample_ids": [
+        "yarn-deduplicate@6.0.2",
+        "standard-version@9.5.0"
+      ],
+      "matching_distance": 3.1770987931010324,
+      "matching_features": {
+        "fileCount": 22.0,
+        "analysedExecutableBytes": 73187.0,
+        "coverageRatio": 0.95,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 8.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/generator-react-sdk@1.1.4",
+      "matched_benign_sample_ids": [
+        "inquirer-autocomplete-prompt@3.0.1",
+        "eslint-plugin-security@3.0.1"
+      ],
+      "matching_distance": 3.2994936172761133,
+      "matching_features": {
+        "fileCount": 79.0,
+        "analysedExecutableBytes": 90024.0,
+        "coverageRatio": 0.9807692307692307,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 15.0,
+        "name_len": 29.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/generator@2.8.6",
+      "matched_benign_sample_ids": [
+        "worker-loader@3.0.8",
+        "thread-loader@4.0.4"
+      ],
+      "matching_distance": 3.3324425409826177,
+      "matching_features": {
+        "fileCount": 279.0,
+        "analysedExecutableBytes": 279847.0,
+        "coverageRatio": 0.993103448275862,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 18.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/keeper@0.0.3",
+      "matched_benign_sample_ids": [
+        "swc-loader@0.2.6",
+        "querystring@0.2.1"
+      ],
+      "matching_distance": 3.4377137425604363,
+      "matching_features": {
+        "fileCount": 9.0,
+        "analysedExecutableBytes": 13927.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 6.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 1.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/markdown-template@1.6.8",
+      "matched_benign_sample_ids": [
+        "read-package-json@7.0.1",
+        "npm-user-validate@3.0.0"
+      ],
+      "matching_distance": 3.366281804986511,
+      "matching_features": {
+        "fileCount": 80.0,
+        "analysedExecutableBytes": 221487.0,
+        "coverageRatio": 0.9743589743589743,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 13.0,
+        "name_len": 27.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/multi-parser@2.2.2",
+      "matched_benign_sample_ids": [
+        "node-addon-api@8.3.0",
+        "read-cmd-shim@5.0.0"
+      ],
+      "matching_distance": 3.3212458932502047,
+      "matching_features": {
+        "fileCount": 15.0,
+        "analysedExecutableBytes": 15468.0,
+        "coverageRatio": 0.9285714285714286,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 12.0,
+        "name_len": 22.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/nodejs-template@3.0.5",
+      "matched_benign_sample_ids": [
+        "gradient-string@3.0.0",
+        "lerna-changelog@2.2.0"
+      ],
+      "matching_distance": 3.4709061846236717,
+      "matching_features": {
+        "fileCount": 69.0,
+        "analysedExecutableBytes": 64745.0,
+        "coverageRatio": 0.9565217391304348,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 9.0,
+        "name_len": 25.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/optimizer@1.0.6",
+      "matched_benign_sample_ids": [
+        "readable-stream@4.7.0",
+        "comment-json@4.2.5"
+      ],
+      "matching_distance": 3.2083385135128824,
+      "matching_features": {
+        "fileCount": 38.0,
+        "analysedExecutableBytes": 43154.0,
+        "coverageRatio": 0.9583333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 14.0,
+        "name_len": 19.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@asyncapi/problem@1.0.1",
+      "matched_benign_sample_ids": [
+        "babel-loader@9.2.1",
+        "jsonc-parser@3.3.1"
+      ],
+      "matching_distance": 3.2163209078930706,
+      "matching_features": {
+        "fileCount": 35.0,
+        "analysedExecutableBytes": 23191.0,
+        "coverageRatio": 0.9545454545454546,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 11.0,
+        "name_len": 17.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@browserbasehq/bb9@1.2.21",
+      "matched_benign_sample_ids": [
+        "semantic-release@24.2.0",
+        "dotenv-expand@12.0.1"
+      ],
+      "matching_distance": 3.406846674556937,
+      "matching_features": {
+        "fileCount": 20.0,
+        "analysedExecutableBytes": 19504.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 6.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.05555555555555555,
+        "segment_count": 2.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@browserbasehq/mcp@2.1.1",
+      "matched_benign_sample_ids": [
+        "axios-retry@4.5.0",
+        "cache-loader@4.1.0"
+      ],
+      "matching_distance": 3.2556537080687034,
+      "matching_features": {
+        "fileCount": 38.0,
+        "analysedExecutableBytes": 96412.0,
+        "coverageRatio": 0.9655172413793104,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 13.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@cap-js/db-service@2.10.1",
+      "matched_benign_sample_ids": [
+        "node-gyp-build@4.8.4"
+      ],
+      "matching_distance": 3.4999948499107627,
+      "matching_features": {
+        "fileCount": 26.0,
+        "analysedExecutableBytes": 339118.0,
+        "coverageRatio": 0.9545454545454546,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 18.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 4.0,
+        "version_len": 6.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@cap-js/postgres@2.2.2",
+      "matched_benign_sample_ids": [
+        "loud-rejection@2.2.0",
+        "load-json-file@7.0.1"
+      ],
+      "matching_distance": 3.3018283981513927,
+      "matching_features": {
+        "fileCount": 12.0,
+        "analysedExecutableBytes": 45954.0,
+        "coverageRatio": 0.8333333333333334,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 16.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@cap-js/sqlite@2.2.2",
+      "matched_benign_sample_ids": [
+        "end-of-stream@1.4.4",
+        "chalk-template@1.1.0"
+      ],
+      "matching_distance": 3.233335973008878,
+      "matching_features": {
+        "fileCount": 13.0,
+        "analysedExecutableBytes": 24861.0,
+        "coverageRatio": 0.875,
+        "hasPreinstall": 1.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 1.0,
+        "name_len": 14.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 3.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    },
+    {
+      "malicious_sample_id": "@coveops/abi@2.0.1",
+      "matched_benign_sample_ids": [
+        "crypto-js@4.2.0",
+        "clean-css@5.3.3"
+      ],
+      "matching_distance": 2.5002433927646486,
+      "matching_features": {
+        "fileCount": 89.0,
+        "analysedExecutableBytes": 1375058.0,
+        "coverageRatio": 0.8372093023255813,
+        "hasPreinstall": 0.0,
+        "hasInstall": 0.0,
+        "hasPostinstall": 0.0,
+        "lifecycleHookCount": 3.0,
+        "name_len": 12.0,
+        "scoped": 1.0,
+        "digit_fraction_name": 0.0,
+        "segment_count": 2.0,
+        "version_len": 5.0,
+        "version_unusual_large": 0.0,
+        "version_is_zeroish": 0.0
+      }
+    }
+  ],
+  "unmatched": [
+    "000webhost-admin@999.9.9",
+    "000webhost-analytics@999.9.9",
+    "000webhost-api-client@999.9.9",
+    "000webhost-api@999.9.9",
+    "000webhost-auth@999.9.9",
+    "000webhost-cache@999.9.9",
+    "000webhost-checkout@999.9.9",
+    "000webhost-cloud@999.9.9",
+    "000webhost-connect@999.9.9",
+    "000webhost-database@999.9.9",
+    "0vulns-dependency-confusion-poc@1.0.0",
+    "1kzr@1.0.0",
+    "24712-pl3469@0.0.2",
+    "24712-pl5004@0.0.1",
+    "24712-pl5005@0.0.1",
+    "24712-pl5006@0.0.4",
+    "24712-plv2@0.0.2",
+    "24712-plv3@0.0.2",
+    "32red-admin@999.9.9",
+    "32red-analytics@999.9.9",
+    "32red-api-client@999.9.9",
+    "32red-api@999.9.9",
+    "32red-auth@999.9.9",
+    "32red-cache@999.9.9",
+    "32red-checkout@999.9.9",
+    "32red-cloud@999.9.9",
+    "32red-connect@999.9.9",
+    "32red-database@999.9.9",
+    "4m-clean-shopify-app@9.0.1",
+    "511fola@99.99.99",
+    "52471254zqdl55@22.2.2",
+    "6sdgsd6s-control@9999.0.0",
+    "7715-permissions-shared@2.0.0",
+    "@3kali182/angular-1.6@9.1.1",
+    "@3stripes/auth@999.0.2",
+    "@3stripes/common@999.0.3",
+    "@3stripes/components@999.0.2",
+    "@3stripes/config@999.0.2",
+    "@3stripes/core@999.0.2",
+    "@3stripes/helpers@999.0.2",
+    "@3stripes/lib@999.0.2",
+    "@3stripes/sdk@999.0.2",
+    "@3stripes/shared@999.0.2",
+    "@3stripes/toolkit@999.0.2",
+    "@3stripes/ui@999.0.2",
+    "@3stripes/utils@999.0.2",
+    "@42ailab/42cc-darwin-universal@0.8.3",
+    "@42ailab/42cc-win32-x64@0.4.0",
+    "@abb-ux/commonux-web-components@100.0.0",
+    "@abg-mec/fwk-fe-devcraft@1.999.8",
+    "@access-risk/browser-remedy-react@99.1.1",
+    "@accesshsc/access-forms-engine@0.999.999",
+    "@account-portal/ui-toolkit-react@99.9.0",
+    "@acitons/artifact@4.0.17",
+    "@actbase/react-native-actionsheet@1.0.3",
+    "@actbase/react-native-devtools@0.1.3",
+    "@actbase/react-native-fast-image@8.5.13",
+    "@actbase/react-native-kakao-channel@1.0.2",
+    "@actbase/react-native-kakao-navi@2.0.4",
+    "@actbase/react-native-less-transformer@1.0.6",
+    "@actbase/react-native-naver-login@1.0.1",
+    "@actbase/react-native-simple-video@1.0.13",
+    "@add-wallet-exchange/import-type@1.0.0",
+    "@add-wallet-exchange/set-imported-csv-message@1.0.0",
+    "@add-wallet-exchange/type-api-data@1.0.0",
+    "@afg-ikea/ikea-family-registration-module@99.9.9",
+    "@afg-ikea/ikea-kiosk-related-components@99.9.9",
+    "@ahmedhfarag/ngx-perfect-scrollbar@20.0.20",
+    "@ahmedhfarag/ngx-virtual-scroller@4.0.4",
+    "@ai-document-translation/ui-core@99.9.1",
+    "@ai0x1337/budoux-extension@99.0.0",
+    "@alexandrsarioglo/npm-ghost-htb@1.0.5",
+    "@alexcolls/nuxt-socket.io@0.0.8",
+    "@alfa.life.mapp/app.web@99.0.11",
+    "@allybank/ally-sdk@100.0.0",
+    "@allyfinancial/allyfinancial-api@100.0.0",
+    "@amazon-bedrock-agents-healthcare-lifesciences/docs@0.0.1",
+    "@amiga-fwk-nodejs/log@331.0.0",
+    "@amiga-fwk-nodejs/metrics@331.0.0",
+    "@amigatechdocs/core@331.0.0",
+    "@aml-ark/ark-experience-byteplus@18.3.0",
+    "@aml-ark/demo-house@999.99.0",
+    "@amsterdam-local/forms-component-library@1.0.15",
+    "@angular_devkit/build-webpack@99.1.1",
+    "@angular_devkit/build_angular@99.1.1",
+    "@antoncallahan/aws-user-helper@6767.67.72",
+    "@antstackio/eslint-config-antstack@0.0.3",
+    "@antstackio/express-graphql-proxy@0.2.8",
+    "@antstackio/graphql-body-parser@0.1.1",
+    "@antstackio/json-to-graphql@1.0.3",
+    "@antv/data-set@0.12.8",
+    "@antv/dumi-theme-antv@0.10.4",
+    "@antv/f6-core@0.2.2",
+    "@antv/f6@0.1.19",
+    "@antv/g2-extension-3d@0.3.0",
+    "@antv/g6-mobile@0.2.2",
+    "@antv/g6-pc@0.9.25",
+    "@antv/gi-assets-algorithm@2.4.19",
+    "@antv/gi-assets-xlab@0.3.30",
+    "@antv/l7-composite-layers@0.19.1",
+    "@antv/l7-core@2.27.10",
+    "@antv/l7-map@2.27.10",
+    "@antv/l7-source@2.27.10",
+    "@antv/li-aiearth-assets@0.5.7",
+    "@antv/mcp-server-chart@0.10.10",
+    "@antv/narrative-text-editor@0.4.20",
+    "@antv/narrative-text-vis@0.5.16",
+    "@antv/s2-react-components@2.3.2",
+    "@antv/s2-react@2.5.1",
+    "@antv/scale@0.6.2",
+    "@antv/t8@0.5.0",
+    "@antv/x6-geometry@2.2.5",
+    "@antv/x6-react-components@2.1.9",
+    "@app-tray-ui/stencil-component@10.1.0",
+    "@apple-pay-trust/authorize-payment@99.0.3",
+    "@apple-pay-trust/cancelled@99.0.3",
+    "@apple-pay-trust/check-apple-pay-result@99.0.2",
+    "@apple-pay-trust/check-apple-pay@99.0.2",
+    "@apple-pay-trust/destroy@99.0.1",
+    "@apple-pay-trust/finish@99.0.2",
+    "@apple-pay-trust/merchant-session@99.0.2",
+    "@apple-pay-trust/start@99.0.2",
+    "@apple-pay-trust/validate-merchant@99.0.2",
+    "@applicationbuildingcenter/xcube-schema@99.9.12",
+    "@art-ws/config-eslint@2.0.4",
+    "@art-ws/config-ts@2.0.7",
+    "@art-ws/db-context@2.0.24",
+    "@art-ws/di-node@2.0.13",
+    "@art-ws/di@2.0.32",
+    "@art-ws/eslint@1.0.5",
+    "@art-ws/fastify-http-server@2.0.27",
+    "@art-ws/http-server@2.0.25",
+    "@art-ws/package-base@1.0.5",
+    "@art-ws/prettier@1.0.5",
+    "@art-ws/slf@2.0.15",
+    "@art-ws/ssl-info@1.0.9",
+    "@art-ws/web-app@1.0.3",
+    "@aryanhussain/my-angular-lib@0.0.23",
+    "@asarioglo/ect-472839@1.23.464",
+    "@asyncapi/avro-schema-parser@3.0.26",
+    "@asyncapi/cli@4.1.3",
+    "@asyncapi/diff@0.5.1",
+    "@asyncapi/generator-components@0.3.3",
+    "@asyncapi/generator-helpers@0.2.2",
+    "@asyncapi/html-template@3.3.2",
+    "@asyncapi/java-spring-template@1.6.2",
+    "@asyncapi/java-template@0.3.5",
+    "@asyncapi/modelina@5.10.3",
+    "@asyncapi/nunjucks-filters@2.1.2",
+    "@asyncapi/openapi-schema-parser@3.0.26",
+    "@asyncapi/parser@3.4.1",
+    "@asyncapi/php-template@0.1.1",
+    "@asyncapi/protobuf-schema-parser@3.5.2",
+    "@asyncapi/python-paho-template@0.2.14",
+    "@asyncapi/react-component@2.6.7",
+    "@asyncapi/server-api@0.16.24",
+    "@asyncapi/specs@6.8.2",
+    "@automagik/genie@4.260421.37",
+    "@beproduct/nestjs-auth@0.1.8",
+    "@bitwarden/cli@2026.4.0",
+    "@browserbasehq/director-ai@1.0.3",
+    "@browserbasehq/sdk-functions@0.0.4",
+    "@browserbasehq/stagehand@3.0.4",
+    "@clausehq/flows-step-mqtt@0.1.14",
+    "@clausehq/flows-step-sendgridemail@0.1.14",
+    "@clausehq/flows-step-taskscreateurl@0.1.14",
+    "@crowdstrike/commitlint@8.1.2",
+    "@crowdstrike/falcon-shoelace@0.4.1",
+    "@crowdstrike/foundry-js@0.19.2",
+    "@crowdstrike/glide-core@0.34.3",
+    "@crowdstrike/logscale-file-editor@1.205.2",
+    "@crowdstrike/tailwind-toucan-base@5.0.1",
+    "@ctrl/deluge@7.2.2",
+    "@ctrl/golang-template@1.4.2",
+    "@ctrl/magnet-link@4.0.4",
+    "@ctrl/ngx-codemirror@7.0.1",
+    "@ctrl/ngx-csv@6.0.1",
+    "@ctrl/ngx-rightclick@4.0.2"
+  ],
+  "beforeSMD": {
+    "fileCount": -0.1869799819833326,
+    "analysedExecutableBytes": -0.27386038988461725,
+    "coverageRatio": -0.5482132219952885,
+    "hasPreinstall": 2.219290424187474,
+    "hasInstall": -0.13264759919985789,
+    "hasPostinstall": 0.621707467174138,
+    "lifecycleHookCount": -0.21137727764893485,
+    "name_len": 1.4936020999824677,
+    "scoped": 2.1244465456152795,
+    "digit_fraction_name": 0.5615666692367359,
+    "segment_count": 1.3913764904702877,
+    "version_len": 0.36897846001626444,
+    "version_unusual_large": 0.5836945425101238,
+    "version_is_zeroish": 0.36163583559170537
+  },
+  "afterSMD": {
+    "fileCount": -0.042499906902749525,
+    "analysedExecutableBytes": -0.16790248548341302,
+    "coverageRatio": -0.21619459909439562,
+    "hasPreinstall": 2.1905051775475943,
+    "hasInstall": 0.0,
+    "hasPostinstall": 0.07131275061681824,
+    "lifecycleHookCount": -0.22789890309727234,
+    "name_len": 0.5576511844053331,
+    "scoped": 1.4049572324794066,
+    "digit_fraction_name": 0.40018861567739605,
+    "segment_count": 0.34539950353869997,
+    "version_len": -0.035655519794348764,
+    "version_unusual_large": -0.006953924690022309,
+    "version_is_zeroish": -0.0006431577720659776
+  }
+}

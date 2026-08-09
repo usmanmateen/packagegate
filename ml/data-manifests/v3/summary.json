@@ -1,0 +1,40 @@
+{
+  "total": 1043,
+  "available": 992,
+  "labels": {
+    "MALICIOUS": 181,
+    "COMPROMISED": 140,
+    "EXPECTED_BENIGN": 722
+  },
+  "available_labels": {
+    "MALICIOUS": 140,
+    "COMPROMISED": 138,
+    "EXPECTED_BENIGN": 714
+  },
+  "attack_categories": {
+    "malicious_intent": 140,
+    "compromised_lib": 138
+  },
+  "positive_compromise_pairs": 160,
+  "negative_version_pairs": 120,
+  "exact_dup_groups": 0,
+  "near_dup_groups": 132,
+  "cross_label_duplicate_groups": 28,
+  "excluded_cross_label_samples": 6,
+  "split": {
+    "train": 665,
+    "validation": 196,
+    "test": 131,
+    "holdout": 51
+  },
+  "hashes": {
+    "train": "7667aa06dce6ca4f2d815c00ee7a26e7c4058ca9fa4b3ea2abe2e75f0d868913",
+    "validation": "fe4f164b539acea3b83ce7566c40ff40b665d5b6dd6a5577d6ffe53716f7de32",
+    "test": "c799e5f2a37e4f71cffaea96763097e8a3266c92dded428d509546ccf32837ec",
+    "qualitative-holdouts": "93fdea66cf210d6e41019352b4e21e33a4207d077607137f70a07691e55e78a3",
+    "split": "d83990a2ac199e5d65ffc73838594d738d30e0d69496cdfaff7631a3041a73c6"
+  },
+  "audit_passed": true,
+  "canonical": true,
+  "note_02_echo": true
+}

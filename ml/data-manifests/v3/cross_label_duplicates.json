@@ -1,0 +1,352 @@
+[
+  {
+    "duplicate_group_id": "content:71e047ce0da42fa94dd2c1643d64c6b39402f49572d07fce927c5ad90b640932",
+    "sample_ids": [
+      "@aifabrix/miso-client@4.7.2",
+      "@aifabrix/miso-client@4.7.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:683b7a6f15e43833e0141188f92704a52dc17ac3dd3e9109f1da0dcf21868859",
+    "sample_ids": [
+      "@antv/algorithm@0.3.26",
+      "@antv/algorithm@0.1.26"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:5465fd183744149f935c85f5dbd2989cce71fa7be848e275a17ab2c07d57e5be",
+    "sample_ids": [
+      "@antv/ava-react@3.5.2",
+      "@antv/ava-react@3.3.2-beta.1",
+      "@antv/ava-react@3.3.2-beta.0",
+      "@antv/ava-react@3.3.2"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:b289ebf167da1bd14bbd33e9a25cc3c76a8b982a9794576f643883fcbd3bd47b",
+    "sample_ids": [
+      "@antv/data-samples@1.2.1",
+      "@antv/data-samples@1.0.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "near:14",
+    "sample_ids": [
+      "@antv/data-set@0.12.8",
+      "@antv/data-set@0.11.8"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:ba0f3ffcfdaf5a9faafe9dc102c8ccee52769452fd368dc5eff845d2f6426b34",
+    "sample_ids": [
+      "@antv/dumi-theme-antv@0.10.4",
+      "@antv/dumi-theme-antv@0.8.5",
+      "@antv/dumi-theme-antv@0.8.4"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:5be8b524daa5dd5916dd2a7a5285225ba9f2a198ab7ddd89850644a7004a5a03",
+    "sample_ids": [
+      "@antv/f-engine@1.11.0",
+      "@antv/f-engine@1.10.0",
+      "@antv/f-engine@1.8.3-alpha.2",
+      "@antv/f-engine@1.8.3-alpha.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:88290bc6e81f227a0cdf9587b324ac4fed54d5d1352d2de62f0ff4070681cc5a",
+    "sample_ids": [
+      "@antv/f2-graphic@0.2.16",
+      "@antv/f2-graphic@0.0.16",
+      "@antv/f2-graphic@0.0.15",
+      "@antv/f2-graphic@0.0.14"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:9f6740bc21ae84bae53980ab9a8f3aa9b890139b4347ab6bbf7ce43177f1a8b6",
+    "sample_ids": [
+      "@antv/f6-core@0.2.2",
+      "@antv/f6-core@0.0.2",
+      "@antv/f6-core@0.0.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:304166915f08f4cd8eff03856738c84f32b2e802ebf47986596eb10914765099",
+    "sample_ids": [
+      "@antv/f6@0.1.19",
+      "@antv/f6@0.0.19"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:3d3893ee6742362cde715350954efdf12156208f12d1dd4097173bf3543404ed",
+    "sample_ids": [
+      "@antv/g-device-api@1.7.13",
+      "@antv/g-device-api@1.6.13",
+      "@antv/g-device-api@1.6.12",
+      "@antv/g-device-api@1.6.11"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:d47498c2ba502ed153a1924a47f76d56382ba600a7f961048de788c9894fb08d",
+    "sample_ids": [
+      "@antv/g2-extension-3d@0.3.0",
+      "@antv/g2-extension-3d@0.2.0"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:03598c413f69a3ba7b1d8719b7334daecdb87ef3306e7bf56781c3a6cdccc42e",
+    "sample_ids": [
+      "@antv/g6-mobile@0.2.2",
+      "@antv/g6-mobile@0.1.2"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:af2d3d3c720e3801b14b42951846729c06e66494f4c85e03420233be771915ed",
+    "sample_ids": [
+      "@antv/g6-pc@0.9.25",
+      "@antv/g6-pc@0.8.25"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:737a420f9bc715b2e5b1ae51260f48aac655b5383d16367838534ff64e3f98a9",
+    "sample_ids": [
+      "@antv/gi-assets-algorithm@2.4.19",
+      "@antv/gi-assets-algorithm@2.3.19"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:f97ed3ac0c95f9b28d1667df2b6e7162e459d8c6d0df547120925f71b83f3319",
+    "sample_ids": [
+      "@antv/gi-assets-scene@2.3.21",
+      "@antv/gi-assets-scene@2.2.21"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:6b0886774318880eead09ccf2599bea715cad7053662d364574fb6ee4b0253ef",
+    "sample_ids": [
+      "@antv/gi-assets-xlab@0.3.30",
+      "@antv/gi-assets-xlab@0.1.30",
+      "@antv/gi-assets-xlab@0.1.29"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:9f7f15a06f3775b6e9f3488dc89bea8c7cd62b9bf86bb2e5131960c2832cf048",
+    "sample_ids": [
+      "@antv/gpt-vis@1.1.0",
+      "@antv/gpt-vis@1.0.0"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:fc323440031e5f4b663f938e5f23b24df3b802100ab6ec4aff5d8b9be487d609",
+    "sample_ids": [
+      "@antv/insight-component@1.1.0",
+      "@antv/insight-component@1.0.0"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:1cf0e32775a9c9fdb37c697ce29c789814033cdd9379ac2be7b611bf271142d9",
+    "sample_ids": [
+      "@antv/l7-component@2.27.10",
+      "@antv/l7-component@2.25.10",
+      "@antv/l7-component@2.28.10",
+      "@antv/l7-component@2.25.9"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:ff94348da73f4efb0a0bdd5db8e4d4bf8fbb49c9057571157598ee9709c1e39e",
+    "sample_ids": [
+      "@antv/l7-composite-layers@0.19.1",
+      "@antv/l7-composite-layers@0.17.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:9e45030e55cd25f352485618acce990da820e56d18922940cfec5d07fea81b2e",
+    "sample_ids": [
+      "@antv/l7-core@2.27.10",
+      "@antv/l7-core@2.25.10",
+      "@antv/l7-core@2.28.10",
+      "@antv/l7-core@2.25.9"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:90a64fa650d330bdde4e31848ceefad26cfbde65fe85b9765e0570842788ec35",
+    "sample_ids": [
+      "@antv/l7-draw@3.2.5",
+      "@antv/l7-draw@3.1.5",
+      "@antv/l7-draw@3.1.4"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:f7b543241b8cc0b6136534cc261768345c1a7aea3b06f785fc0db6661f8636aa",
+    "sample_ids": [
+      "@antv/l7-map@2.27.10",
+      "@antv/l7-map@2.25.10",
+      "@antv/l7-map@2.28.10",
+      "@antv/l7-map@2.25.9"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:e0ef702a24612ef069af6a7304dbc065c8a395950d13bfef0237e9e726ca6748",
+    "sample_ids": [
+      "@antv/l7-source@2.27.10",
+      "@antv/l7-source@2.25.10",
+      "@antv/l7-source@2.28.10",
+      "@antv/l7-source@2.25.9"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:395eb6b80e5d6bb48994bfdcb12084314f2cb5b8fbee53e73e4cf8e6044453cc",
+    "sample_ids": [
+      "@antv/li-aiearth-assets@0.5.7",
+      "@antv/li-aiearth-assets@0.4.7"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:cec68ded6312a1bec6b1888e51d573fa54a53d2b8b09ca7457d44ba27d387dda",
+    "sample_ids": [
+      "@antv/lite-insight@2.2.1",
+      "@antv/lite-insight@2.1.1"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN"
+    ]
+  },
+  {
+    "duplicate_group_id": "content:1cd2a6d1feac0a2af3d5459791f04f340738dae69d1b125ec1960641350d2cc3",
+    "sample_ids": [
+      "@antv/mcp-server-chart@0.10.10",
+      "@antv/mcp-server-chart@0.9.10",
+      "@antv/mcp-server-chart@0.9.9"
+    ],
+    "labels": [
+      "COMPROMISED",
+      "EXPECTED_BENIGN",
+      "EXPECTED_BENIGN"
+    ]
+  }
+]

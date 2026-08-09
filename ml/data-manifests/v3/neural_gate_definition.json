@@ -1,0 +1,14 @@
+{
+  "max_name_lexical_matched": 0.8,
+  "max_artifact_structure_matched_over_prevalence": 0.2,
+  "max_generic_metadata_matched": 0.8,
+  "min_behaviour_minus_nuisance_matched": 0.05,
+  "max_shuffled_pr_auc": 0.75,
+  "max_opaque_over_prevalence": 0.25,
+  "min_matched_samples": 80,
+  "min_pg_delta_positive_pairs_with_features": 60,
+  "min_pg_delta_negative_pairs_with_features": 40,
+  "require_canonical_processing": true,
+  "source_only_not_a_gate": true,
+  "source_only_note": "SOURCE_ONLY may be ~1.0 by construction; gate uses matched structure/metadata/name proxies instead."
+}
