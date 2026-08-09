@@ -13,6 +13,8 @@ export * from "./finding.js";
 export * from "./chain.js";
 export * from "./risk.js";
 export * from "./intelligence.js";
+export * from "./completeness.js";
+export * from "./policy.js";
 export * from "./scan.js";
 export * from "./comparison.js";
 export * from "./errors.js";

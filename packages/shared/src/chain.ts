@@ -74,6 +74,16 @@ export const CHAIN_LINK_KINDS = [
   "RETURN_VALUE",
   /** Steps occur in the same function with no proven dataflow between them. */
   "SEQUENTIAL_IN_SCOPE",
+  /**
+   * A lifecycle script statically names a local entrypoint that contains the
+   * next step. Never implies the script was executed by PackageGate.
+   */
+  "LIFECYCLE_INVOCATION",
+  /**
+   * A statically recovered shell command string at a process-execution sink
+   * contains a pipe/operator that joins two modelled shell operations.
+   */
+  "SHELL_PIPELINE",
 ] as const;
 export const ChainLinkKindSchema = z.enum(CHAIN_LINK_KINDS);
 export type ChainLinkKind = z.infer<typeof ChainLinkKindSchema>;
@@ -123,7 +133,11 @@ export function maxConfidenceForLinks(
   if (links.length === 0) return "LOW";
   if (links.some((link) => WEAK_LINK_KINDS.includes(link.kind))) return "LOW";
   const allStrong = links.every(
-    (link) => link.kind === "SHARED_BINDING" || link.kind === "ARGUMENT_FLOW",
+    (link) =>
+      link.kind === "SHARED_BINDING" ||
+      link.kind === "ARGUMENT_FLOW" ||
+      link.kind === "SHELL_PIPELINE" ||
+      link.kind === "LIFECYCLE_INVOCATION",
   );
   return allStrong ? "HIGH" : "MEDIUM";
 }
