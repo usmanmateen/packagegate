@@ -1,59 +1,158 @@
+import type { BehaviourChain, Confidence, Severity } from "@packagegate/shared";
+import type { Theme } from "./output/theme.js";
+import { createTheme } from "./output/theme.js";
 import type { InvestigationResult } from "./types.js";
+
+export interface ReportOptions {
+  /**
+   * When true/false, force colour. When omitted, colour is off so library
+   * callers and tests get plain text; the CLI enables colour via TTY checks.
+   */
+  readonly color?: boolean;
+  readonly theme?: Theme;
+}
+
+/** Human labels for chain nodes — display only; underlying enums unchanged. */
+const CHAIN_NODE_LABELS: Readonly<Record<string, string>> = {
+  ENVIRONMENT_ACCESS: "process.env",
+  SENSITIVE_FILE_READ: "sensitive file",
+  FILESYSTEM_READ: "fs.read",
+  SYSTEM_INFORMATION: "host info",
+  ENCODED_CONSTANT: "encoded payload",
+  REMOTE_DOWNLOAD: "remote download",
+  PROCESS_OUTPUT: "process output",
+  OBJECT_COLLECTION: "collect",
+  JSON_SERIALIZATION: "JSON.stringify",
+  STRING_CONCATENATION: "concat",
+  BASE64_ENCODE: "base64 encode",
+  BASE64_DECODE: "base64 decode",
+  HEX_ENCODE: "hex encode",
+  HEX_DECODE: "hex decode",
+  COMPRESSION: "compress",
+  ENCRYPTION: "encrypt",
+  HASHING: "hash",
+  TEMPLATE_INTERPOLATION: "template",
+  NETWORK_REQUEST: "https.request",
+  SOCKET_WRITE: "socket.write",
+  FILESYSTEM_WRITE: "fs.write",
+  EXECUTABLE_WRITE: "executable write",
+  PROCESS_EXECUTION: "child_process",
+  DYNAMIC_EVALUATION: "eval",
+};
+
+function nodeLabel(node: string): string {
+  return CHAIN_NODE_LABELS[node] ?? node;
+}
+
+function formatFindingBadge(
+  severity: Severity,
+  confidence: Confidence,
+  theme: Theme,
+): string {
+  const severityPart = theme.colourSeverity(severity, `${severity} severity`);
+  const confidencePart = theme.colourConfidence(
+    confidence,
+    `${confidence} confidence`,
+  );
+  return `[${severityPart} · ${confidencePart}]`;
+}
+
+function formatIntegrityLine(
+  verified: boolean | undefined,
+  theme: Theme,
+): string {
+  if (verified === true) {
+    return theme.success("✓ Integrity verified");
+  }
+  if (verified === false) {
+    return theme.danger("✗ Integrity MISMATCH");
+  }
+  return theme.warning("? Integrity not declared");
+}
+
+function formatChainPath(chain: BehaviourChain, theme: Theme): string {
+  const nodes = [
+    chain.source,
+    ...chain.transformations,
+    chain.sink,
+  ];
+  const arrow = theme.muted(" → ");
+  const rendered = nodes.map((node, index) => {
+    const label = nodeLabel(node);
+    const isEndpoint = index === 0 || index === nodes.length - 1;
+    if (!isEndpoint) return theme.info(label);
+    // Endpoints follow overall risk posture via caller; here emphasise as info
+    // for structure and let recommendation colour sit on the confidence tag.
+    return theme.emphasis(label);
+  });
+  return rendered.join(arrow);
+}
 
 /**
  * Human-readable investigation report for demos and terminal review.
  *
  * Writes to a string so the CLI can print it and tests can assert on it
- * without depending on process.stdout.
+ * without depending on process.stdout. Colour is optional and never affects
+ * the underlying investigation data.
  */
-export function formatInvestigationReport(result: InvestigationResult): string {
+export function formatInvestigationReport(
+  result: InvestigationResult,
+  options: ReportOptions = {},
+): string {
+  const theme =
+    options.theme ??
+    createTheme({
+      enabled: options.color === true,
+    });
+
   const lines: string[] = [];
   const push = (line = ""): void => {
     lines.push(line);
   };
 
-  push("PACKAGEGATE INVESTIGATION");
-  push("=========================");
+  push(theme.heading("PACKAGEGATE INVESTIGATION"));
+  push(theme.muted("========================="));
   push("");
-  push(`Package:        ${result.resolved.name}@${result.resolved.version}`);
-  push(`Requested:      ${result.requestedSpec}`);
-  push(`Duration:       ${String(result.durationMs)}ms`);
+  const packageId = `${result.resolved.name}@${result.resolved.version}`;
+  push(`Package:        ${theme.heading(packageId)}`);
+  push(`Requested:      ${theme.info(result.requestedSpec)}`);
+  push(`Duration:       ${theme.muted(`${String(result.durationMs)}ms`)}`);
   push("");
 
-  push("Artifact");
-  push("--------");
-  const integrity =
-    result.artifact.integrityVerified === true
-      ? "Integrity verified"
-      : result.artifact.integrityVerified === false
-        ? "Integrity MISMATCH"
-        : "Integrity not declared";
-  push(`  ${integrity}`);
-  push(`  SHA-256: ${result.artifact.sha256}`);
-  push(`  Files extracted: ${String(result.artifact.fileCount)}`);
-  push(`  Files analysed:  ${String(result.files.filter((file) => file.analysed).length)}`);
+  push(theme.heading("Artifact"));
+  push(theme.muted("--------"));
+  push(`  ${formatIntegrityLine(result.artifact.integrityVerified, theme)}`);
+  push(`  ${theme.muted("SHA-256:")} ${theme.info(result.artifact.sha256)}`);
   push(
-    `  Analysis coverage: ${(result.analysisCoverage * 100).toFixed(1)}%`,
+    `  ${theme.muted("Files extracted:")} ${theme.info(String(result.artifact.fileCount))}`,
+  );
+  push(
+    `  ${theme.muted("Files analysed:")}  ${theme.info(String(result.files.filter((file) => file.analysed).length))}`,
+  );
+  push(
+    `  ${theme.muted("Analysis coverage:")} ${theme.info(`${(result.analysisCoverage * 100).toFixed(1)}%`)}`,
   );
   push("");
 
-  push("Lifecycle scripts");
-  push("-----------------");
+  push(theme.heading("Lifecycle scripts"));
+  push(theme.muted("-----------------"));
   if (result.lifecycleScripts.length === 0) {
-    push("  (none)");
+    push(theme.muted("  (none)"));
   } else {
     for (const script of result.lifecycleScripts) {
-      const flag = script.runsOnInstall ? " [install]" : "";
-      push(`  ${script.name}${flag}: ${script.command}`);
+      const flag = script.runsOnInstall ? theme.warning(" [install]") : "";
+      push(
+        `  ${theme.info(script.name)}${flag}: ${theme.muted(script.command)}`,
+      );
     }
   }
   push("");
 
-  push(`Findings (${String(result.findings.length)})`);
-  push("--------");
+  push(theme.heading(`Findings (${String(result.findings.length)})`));
+  push(theme.muted("--------"));
   if (result.findings.length === 0) {
-    push("  No rule matches in the code that was analysed.");
-    push(`  ${result.disclaimer}`);
+    push(theme.success("  No rule matches in the code that was analysed."));
+    push(`  ${theme.muted(result.disclaimer)}`);
   } else {
     const byCategory = new Map<string, number>();
     for (const finding of result.findings) {
@@ -63,96 +162,146 @@ export function formatInvestigationReport(result: InvestigationResult): string {
       .sort((left, right) => right[1] - left[1])
       .map(([category, count]) => `${category}=${String(count)}`)
       .join(", ");
-    push(`  By category: ${summary}`);
+    push(`  ${theme.muted("By category:")} ${theme.info(summary)}`);
     push("");
     const sample = result.findings.slice(0, 20);
     for (const finding of sample) {
       push(
-        `  [${finding.severity}/${finding.confidence}] ${finding.category} — ${finding.title}`,
+        `  ${formatFindingBadge(finding.severity, finding.confidence, theme)} ${theme.info(finding.category)} — ${finding.title}`,
       );
       push(
-        `    ${finding.location.filePath}:${String(finding.location.startLine)}  (${finding.ruleId})`,
+        `    ${theme.muted(`${finding.location.filePath}:${String(finding.location.startLine)}`)}  ${theme.muted(`(${finding.ruleId})`)}`,
       );
     }
     if (result.findings.length > sample.length) {
-      push(`  … and ${String(result.findings.length - sample.length)} more`);
+      push(
+        theme.muted(
+          `  … and ${String(result.findings.length - sample.length)} more`,
+        ),
+      );
     }
   }
   push("");
 
   if (result.parseFailures.length > 0) {
-    push(`Parse failures (${String(result.parseFailures.length)})`);
-    push("--------------");
+    push(
+      theme.warning(`Parse failures (${String(result.parseFailures.length)})`),
+    );
+    push(theme.muted("--------------"));
     for (const failure of result.parseFailures.slice(0, 10)) {
-      push(`  ${failure.filePath}: ${failure.reason}`);
+      push(
+        `  ${theme.muted(failure.filePath)}: ${theme.warning(failure.reason)}`,
+      );
     }
     push("");
   }
 
-  push(`Behaviour chains (${String(result.behaviourChains.length)})`);
-  push("----------------");
+  push(
+    theme.heading(`Behaviour chains (${String(result.behaviourChains.length)})`),
+  );
+  push(theme.muted("----------------"));
   if (result.behaviourChains.length === 0) {
-    push("  None with evidenced dataflow.");
+    push(theme.success("  None with evidenced dataflow."));
+    push(
+      theme.muted(
+        "  (No evidenced chain was established — this is not proof the package is safe.)",
+      ),
+    );
   } else {
     for (const chain of result.behaviourChains) {
-      const transforms =
-        chain.transformations.length === 0
-          ? ""
-          : ` → ${chain.transformations.join(" → ")}`;
-      push(
-        `  ${chain.source}${transforms} → ${chain.sink}  [${chain.confidence}]`,
+      const path = formatChainPath(chain, theme);
+      const confidenceTag = theme.colourConfidence(
+        chain.confidence,
+        chain.confidence,
       );
-      push(`    ${chain.rationale}`);
+      // Marker colour follows the machine recommendation — not a second score.
+      const marker =
+        result.risk.recommendation === "BLOCK"
+          ? theme.danger("●")
+          : theme.warning("●");
+      push(`  ${marker} ${path}  [${confidenceTag}]`);
+      push(`    ${theme.muted(chain.rationale)}`);
       for (const link of chain.links) {
         push(
-          `    link/${link.kind}: ${link.description} @ ${link.location.filePath}:${String(link.location.startLine)}`,
+          `    ${theme.muted(`link/${link.kind}:`)} ${link.description} ${theme.muted(`@ ${link.location.filePath}:${String(link.location.startLine)}`)}`,
         );
       }
     }
   }
   push("");
 
-  push("Risk");
-  push("----");
-  push(`  Score:            ${String(result.risk.score)} / 100`);
-  push(`  Recommendation:   ${result.risk.recommendation}`);
-  push(`  Classification:   ${result.risk.classification}`);
+  push(theme.heading("Risk"));
+  push(theme.muted("----"));
+  const scoreText = theme.colourRiskScore(
+    result.risk.score,
+    result.risk.recommendation,
+  );
+  push(`  Score:            ${scoreText} ${theme.muted("/ 100")}`);
+  push(
+    `  Recommendation:   ${theme.colourRecommendation(result.risk.recommendation)}`,
+  );
+  push(
+    `  Classification:   ${theme.colourClassification(result.risk.classification)}`,
+  );
   push("");
 
-  push("Risk breakdown");
-  push("--------------");
+  push(theme.heading("Risk breakdown"));
+  push(theme.muted("--------------"));
   const breakdown = result.scoringBreakdown;
-  push(`  Breadth (B):          ${breakdown.breadthRaw.toFixed(2)}`);
-  push(`  Chains (X):           ${breakdown.chainSaturated.toFixed(2)}`);
-  push(`  Modifiers (M):        ${breakdown.modifierTotal.toFixed(2)}`);
-  push(`  Structural cap:       ${String(breakdown.structuralCap)}`);
-  push(`  Raw total:            ${breakdown.rawTotal.toFixed(2)}`);
-  push(`  Final score:          ${String(breakdown.score)}`);
+  push(
+    `  ${theme.muted("Breadth (B):")}          ${theme.info(breakdown.breadthRaw.toFixed(2))}`,
+  );
+  push(
+    `  ${theme.muted("Chains (X):")}           ${theme.info(breakdown.chainSaturated.toFixed(2))}`,
+  );
+  push(
+    `  ${theme.muted("Modifiers (M):")}        ${theme.info(breakdown.modifierTotal.toFixed(2))}`,
+  );
+  push(
+    `  ${theme.muted("Structural cap:")}       ${theme.info(String(breakdown.structuralCap))}`,
+  );
+  push(
+    `  ${theme.muted("Raw total:")}            ${theme.info(breakdown.rawTotal.toFixed(2))}`,
+  );
+  push(
+    `  ${theme.muted("Final score:")}          ${theme.colourRiskScore(breakdown.score, result.risk.recommendation)}`,
+  );
   if (breakdown.familyBreakdown.length > 0) {
-    push("  Families (after decay):");
+    push(theme.muted("  Families (after decay):"));
     for (const family of breakdown.familyBreakdown.slice(0, 8)) {
       push(
-        `    ${family.family}: ${family.decayedPoints.toFixed(2)} (rank ${String(family.decayRank)}, factor ${family.decayFactor.toFixed(2)})`,
+        `    ${theme.info(family.family)}: ${theme.info(family.decayedPoints.toFixed(2))} ${theme.muted(`(rank ${String(family.decayRank)}, factor ${family.decayFactor.toFixed(2)})`)}`,
       );
     }
   }
   push("");
-  push("Contributions");
-  push("-------------");
+  push(theme.heading("Contributions"));
+  push(theme.muted("-------------"));
   for (const contribution of result.risk.contributions.slice(0, 15)) {
     const sign = contribution.points >= 0 ? "+" : "";
-    push(
-      `  ${contribution.label.padEnd(36)} ${sign}${contribution.points.toFixed(2)}`,
-    );
+    const points = `${sign}${contribution.points.toFixed(2)}`;
+    const pointsStyled =
+      contribution.points < 0
+        ? theme.success(points)
+        : contribution.points > 0
+          ? theme.info(points)
+          : theme.muted(points);
+    push(`  ${contribution.label.padEnd(36)} ${pointsStyled}`);
   }
   if (result.risk.contributions.length > 15) {
-    push(`  … and ${String(result.risk.contributions.length - 15)} more`);
+    push(
+      theme.muted(
+        `  … and ${String(result.risk.contributions.length - 15)} more`,
+      ),
+    );
   }
   push("");
-  push(result.disclaimer);
+  push(theme.muted(result.disclaimer));
   push("");
   push(
-    `scanner=${result.scannerVersion}  rules=${result.rulesVersion}  risk=${result.risk.scannerVersion}`,
+    theme.muted(
+      `scanner=${result.scannerVersion}  rules=${result.rulesVersion}  risk=${result.risk.scannerVersion}`,
+    ),
   );
 
   return lines.join("\n");
