@@ -33,11 +33,14 @@ Do not rewrite history to claim behavioural analysis alone returned BLOCK.
 - **Evaluation harness** (`packagegate evaluate`) — intervention-level TP/TN/FP/FN; real malware never auto-downloaded
 - **Decision explanation** — why final policy was chosen, with lanes kept separate
 
-## ML V1 scaffolding
+## ML V1 scaffolding / Dataset V1 pilot
 
 See `docs/ML_EVALUATION.md`. Optional `--ml` lane is separate from behavioural
-risk. ML may escalate ALLOW→REVIEW only; never independent BLOCK. Code-model
-fine-tuning is gated on external curated data quality.
+risk. ML may escalate ALLOW→REVIEW only; never independent BLOCK.
+
+Dataset V1 pilot (external corpus + structured baselines) is in place. The
+**neural training gate failed** on package-name shortcut bias — do not treat
+strong structured PR-AUC as proof that ML learns malware behaviour yet.
 
 ## Controls (post-v3)
 

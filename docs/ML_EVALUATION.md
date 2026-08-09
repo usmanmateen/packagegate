@@ -31,8 +31,8 @@ External root: `/tmp/packagegate-ml-data` (never committed).
 | Expected-benign available | 227 |
 | Synthetic suspicious fixtures | 4 |
 | OpenSSF metadata-only | 40 |
-| Exact duplicate groups | 0 |
-| Near-duplicate clusters | 17 |
+| Exact duplicate group IDs | 12 (57 member samples) |
+| Near-duplicate `dupcluster::*` families | 12 |
 | Train / Val / Test (split IDs) | 275 / 52 / 54 |
 | Feature-exported rows | 373 |
 | Export failures (final) | 8 |
