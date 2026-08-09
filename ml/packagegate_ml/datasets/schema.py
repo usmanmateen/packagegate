@@ -1,4 +1,4 @@
-"""Dataset record schemas and leakage-safe helpers."""
+"""Canonical PackageGate ML dataset records and holdout constants."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ class SampleLabel(str, Enum):
     MALICIOUS = "MALICIOUS"
     SYNTHETIC_SUSPICIOUS = "SYNTHETIC_SUSPICIOUS"
     UNKNOWN = "UNKNOWN"
+    COMPROMISED = "COMPROMISED"
 
 
 class SplitName(str, Enum):
@@ -33,6 +34,9 @@ QUALITATIVE_HOLDOUT_IDS = frozenset(
     }
 )
 
+# Must never appear in train/validation for ML V1 pilot.
+MALWARE_QUALITATIVE_HOLDOUT_IDS = frozenset({"02-echo@0.0.7"})
+
 
 @dataclass(frozen=True)
 class DatasetRecord:
@@ -41,21 +45,40 @@ class DatasetRecord:
     label_source: str
     family_group: str
     available: bool
+    package_name: str | None = None
+    version: str | None = None
+    label_reference: str | None = None
+    observed_date: str | None = None
     artifact_sha256: str | None = None
+    artifact_path: str | None = None
     artifact_path_external: str | None = None
     package_name_hash: str | None = None
-    version: str | None = None
-    observed_date: str | None = None
+    dataset_source: str | None = None
+    hard_negative_category: str | None = None
+    duplicate_group_id: str | None = None
     notes: str = ""
-    # Training metadata only — never fed as model input text.
-    package_label_private: str | None = None
 
-    def to_public_dict(self) -> dict[str, Any]:
-        """Serialize without private package names when present."""
+    def to_public_dict(self, *, include_package_name: bool = False) -> dict[str, Any]:
+        """Serialize for manifests. Package names omitted by default (leakage control)."""
         data = asdict(self)
-        data.pop("package_label_private", None)
+        if not include_package_name:
+            data.pop("package_name", None)
+        # Prefer artifact_path_external alias for older smoke manifests.
+        if data.get("artifact_path") is None and data.get("artifact_path_external"):
+            data["artifact_path"] = data["artifact_path_external"]
         data["label"] = self.label.value
         return data
+
+    def binary_positive(self) -> bool | None:
+        if self.label in {
+            SampleLabel.MALICIOUS,
+            SampleLabel.COMPROMISED,
+            SampleLabel.SYNTHETIC_SUSPICIOUS,
+        }:
+            return True
+        if self.label == SampleLabel.EXPECTED_BENIGN:
+            return False
+        return None
 
 
 @dataclass
@@ -80,8 +103,12 @@ def family_group_for(package_name: str) -> str:
     return package_name.strip().lower()
 
 
+def sample_id_for(package_name: str, version: str) -> str:
+    return f"{package_name}@{version}"
+
+
 def assert_no_path_leakage(feature_keys: list[str]) -> None:
-    banned = ("malicious", "benign", "/tmp/", "quarantine", "label", "policy")
+    banned = ("malicious", "benign", "/tmp/", "quarantine", "label", "policy", "datadog")
     for key in feature_keys:
         lower = key.lower()
         for token in banned:
