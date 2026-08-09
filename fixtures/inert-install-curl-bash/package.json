@@ -1,0 +1,8 @@
+{
+  "name": "inert-install-curl-bash",
+  "version": "1.0.0",
+  "description": "Inert fixture: install-time curl|bash string passed to execSync (never executed by PackageGate)",
+  "scripts": {
+    "preinstall": "node setup.js"
+  }
+}

@@ -1,24 +1,32 @@
 import { createHash } from "node:crypto";
 import type { ExtractedPackage } from "@packagegate/artifact-fetcher";
 import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
+import { decidePolicy, POLICY_ENGINE_VERSION } from "@packagegate/policy-engine";
 import {
   assessRisk,
   computeScoringBreakdown,
   WEIGHTS_VERSION,
 } from "@packagegate/risk-engine";
-import type { PackageMetadata, ScannedFile } from "@packagegate/shared";
+import type { Finding, PackageMetadata, ScannedFile } from "@packagegate/shared";
 import {
+  analyseOpaqueSource,
   analysePackage,
   RULES_VERSION as STATIC_RULES_VERSION,
 } from "@packagegate/static-analyser";
+import {
+  buildAnalysisCompleteness,
+  isExecutableSourcePath,
+  lifecycleReachablePaths,
+} from "./completeness.js";
 import { parsePackageManifest } from "./manifest.js";
+import { defaultThreatIntelProvider } from "./threat-intel.js";
 import {
   SAFETY_DISCLAIMER,
   type AcquisitionInfo,
   type InvestigationResult,
 } from "./types.js";
 
-export const SCANNER_VERSION = "packagegate-cli/0.1.0";
+export const SCANNER_VERSION = "packagegate-cli/0.2.0";
 
 /**
  * Decode retained file bytes for the analyser.
@@ -142,20 +150,59 @@ export function investigateExtractedPackage(
     manifestPath: "package.json",
   });
 
+  const reachable = lifecycleReachablePaths(staticResult.lifecycleScripts);
+
+  // Opaque triage for executable sources whose full content was not retained.
+  const opaqueFindings: Finding[] = [];
+  const droppedExecutable: {
+    path: string;
+    sizeBytes: number;
+    retainedBytes?: number;
+    lifecycleReachable: boolean;
+  }[] = [];
+  const opaquePaths: string[] = [];
+
+  for (const file of extracted.files) {
+    if (file.content !== undefined) continue;
+    if (!isExecutableSourcePath(file.path)) continue;
+    const lifecycleReachable = reachable.has(file.path);
+    droppedExecutable.push({
+      path: file.path,
+      sizeBytes: file.sizeBytes,
+      retainedBytes: file.contentPreview?.byteLength ?? 0,
+      lifecycleReachable,
+    });
+    const opaque = analyseOpaqueSource({
+      path: file.path,
+      sizeBytes: file.sizeBytes,
+      preview: file.contentPreview,
+      lifecycleReachable,
+      retainedBytes: file.contentPreview?.byteLength ?? 0,
+      reason: "SOURCE_CONTENT_LIMIT_EXCEEDED",
+    });
+    opaqueFindings.push(...opaque.findings);
+    opaquePaths.push(file.path);
+  }
+
+  const allFindings = [...staticResult.findings, ...opaqueFindings];
+
   const behaviour = analyseBehaviourChains({
     files: sourceFiles,
-    findings: staticResult.findings,
+    findings: allFindings,
+    lifecycleScripts: staticResult.lifecycleScripts,
   });
 
-  const analysable = staticResult.files.filter(
+  // Coverage: include dropped executable JS in the denominator for honesty.
+  const analysedJsTs = staticResult.files.filter(
+    (file) =>
+      (file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT") && file.analysed,
+  );
+  const retainedAnalysable = staticResult.files.filter(
     (file) => file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT",
   );
-  const analysedCount = analysable.filter((file) => file.analysed).length;
-  const coverageDenominator = Math.max(analysable.length, 1);
-  let analysisCoverage = analysedCount / coverageDenominator;
-  if (extracted.retention.truncated) {
-    analysisCoverage = Math.min(analysisCoverage, 0.85);
-  }
+  const analysableCount = retainedAnalysable.length + droppedExecutable.length;
+  const coverageDenominator = Math.max(analysableCount, 1);
+  let analysisCoverage = analysedJsTs.length / coverageDenominator;
   if (staticResult.parseFailures.length > 0) {
     analysisCoverage = Math.min(
       analysisCoverage,
@@ -163,30 +210,63 @@ export function investigateExtractedPackage(
     );
   }
 
+  const analysisCompleteness = buildAnalysisCompleteness({
+    coverageRatio: analysisCoverage,
+    droppedExecutable,
+    parseFailures: staticResult.parseFailures,
+    opaquePaths,
+  });
+
   const riskInput = {
-    findings: staticResult.findings,
+    findings: allFindings,
     chains: behaviour.chains,
     analysisCoverage,
     integrityVerified: input.integrityVerifiedForRisk,
     scannerVersion: SCANNER_VERSION,
-    rulesVersion: `${STATIC_RULES_VERSION}+${behaviour.engineVersion}+${WEIGHTS_VERSION}`,
+    rulesVersion: `${STATIC_RULES_VERSION}+${behaviour.engineVersion}+${WEIGHTS_VERSION}+${POLICY_ENGINE_VERSION}`,
   };
 
   const risk = assessRisk(riskInput);
   const scoringBreakdown = computeScoringBreakdown(riskInput);
 
-  const files: ScannedFile[] = staticResult.files.map((file) => {
-    const extractedFile = extracted.files.find((entry) => entry.path === file.path);
-    return {
-      path: file.path,
-      sizeBytes: file.sizeBytes,
-      sha256:
-        extractedFile?.sha256 ??
-        createHash("sha256").update(file.path).digest("hex"),
-      kind: file.kind,
-      analysed: file.analysed,
-    };
+  const threat = defaultThreatIntelProvider.lookupPackageVersion({
+    name: metadata.name,
+    version: metadata.version,
+    sha256: extracted.artifact.sha256,
   });
+
+  const policy = decidePolicy({
+    behaviouralRecommendation: risk.recommendation,
+    analysisCompleteness,
+    threatIntelligence: threat.status,
+  });
+
+  const files: ScannedFile[] = [
+    ...staticResult.files.map((file) => {
+      const extractedFile = extracted.files.find((entry) => entry.path === file.path);
+      return {
+        path: file.path,
+        sizeBytes: file.sizeBytes,
+        sha256:
+          extractedFile?.sha256 ??
+          createHash("sha256").update(file.path).digest("hex"),
+        kind: file.kind,
+        analysed: file.analysed,
+      };
+    }),
+    ...droppedExecutable.map((dropped) => {
+      const extractedFile = extracted.files.find((entry) => entry.path === dropped.path);
+      return {
+        path: dropped.path,
+        sizeBytes: dropped.sizeBytes,
+        sha256:
+          extractedFile?.sha256 ??
+          createHash("sha256").update(dropped.path).digest("hex"),
+        kind: "JAVASCRIPT" as const,
+        analysed: false,
+      };
+    }),
+  ];
 
   // Local artifacts must never report registry integrityVerified=true.
   const artifact =
@@ -222,12 +302,14 @@ export function investigateExtractedPackage(
     acquisition,
     lifecycleScripts: staticResult.lifecycleScripts,
     files,
-    findings: staticResult.findings,
+    findings: allFindings,
     parseFailures: staticResult.parseFailures,
     behaviourChains: behaviour.chains,
     risk,
     scoringBreakdown,
     analysisCoverage,
+    analysisCompleteness,
+    policy,
     startedAt: startedAt.toISOString(),
     completedAt: completedAt.toISOString(),
     durationMs: completedAt.getTime() - startedAt.getTime(),

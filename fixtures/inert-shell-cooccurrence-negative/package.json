@@ -1,0 +1,6 @@
+{
+  "name": "inert-shell-cooccurrence-negative",
+  "version": "1.0.0",
+  "description": "Inert negative: curl string never executed; unrelated echo is executed",
+  "main": "index.js"
+}

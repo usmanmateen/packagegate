@@ -9,7 +9,7 @@
  *   packagegate --help
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ScanError } from "@packagegate/shared";
@@ -154,9 +154,7 @@ function repoRoot(): string {
 
 function runFixture(name: string): InvestigationResult {
   const root = join(repoRoot(), "fixtures", name);
-  const indexPath = join(root, "index.js");
   const manifestPath = join(root, "package.json");
-  const index = readFileSync(indexPath, "utf8");
   const manifest = readFileSync(manifestPath, "utf8");
   const parsed: unknown = JSON.parse(manifest);
   const packageName =
@@ -173,15 +171,35 @@ function runFixture(name: string): InvestigationResult {
     typeof parsed.version === "string"
       ? parsed.version
       : "0.0.0";
+  const scripts =
+    parsed !== null &&
+    typeof parsed === "object" &&
+    "scripts" in parsed &&
+    parsed.scripts !== null &&
+    typeof parsed.scripts === "object"
+      ? Object.fromEntries(
+          Object.entries(parsed.scripts as Record<string, unknown>).filter(
+            (entry): entry is [string, string] => typeof entry[1] === "string",
+          ),
+        )
+      : {};
+
+  const files: { path: string; content: string }[] = [
+    { path: "package.json", content: manifest },
+  ];
+  for (const entry of readdirSync(root)) {
+    if (!/\.(?:[cm]?js|jsx|[cm]?ts|tsx)$/i.test(entry)) continue;
+    files.push({
+      path: entry,
+      content: readFileSync(join(root, entry), "utf8"),
+    });
+  }
 
   return investigateSources({
     requestedSpec: `${packageName}@${version}`,
     resolved: { name: packageName, version },
-    files: [
-      { path: "index.js", content: index },
-      { path: "package.json", content: manifest },
-    ],
-    scripts: {},
+    files,
+    scripts,
     manifestText: manifest,
   });
 }

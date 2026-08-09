@@ -266,8 +266,53 @@ export function formatInvestigationReport(
   }
   push("");
 
-  push(theme.heading("Risk"));
-  push(theme.muted("----"));
+  push(theme.heading("Analysis completeness"));
+  push(theme.muted("---------------------"));
+  const completeness = result.analysisCompleteness;
+  if (completeness.status === "COMPLETE") {
+    push(`  ${theme.success("COMPLETE")}`);
+  } else if (completeness.status === "DEGRADED") {
+    push(`  ${theme.warning(`⚠ ${completeness.status}`)}`);
+  } else {
+    push(`  ${theme.danger(`⚠ ${completeness.status}`)}`);
+  }
+  push(
+    `  ${theme.muted("Coverage ratio:")} ${theme.info(`${(completeness.coverageRatio * 100).toFixed(1)}%`)}`,
+  );
+  if (completeness.reasons.length === 0) {
+    push(theme.muted("  No completeness gaps recorded."));
+  } else {
+    for (const reason of completeness.reasons.slice(0, 8)) {
+      const pathBit =
+        reason.path === undefined ? "" : ` ${theme.muted(reason.path)}`;
+      push(`  ${theme.warning("•")} ${reason.code}${pathBit}`);
+      push(`    ${theme.muted(reason.message)}`);
+      if (reason.lifecycleReachable === true) {
+        push(`    ${theme.warning("Lifecycle reachable: yes")}`);
+      }
+      if (reason.sizeBytes !== undefined) {
+        push(
+          `    ${theme.muted(`Size: ${String(reason.sizeBytes)} bytes`)}`,
+        );
+      }
+    }
+    if (completeness.reasons.length > 8) {
+      push(
+        theme.muted(
+          `  … and ${String(completeness.reasons.length - 8)} more`,
+        ),
+      );
+    }
+  }
+  push(
+    theme.muted(
+      "  Behavioural score does not include behaviour in unanalysed executable source.",
+    ),
+  );
+  push("");
+
+  push(theme.heading("Behavioural risk"));
+  push(theme.muted("----------------"));
   const scoreText = theme.colourRiskScore(
     result.risk.score,
     result.risk.recommendation,
@@ -279,6 +324,30 @@ export function formatInvestigationReport(
   push(
     `  Classification:   ${theme.colourClassification(result.risk.classification)}`,
   );
+  push("");
+
+  push(theme.heading("Final policy"));
+  push(theme.muted("------------"));
+  push(
+    `  Analysis completeness: ${
+      result.policy.analysisCompleteness === "COMPLETE"
+        ? theme.success(result.policy.analysisCompleteness)
+        : theme.warning(result.policy.analysisCompleteness)
+    }`,
+  );
+  push(
+    `  Threat intelligence:   ${
+      result.policy.threatIntelligence === "KNOWN_MALICIOUS"
+        ? theme.danger(result.policy.threatIntelligence)
+        : theme.muted(result.policy.threatIntelligence)
+    }`,
+  );
+  push(
+    `  Final action:          ${theme.colourRecommendation(result.policy.finalAction)}`,
+  );
+  for (const reason of result.policy.reasons) {
+    push(`  ${theme.muted(`• ${reason.code}:`)} ${reason.message}`);
+  }
   push("");
 
   push(theme.heading("Risk breakdown"));

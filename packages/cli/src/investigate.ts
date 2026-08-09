@@ -3,6 +3,7 @@ import type {
   PackageMetadata,
 } from "@packagegate/shared";
 import { analyseBehaviourChains } from "@packagegate/behaviour-engine";
+import { decidePolicy, POLICY_ENGINE_VERSION } from "@packagegate/policy-engine";
 import {
   assessRisk,
   computeScoringBreakdown,
@@ -13,6 +14,7 @@ import {
   RULES_VERSION as STATIC_RULES_VERSION,
 } from "@packagegate/static-analyser";
 import type { ScannedFile } from "@packagegate/shared";
+import { buildAnalysisCompleteness } from "./completeness.js";
 import { SCANNER_VERSION } from "./pipeline.js";
 import {
   SAFETY_DISCLAIMER,
@@ -51,6 +53,7 @@ export function investigateSources(
   const behaviour = analyseBehaviourChains({
     files: input.files,
     findings: staticResult.findings,
+    lifecycleScripts: staticResult.lifecycleScripts,
   });
 
   const analysable = staticResult.files.filter(
@@ -60,6 +63,12 @@ export function investigateSources(
   const analysisCoverage =
     analysable.length === 0 ? 1 : analysedCount / analysable.length;
 
+  const analysisCompleteness = buildAnalysisCompleteness({
+    coverageRatio: analysisCoverage,
+    droppedExecutable: [],
+    parseFailures: staticResult.parseFailures,
+  });
+
   const integrityVerified = input.integrityVerified === true;
   const riskInput = {
     findings: staticResult.findings,
@@ -67,11 +76,16 @@ export function investigateSources(
     analysisCoverage,
     integrityVerified,
     scannerVersion: SCANNER_VERSION,
-    rulesVersion: `${STATIC_RULES_VERSION}+${behaviour.engineVersion}+${WEIGHTS_VERSION}`,
+    rulesVersion: `${STATIC_RULES_VERSION}+${behaviour.engineVersion}+${WEIGHTS_VERSION}+${POLICY_ENGINE_VERSION}`,
   };
 
   const risk = assessRisk(riskInput);
   const scoringBreakdown = computeScoringBreakdown(riskInput);
+  const policy = decidePolicy({
+    behaviouralRecommendation: risk.recommendation,
+    analysisCompleteness,
+    threatIntelligence: "NONE",
+  });
 
   const files: ScannedFile[] = staticResult.files.map((file) => ({
     path: file.path,
@@ -129,6 +143,8 @@ export function investigateSources(
     risk,
     scoringBreakdown,
     analysisCoverage,
+    analysisCompleteness,
+    policy,
     startedAt: startedAt.toISOString(),
     completedAt: completedAt.toISOString(),
     durationMs: completedAt.getTime() - startedAt.getTime(),

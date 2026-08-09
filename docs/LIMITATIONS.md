@@ -54,9 +54,10 @@ Docker isolation does not change this. Containerisation is defence-in-depth for
 
 ## 3. Behaviour chains are not taint analysis
 
-The behaviour-chain engine performs **conservative relationship inference**,
-mostly within a single file. It is not whole-program dataflow analysis and must
-never be described as such.
+The behaviour-chain engine performs **conservative relationship inference**.
+Detection Engine v2 adds shell-pipeline links, install-lifecycle invocation
+links, and a small cross-file summary subset. It is still not whole-program
+taint analysis and must never be described as such.
 
 Each chain records *how* its steps were connected, via a `ChainLinkKind`, and a
 chain's confidence is capped at its weakest link. A chain built only on
@@ -70,6 +71,9 @@ evidence that data does not flow.**
 
 We will also occasionally infer a relationship that a human would reject. That
 is why every chain cites the exact lines it rests on.
+
+Shell command semantics means PackageGate **parses command strings as data**.
+It never executes those strings.
 
 ---
 

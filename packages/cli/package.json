@@ -27,6 +27,7 @@
     "@packagegate/artifact-fetcher": "workspace:*",
     "@packagegate/behaviour-engine": "workspace:*",
     "@packagegate/npm-registry": "workspace:*",
+    "@packagegate/policy-engine": "workspace:*",
     "@packagegate/risk-engine": "workspace:*",
     "@packagegate/shared": "workspace:*",
     "@packagegate/static-analyser": "workspace:*"

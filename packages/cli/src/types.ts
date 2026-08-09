@@ -1,10 +1,12 @@
 import type {
+  AnalysisCompleteness,
   ArtifactInfo,
   BehaviourChain,
   Finding,
   LifecycleScript,
   PackageMetadata,
   ParseFailure,
+  PolicyDecision,
   ResolvedPackage,
   RiskAssessment,
   ScannedFile,
@@ -64,6 +66,8 @@ export interface AcquisitionInfo {
  *
  * Absence of findings is not evidence of safety — it means the rules did not
  * match the code we were able to parse within the budgets we applied.
+ *
+ * Behavioural risk and final policy are separate lanes.
  */
 export interface InvestigationResult {
   readonly requestedSpec: string;
@@ -78,7 +82,10 @@ export interface InvestigationResult {
   readonly behaviourChains: readonly BehaviourChain[];
   readonly risk: RiskAssessment;
   readonly scoringBreakdown: ScoringBreakdown;
+  /** @deprecated Prefer analysisCompleteness.coverageRatio */
   readonly analysisCoverage: number;
+  readonly analysisCompleteness: AnalysisCompleteness;
+  readonly policy: PolicyDecision;
   readonly startedAt: string;
   readonly completedAt: string;
   readonly durationMs: number;
