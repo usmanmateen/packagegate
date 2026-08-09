@@ -1,40 +1,71 @@
-# PackageGate — Neural V1 data freeze (pre-training)
+# PackageGate — Neural Experiment V1
 
-**Status:** slice-rich V4 neural export frozen  
-**Export:** `/tmp/packagegate-ml-data-v4/exports/v4-neural/`  
-**Manifests:** `ml/data-manifests/v4/neural/`  
-**Splits:** unchanged from Dataset V4  
+**Status:** first neural experiment complete (shadow)  
+**Gate prerequisite:** Dataset V4 neural gate **PASS** (frozen)  
+**Data freeze:** `ml/data-manifests/v4/neural/` + SliceSchemaV2 export  
 
-## Why slices were empty (before)
+## Slice coverage (required before PyTorch)
 
-| Reason | Count (980 exports) |
-| --- | ---: |
-| Exporter hard-coded `slices: []` in `investigation_to_mle_export` | **980** |
-| Findings present but no filePath flat fields in audit (nested `location`) | 773 |
-| No findings / no evidence locations | 207 |
-| Missing export file | 12 |
+| | Before | After SliceSchemaV2 |
+| --- | ---: | ---: |
+| Packages with ≥1 slice (all) | 0% | **99.4%** |
+| Matched ≥1 / ≥2 | 0% / 0% | **99.0% / 92.1%** |
+| Total slices (980 pkgs) | 0 | **11034** |
+| Leak flags | — | **0** |
 
-Root cause: **feature-export implementation omitted slice generation** (not missing evidence). TS `buildSecuritySlices` existed but the Python pilot path never called it or loaded `sourceByPath`.
+Root cause of empty slices: Python `investigation_to_mle_export` hard-coded
+`slices: []` despite findings having `location.filePath`.
 
-## Coverage after SliceSchemaV2
+## Environment
 
-| Population | n | total slices | mean | median | p90 | ge1 | ge2 | zeros |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| All available exports | 980 | 11034 | 11.3 | 6 | 32 | 99.4% | 92.9% | 6 |
-| Matched benchmark | 305 | 3562 | 11.7 | 6 | 32 | **99.0%** | **92.1%** | 3 |
+| | |
+| --- | --- |
+| GPU | NVIDIA GeForce RTX 5060 Ti (sm_120), ~16 GB |
+| Driver | 596.49 (CUDA 13.2 reported by nvidia-smi) |
+| PyTorch | **2.11.0+cu128** (`torch.cuda.is_available()=True`) |
+| Transformers | 5.14.1 |
+| Install | `uv pip install torch --index-url https://download.pytorch.org/whl/cu128` (ml venv only) |
+| Weights cache | `/home/usman/packagegate-ml-models/` (not git; avoid `/tmp` tmpfs) |
 
-Pre-registered coverage gate: matched ≥95% with ≥1 slice and ≥80% with ≥2 — **PASS**.  
-Leakage audit on strict records: **0** flags — **PASS**.
+## Encoder — PG-SLICE-V1
 
-Zero-slice packages remain in evaluation with `codeViewAvailable: false` (structured path only).
+| | |
+| --- | --- |
+| Base | `microsoft/graphcodebert-base` @ `2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d` |
+| Max length | 512 (~16% truncation) |
+| Train/val/test slices | 7508 / 2085 / 1441 |
+| Val micro-F1 | 0.868 |
+| Test micro-F1 / macro-F1 | **0.853 / 0.788** |
+| Test micro/macro PR-AUC | 0.907 / 0.851 |
+| Train time | ~9.4 min |
 
-## Slice strategy
+## Package models (matched test n=58)
 
-- Evidence windows from findings / chain links / lifecycle / main·bin entrypoints
-- Dedup by content hash + token fingerprint
-- Priority ranking + per-category diversity (max 6, fill remaining)
-- Max 32 slices/package (configurable)
-- STRICT masking via existing `identity_mask` / `record_v2` helpers
-- `package.json` slices use security-manifest view (no name/version/repo)
+| Model | PR-AUC | Recall@~5% FPR |
+| --- | ---: | ---: |
+| Structured behaviour logistic | 0.843 | 0.667 |
+| **Embedding mean only** | **0.897** | **0.714** |
+| Embedding + structured | 0.878 | 0.714 |
+| MIL code only | 0.852 | 0.667 |
+| MIL + structured | 0.775 | 0.571 |
 
-**PyTorch / GraphCodeBERT:** not installed until this freeze.
+## Verdict
+
+**YES** — mean-pooled GraphCodeBERT slice embeddings improve PR-AUC and
+recall@~5%FPR over the behaviour-only structured baseline on the frozen matched
+test. Attention MIL did **not** beat the structured baseline in this run.
+
+Policy: **shadow only**. No ML-only BLOCK. No detector rule changes.
+
+## Holdouts
+
+| Package | Result |
+| --- | --- |
+| 02-echo@0.0.7 | Artifact unavailable (npm 404 / missing archive); never in train/val |
+| lodash / express / debug / JSONStream | Embed-mean proba ≪ 0.01; deterministic ALLOW |
+
+## Next (not this milestone)
+
+- Neural PG-Delta
+- CodeT5+ comparison
+- Richer GraphCodeBERT data-flow inputs
