@@ -58,6 +58,11 @@ export interface ExtractedFile {
    * file has a zero-length `content`.
    */
   readonly content?: Buffer;
+  /**
+   * Bounded prefix retained even when full content is dropped, for opaque-source
+   * triage only. Never a substitute for full AST analysis.
+   */
+  readonly contentPreview?: Buffer;
 }
 
 export interface ContentRetention {
@@ -389,6 +394,9 @@ class ExtractionState {
     // `undefined` once the retention budget has ruled this file out.
     let retained: Buffer[] | undefined = [];
     let retainedForFile = 0;
+    const previewChunks: Buffer[] = [];
+    let previewBytes = 0;
+    const previewLimit = 64 * 1024;
 
     try {
       for await (const chunk of entry) {
@@ -403,6 +411,12 @@ class ExtractionState {
         }
         hash.update(chunk);
         await handle.write(chunk);
+
+        if (previewBytes < previewLimit) {
+          const take = Math.min(chunk.byteLength, previewLimit - previewBytes);
+          previewChunks.push(chunk.subarray(0, take));
+          previewBytes += take;
+        }
 
         if (retained !== undefined) {
           const perFileExceeded =
@@ -427,7 +441,12 @@ class ExtractionState {
 
     if (retained === undefined) {
       this.#droppedFileCount += 1;
-      this.#files.push({ path: relativePath, sizeBytes, sha256: hash.digest("hex") });
+      this.#files.push({
+        path: relativePath,
+        sizeBytes,
+        sha256: hash.digest("hex"),
+        contentPreview: Buffer.concat(previewChunks),
+      });
       return;
     }
 

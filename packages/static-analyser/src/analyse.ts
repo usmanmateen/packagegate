@@ -34,7 +34,7 @@ import type {
  * Recorded in every result so a verdict can be reproduced under the rules that
  * produced it.
  */
-export const RULES_VERSION = "static-analyser/1.0.0";
+export const RULES_VERSION = "static-analyser/2.0.0";
 
 /** One file's analysis, with no knowledge of the rest of the package. */
 export interface FileAnalysis {

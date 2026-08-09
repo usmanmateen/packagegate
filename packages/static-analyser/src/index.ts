@@ -49,6 +49,9 @@ export type { AnalysisLimits } from "./limits.js";
 
 export { shannonEntropy } from "./rules/encoding.js";
 
+export { analyseOpaqueSource } from "./opaque.js";
+export type { OpaqueSourceInput, OpaqueSourceResult } from "./opaque.js";
+
 export type {
   FileAnalysisReport,
   FileKind,

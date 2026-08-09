@@ -128,3 +128,51 @@ export function hasShellOption(path: NodePath<t.CallExpression>): boolean {
   }
   return false;
 }
+
+/**
+ * Recover statically known string values that may reach a process-execution
+ * argument. Supports string/template literals at the call site, and identifiers
+ * bound to one or more constant string assignments (including platform
+ * branches). Does not expand interpolations or non-constant writes.
+ */
+export function recoverableStringArguments(
+  argPath: NodePath<t.Node> | undefined,
+): string[] {
+  if (argPath === undefined) return [];
+  const direct = staticStringValue(argPath.node);
+  if (direct !== undefined) return [direct];
+
+  if (!argPath.isIdentifier()) return [];
+  const binding = argPath.scope.getBinding(argPath.node.name);
+  if (binding === undefined) return [];
+
+  const values = new Set<string>();
+
+  if (binding.path.isVariableDeclarator()) {
+    const init = binding.path.node.init;
+    if (init !== undefined && init !== null) {
+      const value = staticStringValue(init);
+      if (value !== undefined) values.add(value);
+    }
+  }
+
+  for (const write of binding.constantViolations.slice(0, 32)) {
+    if (!write.isAssignmentExpression() || write.node.operator !== "=") continue;
+    const value = staticStringValue(write.node.right);
+    if (value !== undefined) values.add(value);
+  }
+
+  for (const ref of binding.referencePaths.slice(0, 64)) {
+    const parent = ref.parentPath;
+    if (
+      parent?.isAssignmentExpression() &&
+      parent.node.operator === "=" &&
+      parent.get("left") === ref
+    ) {
+      const value = staticStringValue(parent.node.right);
+      if (value !== undefined) values.add(value);
+    }
+  }
+
+  return [...values].slice(0, 8);
+}

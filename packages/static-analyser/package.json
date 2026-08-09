@@ -24,7 +24,8 @@
     "@babel/parser": "^8.0.4",
     "@babel/traverse": "^8.0.4",
     "@babel/types": "^8.0.4",
-    "@packagegate/shared": "workspace:*"
+    "@packagegate/shared": "workspace:*",
+    "@packagegate/shell-analyser": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^26.2.0"
