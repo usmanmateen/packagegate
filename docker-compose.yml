@@ -1,0 +1,38 @@
+# Compose exists for infrastructure and security boundaries, not to containerise
+# every development process. Today that means PostgreSQL; the scanner worker is
+# added here once it runs as a separate network-disabled process.
+#
+# Note for reviewers: nothing in this file runs analysed package code. Container
+# isolation is defence-in-depth for our own pipeline, never a licence to execute
+# unknown packages.
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: packagegate-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-packagegate}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-packagegate}
+      POSTGRES_DB: ${POSTGRES_DB:-packagegate}
+      # Deterministic collation so index ordering does not drift between hosts.
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      # Bound to loopback only. This database holds investigation evidence and
+      # analyst decisions; it must not be reachable from the local network.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # PostgreSQL 18+ images store data in a major-version subdirectory so that
+      # "pg_upgrade --link" can work across a single mount point. Mounting the
+      # old /var/lib/postgresql/data path makes the image refuse to start.
+      - packagegate-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-packagegate} -d ${POSTGRES_DB:-packagegate}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  packagegate-postgres-data:
+    name: packagegate-postgres-data
