@@ -1,0 +1,14 @@
+{
+  "datasetVersion": "v5",
+  "exported": 215,
+  "failed": 2,
+  "leakageFailures": 0,
+  "leakagePass": true,
+  "sliceSchemaVersion": 2,
+  "meanSlices": 10.795348837209302,
+  "ge1": 0.9906976744186047,
+  "ge2": 0.9023255813953488,
+  "zeroReasons": {
+    "no_security_evidence_locations": 2
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "datasetVersion": "v5",
+  "purpose": "external_temporal_holdout_inference_only",
+  "trainingDataCutoff": "2026-06-10",
+  "total": 233,
+  "available": 217,
+  "labels": {
+    "COMPROMISED": 45,
+    "MALICIOUS": 35,
+    "EXPECTED_BENIGN": 137
+  },
+  "temporalUnseen": 80,
+  "hardNegatives": 137,
+  "overlapAudit": {
+    "nameOverlap": [],
+    "familyOverlap": [],
+    "sampleIdOverlap": [],
+    "shaOverlap": [],
+    "exactDupGroups": 0,
+    "nearDupGroups": 3,
+    "passed": true
+  },
+  "categories": {
+    "compromised_lib": 45,
+    "malicious_intent": 35,
+    "benign": 137
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "nameOverlap": [],
+  "familyOverlap": [],
+  "sampleIdOverlap": [],
+  "shaOverlap": [],
+  "exactDupGroups": 0,
+  "nearDupGroups": 3,
+  "nearDupGroupsDetail": {
+    "content:f922145f53cf4ac3edf5440d559dc81dfb5430886ce2fd311c6e546ff3785939": [
+      "@mastra/voice-openai-realtime@0.12.6",
+      "@mastra/voice-openai@0.12.3",
+      "@mastra/voice-modelslab@0.1.2",
+      "@mastra/voice-cloudflare@0.12.3",
+      "@mastra/voice-sarvam@1.0.2",
+      "@mastra/voice-deepgram@0.12.2"
+    ],
+    "near:0": [
+      "new-ecro-1@0.1.9",
+      "new-ecro-helper@5.8.0"
+    ],
+    "near:1": [
+      "@mastra/voice-openai-realtime@0.12.6",
+      "@mastra/voice-openai@0.12.3",
+      "@mastra/voice-modelslab@0.1.2",
+      "@mastra/voice-cloudflare@0.12.3",
+      "@mastra/voice-sarvam@1.0.2",
+      "@mastra/voice-deepgram@0.12.2"
+    ]
+  },
+  "passed": true
+}

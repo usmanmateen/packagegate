@@ -1,0 +1,42 @@
+{
+  "datasetVersion": "v5",
+  "purpose": "external_temporal_holdout_inference_only",
+  "EXPERIMENT_STATUS": "FROZEN_MANIFEST",
+  "trainingDataCutoff": "2026-06-10",
+  "manifestHashes": {
+    "dataset_v5_full.private.json": "8f97218e6ccaf83bb88537f1e96435d75a1abee7330c4d7f1289fb178a697d62",
+    "dataset_v5_full.json": "f8939c47cb995d668561384a4405da24c63810da82ba47b39e3aaabac56ca798",
+    "summary.json": "21a70790d3dcb67fa25ed48cf8d9d0006c3255eb85e51def0662359c3230efb3",
+    "overlap_audit.json": "d24d7d54581d33a682631582510c25d823c80597af8e5701c1494c2fbb8ac7b7",
+    "sample_ids.json": "61c04b75e0090fd89c50cd71de515ed560e8adcf27c1f8dc7bf04dfbd39782cf"
+  },
+  "available": 217,
+  "labels": {
+    "COMPROMISED": 45,
+    "MALICIOUS": 35,
+    "EXPECTED_BENIGN": 137
+  },
+  "temporalUnseen": 80,
+  "crossSourceUnseen": 0,
+  "familyOverlapWithV4": 0,
+  "shaOverlapWithV4": 0,
+  "withinV5NearDupGroups": 3,
+  "primaryEvalAfterNearDupCollapse": {
+    "n": 211,
+    "dropped": [
+      "@mastra/voice-deepgram@0.12.2",
+      "@mastra/voice-modelslab@0.1.2",
+      "@mastra/voice-openai-realtime@0.12.6",
+      "@mastra/voice-openai@0.12.3",
+      "@mastra/voice-sarvam@1.0.2",
+      "new-ecro-helper@5.8.0"
+    ],
+    "labels": {
+      "COMPROMISED": 40,
+      "MALICIOUS": 34,
+      "EXPECTED_BENIGN": 137
+    },
+    "note": "Primary generalisation metrics may use near-dup-collapsed set; full set retained for sensitivity."
+  },
+  "overlapAuditPassed": true
+}
