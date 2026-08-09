@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    // `Buffer` (byte-accurate sizing) and `node:crypto` (deterministic finding
+    // ids) are the only Node APIs this package uses. Notably absent: `fs`.
+    "types": ["node"]
+  },
+  "include": ["src/**/*"]
+}
