@@ -1,0 +1,32 @@
+{
+  "models": [
+    {
+      "id": "pg-slice-graphcodebert-v1",
+      "status": "EXPERIMENTAL_SHADOW",
+      "baseModelId": "microsoft/graphcodebert-base",
+      "baseModelRevision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "checkpointSha256": "cec6d3f5f737d1c6cbc83942c0cbf9dd5cac638ddc51a43eae800d2c71474442",
+      "sliceSchemaVersion": 2,
+      "datasetVersion": "v4",
+      "trainingDataCutoff": "2026-06-10",
+      "maxSeqLength": 512,
+      "experimentId": "pg-neural-exp1",
+      "weightsInGit": false,
+      "localCheckpoint": "/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/best.pt"
+    },
+    {
+      "id": "pg-package-embed-mean-v1",
+      "status": "EXPERIMENTAL_SHADOW",
+      "dependsOn": "pg-slice-graphcodebert-v1",
+      "pooling": "mean",
+      "head": "logistic_regression",
+      "datasetVersion": "v4",
+      "featureSchemaVersion": 2,
+      "calibrationVersion": "v4-val-recall-at-5pct-fpr",
+      "operatingThreshold": 0.11855778073458667,
+      "experimentId": "pg-neural-exp1",
+      "policy": "SHADOW_ONLY",
+      "weightsInGit": false
+    }
+  ]
+}
