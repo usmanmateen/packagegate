@@ -136,7 +136,10 @@ function parseFlags(args: string[]): { positional: string[]; flags: CliFlags } {
   };
 }
 
-function resolveColor(forceColor: boolean | undefined, stream: { isTTY?: boolean }): boolean {
+function resolveColor(
+  forceColor: boolean | undefined,
+  stream: { isTTY?: boolean },
+): boolean {
   if (forceColor === true) return true;
   if (forceColor === false) return false;
   return shouldUseColor({
@@ -200,9 +203,7 @@ async function main(argv: string[]): Promise<number> {
         throw new Error("--sha256 is only valid with scan-tarball");
       }
       const report = await runEvaluation({
-        ...(flags.malwareRoot === undefined
-          ? {}
-          : { malwareRoot: flags.malwareRoot }),
+        ...(flags.malwareRoot === undefined ? {} : { malwareRoot: flags.malwareRoot }),
         fixtureRoot: join(repoRoot(), "fixtures"),
       });
       if (flags.json) {
@@ -363,4 +364,14 @@ function fmt(value: number | null): string {
 }
 
 const exitCode = await main(process.argv);
-process.exit(exitCode);
+
+// Set the exit code and let Node terminate once stdout has drained, rather
+// than calling process.exit().
+//
+// Writing to a pipe is asynchronous. process.exit() tears the process down
+// immediately and discards anything still buffered, which silently truncates
+// output at the pipe capacity (~64KB on Linux) whenever the consumer is slower
+// to start than we are to write. `packagegate scan --json | jq` would then
+// receive invalid JSON — the worst possible failure for output whose whole
+// purpose is automation, because it corrupts rather than errors.
+process.exitCode = exitCode;
