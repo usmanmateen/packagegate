@@ -67,9 +67,7 @@ describe("createTheme", () => {
   it("renders severity badges as readable plain text when colour is off", () => {
     const theme = createTheme({ enabled: false });
     expect(theme.colourSeverity("LOW", "LOW severity")).toBe("LOW severity");
-    expect(theme.colourConfidence("HIGH", "HIGH confidence")).toBe(
-      "HIGH confidence",
-    );
+    expect(theme.colourConfidence("HIGH", "HIGH confidence")).toBe("HIGH confidence");
     expect(containsAnsi(theme.colourSeverity("HIGH"))).toBe(false);
   });
 

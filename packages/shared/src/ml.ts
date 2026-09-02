@@ -7,11 +7,7 @@
 
 import { z } from "zod";
 
-export const ML_ASSESSMENT_STATUSES = [
-  "DISABLED",
-  "AVAILABLE",
-  "ERROR",
-] as const;
+export const ML_ASSESSMENT_STATUSES = ["DISABLED", "AVAILABLE", "ERROR"] as const;
 export const MlAssessmentStatusSchema = z.enum(ML_ASSESSMENT_STATUSES);
 export type MlAssessmentStatus = z.infer<typeof MlAssessmentStatusSchema>;
 

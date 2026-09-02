@@ -50,10 +50,7 @@ function formatFindingBadge(
   theme: Theme,
 ): string {
   const severityPart = theme.colourSeverity(severity, `${severity} severity`);
-  const confidencePart = theme.colourConfidence(
-    confidence,
-    `${confidence} confidence`,
-  );
+  const confidencePart = theme.colourConfidence(confidence, `${confidence} confidence`);
   return `[${severityPart} · ${confidencePart}]`;
 }
 
@@ -72,10 +69,7 @@ function formatSourceLine(acquisition: AcquisitionInfo, theme: Theme): string {
   }
 }
 
-function formatIntegrityLines(
-  result: InvestigationResult,
-  theme: Theme,
-): string[] {
+function formatIntegrityLines(result: InvestigationResult, theme: Theme): string[] {
   const lines: string[] = [];
   const { acquisition } = result;
 
@@ -178,9 +172,7 @@ export function formatInvestigationReport(
   } else {
     for (const script of result.lifecycleScripts) {
       const flag = script.runsOnInstall ? theme.warning(" [install]") : "";
-      push(
-        `  ${theme.info(script.name)}${flag}: ${theme.muted(script.command)}`,
-      );
+      push(`  ${theme.info(script.name)}${flag}: ${theme.muted(script.command)}`);
     }
   }
   push("");
@@ -211,31 +203,21 @@ export function formatInvestigationReport(
       );
     }
     if (result.findings.length > sample.length) {
-      push(
-        theme.muted(
-          `  … and ${String(result.findings.length - sample.length)} more`,
-        ),
-      );
+      push(theme.muted(`  … and ${String(result.findings.length - sample.length)} more`));
     }
   }
   push("");
 
   if (result.parseFailures.length > 0) {
-    push(
-      theme.warning(`Parse failures (${String(result.parseFailures.length)})`),
-    );
+    push(theme.warning(`Parse failures (${String(result.parseFailures.length)})`));
     push(theme.muted("--------------"));
     for (const failure of result.parseFailures.slice(0, 10)) {
-      push(
-        `  ${theme.muted(failure.filePath)}: ${theme.warning(failure.reason)}`,
-      );
+      push(`  ${theme.muted(failure.filePath)}: ${theme.warning(failure.reason)}`);
     }
     push("");
   }
 
-  push(
-    theme.heading(`Behaviour chains (${String(result.behaviourChains.length)})`),
-  );
+  push(theme.heading(`Behaviour chains (${String(result.behaviourChains.length)})`));
   push(theme.muted("----------------"));
   if (result.behaviourChains.length === 0) {
     push(theme.success("  None with evidenced dataflow."));
@@ -247,14 +229,9 @@ export function formatInvestigationReport(
   } else {
     for (const chain of result.behaviourChains) {
       const path = formatChainPath(chain, theme);
-      const confidenceTag = theme.colourConfidence(
-        chain.confidence,
-        chain.confidence,
-      );
+      const confidenceTag = theme.colourConfidence(chain.confidence, chain.confidence);
       const marker =
-        result.risk.recommendation === "BLOCK"
-          ? theme.danger("●")
-          : theme.warning("●");
+        result.risk.recommendation === "BLOCK" ? theme.danger("●") : theme.warning("●");
       push(`  ${marker} ${path}  [${confidenceTag}]`);
       push(`    ${theme.muted(chain.rationale)}`);
       for (const link of chain.links) {
@@ -283,25 +260,18 @@ export function formatInvestigationReport(
     push(theme.muted("  No completeness gaps recorded."));
   } else {
     for (const reason of completeness.reasons.slice(0, 8)) {
-      const pathBit =
-        reason.path === undefined ? "" : ` ${theme.muted(reason.path)}`;
+      const pathBit = reason.path === undefined ? "" : ` ${theme.muted(reason.path)}`;
       push(`  ${theme.warning("•")} ${reason.code}${pathBit}`);
       push(`    ${theme.muted(reason.message)}`);
       if (reason.lifecycleReachable === true) {
         push(`    ${theme.warning("Lifecycle reachable: yes")}`);
       }
       if (reason.sizeBytes !== undefined) {
-        push(
-          `    ${theme.muted(`Size: ${String(reason.sizeBytes)} bytes`)}`,
-        );
+        push(`    ${theme.muted(`Size: ${String(reason.sizeBytes)} bytes`)}`);
       }
     }
     if (completeness.reasons.length > 8) {
-      push(
-        theme.muted(
-          `  … and ${String(completeness.reasons.length - 8)} more`,
-        ),
-      );
+      push(theme.muted(`  … and ${String(completeness.reasons.length - 8)} more`));
     }
   }
   push(
@@ -313,17 +283,10 @@ export function formatInvestigationReport(
 
   push(theme.heading("Behavioural risk"));
   push(theme.muted("----------------"));
-  const scoreText = theme.colourRiskScore(
-    result.risk.score,
-    result.risk.recommendation,
-  );
+  const scoreText = theme.colourRiskScore(result.risk.score, result.risk.recommendation);
   push(`  Score:            ${scoreText} ${theme.muted("/ 100")}`);
-  push(
-    `  Recommendation:   ${theme.colourRecommendation(result.risk.recommendation)}`,
-  );
-  push(
-    `  Classification:   ${theme.colourClassification(result.risk.classification)}`,
-  );
+  push(`  Recommendation:   ${theme.colourRecommendation(result.risk.recommendation)}`);
+  push(`  Classification:   ${theme.colourClassification(result.risk.classification)}`);
   push("");
 
   push(theme.heading("ML analysis"));
@@ -338,10 +301,11 @@ export function formatInvestigationReport(
   } else {
     push(`  Status: ${theme.info(result.ml.status)}`);
     if (result.ml.modelId) {
-      push(`  Model:  ${theme.info(result.ml.modelId)}${result.ml.modelVersion ? ` (${result.ml.modelVersion})` : ""}`);
+      push(
+        `  Model:  ${theme.info(result.ml.modelId)}${result.ml.modelVersion ? ` (${result.ml.modelVersion})` : ""}`,
+      );
     }
-    const prob =
-      result.ml.calibratedProbability ?? result.ml.maliciousProbability;
+    const prob = result.ml.calibratedProbability ?? result.ml.maliciousProbability;
     if (prob !== undefined) {
       push(
         `  Malicious-pattern probability: ${theme.info((prob * 100).toFixed(0) + "%")}${
@@ -451,11 +415,7 @@ export function formatInvestigationReport(
     push(`  ${contribution.label.padEnd(36)} ${pointsStyled}`);
   }
   if (result.risk.contributions.length > 15) {
-    push(
-      theme.muted(
-        `  … and ${String(result.risk.contributions.length - 15)} more`,
-      ),
-    );
+    push(theme.muted(`  … and ${String(result.risk.contributions.length - 15)} more`));
   }
   push("");
   push(theme.muted(result.disclaimer));

@@ -90,8 +90,7 @@ export async function runEvaluation(
   options: EvaluateOptions = {},
 ): Promise<EvaluationReport> {
   const manifest = options.manifest ?? DEFAULT_EVALUATION_MANIFEST;
-  const fixtureRoot =
-    options.fixtureRoot ?? join(process.cwd(), "fixtures");
+  const fixtureRoot = options.fixtureRoot ?? join(process.cwd(), "fixtures");
   const results: EvaluationSampleResult[] = [];
 
   for (const sample of manifest.samples) {

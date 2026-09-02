@@ -1,8 +1,4 @@
-import {
-  MODIFIER_CEILING,
-  MODIFIER_FLOOR,
-  MODIFIER_VALUES,
-} from "./weights.js";
+import { MODIFIER_CEILING, MODIFIER_FLOOR, MODIFIER_VALUES } from "./weights.js";
 import { clampModifiers } from "./saturation.js";
 import type { IntelligenceTier } from "./types.js";
 

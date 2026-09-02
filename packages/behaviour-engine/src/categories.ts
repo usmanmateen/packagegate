@@ -16,10 +16,14 @@ export const SINK_CATEGORIES: ReadonlySet<FindingCategory> = new Set([
   "FILESYSTEM_WRITE",
 ]);
 
-export function hasSourceFinding(findings: readonly { category: FindingCategory }[]): boolean {
+export function hasSourceFinding(
+  findings: readonly { category: FindingCategory }[],
+): boolean {
   return findings.some((finding) => SOURCE_CATEGORIES.has(finding.category));
 }
 
-export function hasSinkFinding(findings: readonly { category: FindingCategory }[]): boolean {
+export function hasSinkFinding(
+  findings: readonly { category: FindingCategory }[],
+): boolean {
   return findings.some((finding) => SINK_CATEGORIES.has(finding.category));
 }

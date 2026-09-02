@@ -40,7 +40,10 @@ export function structuralCap(evidencedChainCount: number): number {
 }
 
 /** Final clamped score after structural cap (§4.9). */
-export function applyStructuralCap(rawTotal: number, evidencedChainCount: number): number {
+export function applyStructuralCap(
+  rawTotal: number,
+  evidencedChainCount: number,
+): number {
   const cap = structuralCap(evidencedChainCount);
   const clamped = Math.max(0, Math.min(100, Math.min(rawTotal, cap)));
   return Math.round(clamped);
@@ -55,9 +58,7 @@ export function clampModifiers(total: number, floor: number, ceiling: number): n
  * Reference B3 rule saturation table from §4.5 (w=1, κ=4, confidence=1.0).
  * Used by unit tests; doc rounds to two decimal places.
  */
-export const B3_RULE_SATURATION_TABLE: Readonly<
-  Record<number, number>
-> = {
+export const B3_RULE_SATURATION_TABLE: Readonly<Record<number, number>> = {
   1: 0.89,
   2: 1.57,
   5: 2.85,

@@ -81,10 +81,7 @@ export function computeScoringBreakdown(input: RiskEngineInput): ScoringBreakdow
 
   const familyRawScores = new Map<FamilyId, number>();
   for (const [family, ruleTotal] of familyRuleTotals.entries()) {
-    familyRawScores.set(
-      family,
-      saturateFamily(ruleTotal, FAMILY_CAPS[family]),
-    );
+    familyRawScores.set(family, saturateFamily(ruleTotal, FAMILY_CAPS[family]));
   }
 
   const sortedFamilies = [...familyRawScores.entries()].sort(
@@ -106,15 +103,9 @@ export function computeScoringBreakdown(input: RiskEngineInput): ScoringBreakdow
     },
   );
 
-  const breadthRaw = familyBreakdown.reduce(
-    (sum, entry) => sum + entry.decayedPoints,
-    0,
-  );
+  const breadthRaw = familyBreakdown.reduce((sum, entry) => sum + entry.decayedPoints, 0);
 
-  const chainRaw = evidenced.reduce(
-    (sum, entry) => sum + entry.rawContribution,
-    0,
-  );
+  const chainRaw = evidenced.reduce((sum, entry) => sum + entry.rawContribution, 0);
   const evidencedChainCount = evidenced.length;
   const maxChainConfidence =
     evidenced.length === 0

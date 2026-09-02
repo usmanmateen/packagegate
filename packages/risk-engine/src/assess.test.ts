@@ -168,7 +168,11 @@ describe("assessRisk — structural invariant without chains", () => {
 
 describe("assessRisk — decision thresholds (§8)", () => {
   it("BLOCK at score≥90 with ≥2 chains and max conf≥0.80", () => {
-    const chains = [strongChain("chain-1"), strongChain("chain-2"), strongChain("chain-3")];
+    const chains = [
+      strongChain("chain-1"),
+      strongChain("chain-2"),
+      strongChain("chain-3"),
+    ];
     const findings: Finding[] = [
       installScriptFinding(),
       baseFinding({

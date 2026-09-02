@@ -8,7 +8,9 @@ import type {
 import { compareInvestigations, findingIdentity } from "./index.js";
 import type { DiffableInvestigation } from "./types.js";
 
-function completeness(status: AnalysisCompleteness["status"] = "COMPLETE"): AnalysisCompleteness {
+function completeness(
+  status: AnalysisCompleteness["status"] = "COMPLETE",
+): AnalysisCompleteness {
   return { status, reasons: [], coverageRatio: 1 };
 }
 
@@ -22,7 +24,9 @@ function policy(action: PolicyDecision["finalAction"]): PolicyDecision {
   };
 }
 
-function finding(overrides: Partial<Finding> & Pick<Finding, "ruleId" | "category" | "title">): Finding {
+function finding(
+  overrides: Partial<Finding> & Pick<Finding, "ruleId" | "category" | "title">,
+): Finding {
   return {
     id: overrides.id ?? "f1",
     ruleId: overrides.ruleId,
@@ -38,7 +42,10 @@ function finding(overrides: Partial<Finding> & Pick<Finding, "ruleId" | "categor
   };
 }
 
-function baseInv(version: string, extra: Partial<DiffableInvestigation> = {}): DiffableInvestigation {
+function baseInv(
+  version: string,
+  extra: Partial<DiffableInvestigation> = {},
+): DiffableInvestigation {
   return {
     resolved: { name: "demo-pkg", version },
     lifecycleScripts: [],

@@ -76,22 +76,17 @@ export class LocalMlProvider implements MlProvider {
         predictedBehaviours: [],
         topSlices: [],
         supportsReviewEscalation: false,
-        errorMessage:
-          error instanceof Error ? error.message : "ML inference failed",
+        errorMessage: error instanceof Error ? error.message : "ML inference failed",
       };
     }
   }
 
   private invoke(input: PackageGateMlRecordV1): Promise<string> {
     return new Promise((resolve, reject) => {
-      const child = spawn(
-        this.pythonBin,
-        ["-m", this.module],
-        {
-          stdio: ["pipe", "pipe", "pipe"],
-          env: { ...process.env },
-        },
-      );
+      const child = spawn(this.pythonBin, ["-m", this.module], {
+        stdio: ["pipe", "pipe", "pipe"],
+        env: { ...process.env },
+      });
       let stdout = "";
       let stderr = "";
       const timer = setTimeout(() => {

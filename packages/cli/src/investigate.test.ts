@@ -53,9 +53,9 @@ describe("investigateSources — inert env exfil fixture", () => {
 
   it("does not invent a chain for unrelated env + network co-occurrence", () => {
     const source = [
-      'const mode = process.env.NODE_ENV;',
+      "const mode = process.env.NODE_ENV;",
       'require("https").request({ hostname: "example.com" });',
-      'console.log(mode);',
+      "console.log(mode);",
     ].join("\n");
 
     const result = investigateSources({

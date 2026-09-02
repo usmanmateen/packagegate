@@ -39,9 +39,9 @@ describe("ml feature export", () => {
     const { result, sourceByPath } = loadFixture("inert-install-curl-bash");
     const features = extractStructuredFeatures(result);
     expect(features.processExecutionCount).toBeGreaterThan(0);
-    expect(features.hasPreinstall + features.hasInstall + features.hasPostinstall).toBeGreaterThan(
-      0,
-    );
+    expect(
+      features.hasPreinstall + features.hasInstall + features.hasPostinstall,
+    ).toBeGreaterThan(0);
     expect("finalAction" in features).toBe(false);
     expect(features.behaviouralScore).toBeUndefined();
 
@@ -79,9 +79,7 @@ describe("ml policy escalation", () => {
       mlSupportsReviewEscalation: true,
     });
     expect(withMl.finalAction).toBe("REVIEW");
-    expect(withMl.reasons.some((r) => r.code === "ML_REVIEW_ESCALATION")).toBe(
-      true,
-    );
+    expect(withMl.reasons.some((r) => r.code === "ML_REVIEW_ESCALATION")).toBe(true);
 
     const behaviouralBlock = decidePolicy({
       behaviouralRecommendation: "BLOCK",

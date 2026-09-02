@@ -69,14 +69,11 @@ export function buildDecisionExplanation(result: InvestigationResult): string[] 
       `ML assessment: ERROR${result.ml.errorMessage ? ` — ${result.ml.errorMessage}` : ""}`,
     );
   } else {
-    const prob =
-      result.ml.calibratedProbability ?? result.ml.maliciousProbability;
+    const prob = result.ml.calibratedProbability ?? result.ml.maliciousProbability;
     lines.push(
       `ML assessment: AVAILABLE` +
         (prob === undefined ? "" : ` (malicious-pattern p=${prob.toFixed(2)})`) +
-        (result.ml.supportsReviewEscalation
-          ? "; supports REVIEW escalation"
-          : ""),
+        (result.ml.supportsReviewEscalation ? "; supports REVIEW escalation" : ""),
     );
   }
 

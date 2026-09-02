@@ -273,8 +273,7 @@ function maybeEmitCrossFileChain(args: {
   const envFinding = args.findings.find(
     (f) =>
       f.location.filePath === args.importedPath &&
-      (f.category === "ENVIRONMENT_ACCESS" ||
-        f.category === "CREDENTIAL_RELATED_ACCESS"),
+      (f.category === "ENVIRONMENT_ACCESS" || f.category === "CREDENTIAL_RELATED_ACCESS"),
   );
   const netFinding = args.findings.find(
     (f) =>

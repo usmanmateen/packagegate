@@ -41,9 +41,7 @@ export function linkageFactorForLinks(links: readonly ChainLink[]): {
     return { factor: 0, isEvidenced: false };
   }
 
-  const onlyCooccurrence = links.every(
-    (link) => link.kind === "SEQUENTIAL_IN_SCOPE",
-  );
+  const onlyCooccurrence = links.every((link) => link.kind === "SEQUENTIAL_IN_SCOPE");
   if (onlyCooccurrence) {
     return { factor: 0.25, isEvidenced: false };
   }
@@ -98,11 +96,7 @@ export function resolveChainPattern(chain: BehaviourChain): {
   }
 
   // Install-time remote download→shell/process execution (shell semantics).
-  if (
-    installRooted &&
-    source === "REMOTE_DOWNLOAD" &&
-    sink === "PROCESS_EXECUTION"
-  ) {
+  if (installRooted && source === "REMOTE_DOWNLOAD" && sink === "PROCESS_EXECUTION") {
     return pattern("J3");
   }
 
@@ -170,8 +164,7 @@ export function resolveChains(chains: readonly BehaviourChain[]): {
     if (pattern === null) continue;
 
     const linkage = linkageFactorForLinks(chain.links);
-    const confidenceNumeric =
-      confidenceToNumeric(chain.confidence) * linkage.factor;
+    const confidenceNumeric = confidenceToNumeric(chain.confidence) * linkage.factor;
     const installTimeRooted = isInstallTimeRooted(chain);
     const installMultiplier = installTimeRooted ? INSTALL_TIME_CHAIN_MULTIPLIER : 1;
 
@@ -180,8 +173,7 @@ export function resolveChains(chains: readonly BehaviourChain[]): {
       continue;
     }
 
-    const rawContribution =
-      pattern.weight * confidenceNumeric * installMultiplier;
+    const rawContribution = pattern.weight * confidenceNumeric * installMultiplier;
 
     evidenced.push({
       chain,

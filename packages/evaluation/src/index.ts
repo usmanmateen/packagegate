@@ -8,10 +8,7 @@ export type {
   MissReasonCode,
   SampleSourceKind,
 } from "./types.js";
-export {
-  EVALUATION_LABELS,
-  MISS_REASON_CODES,
-} from "./types.js";
+export { EVALUATION_LABELS, MISS_REASON_CODES } from "./types.js";
 export {
   buildConfusionMatrix,
   classifyOutcome,

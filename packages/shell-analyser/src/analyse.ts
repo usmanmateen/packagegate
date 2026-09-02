@@ -57,7 +57,11 @@ function isVersionOnlyCurl(args: string[]): boolean {
   return args.some((a) => a === "--version" || a === "-V");
 }
 
-function classifySegment(args: readonly string[], start: number, end: number): ShellOperation | null {
+function classifySegment(
+  args: readonly string[],
+  start: number,
+  end: number,
+): ShellOperation | null {
   if (args.length === 0) return null;
   const tool = basenameTool(args[0]!);
   const rest = args.slice(1).map(stripQuotes);
@@ -132,7 +136,10 @@ function classifySegment(args: readonly string[], start: number, end: number): S
     const target = rest[1];
     const executable =
       mode !== undefined &&
-      (mode.includes("+x") || /^[0-7]*[1357]$/.test(mode) || mode === "755" || mode === "775");
+      (mode.includes("+x") ||
+        /^[0-7]*[1357]$/.test(mode) ||
+        mode === "755" ||
+        mode === "775");
     if (executable) {
       return {
         kind: "PERMISSION_CHANGE",
@@ -194,10 +201,7 @@ function classifySegment(args: readonly string[], start: number, end: number): S
   return null;
 }
 
-function findingForOperation(
-  op: ShellOperation,
-  sink: string,
-): ShellFindingDraft | null {
+function findingForOperation(op: ShellOperation, sink: string): ShellFindingDraft | null {
   const evidenceValue = sanitiseInlineValue(op.summary, 200);
   if (op.kind === "REMOTE_DOWNLOAD") {
     const hasUrl = op.destinationUrl !== undefined;
@@ -366,8 +370,7 @@ export function analyseShellCommand(input: ShellAnalyseInput): ShellAnalyseResul
   for (const { op: dl, index: di } of downloads) {
     const path = dl.outputPath!;
     const chmod = operations.findIndex(
-      (op, idx) =>
-        idx > di && op.kind === "PERMISSION_CHANGE" && op.outputPath === path,
+      (op, idx) => idx > di && op.kind === "PERMISSION_CHANGE" && op.outputPath === path,
     );
     const exec = operations.findIndex(
       (op, idx) =>

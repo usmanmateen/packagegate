@@ -119,10 +119,14 @@ export function compareInvestigations(
   }
 
   const beforeDest = new Set(
-    before.findings.map(destinationFromFinding).filter((d): d is string => d !== undefined),
+    before.findings
+      .map(destinationFromFinding)
+      .filter((d): d is string => d !== undefined),
   );
   const afterDest = new Set(
-    after.findings.map(destinationFromFinding).filter((d): d is string => d !== undefined),
+    after.findings
+      .map(destinationFromFinding)
+      .filter((d): d is string => d !== undefined),
   );
   const destinationsAdded = [...afterDest].filter((d) => !beforeDest.has(d)).sort();
   const destinationsRemoved = [...beforeDest].filter((d) => !afterDest.has(d)).sort();
@@ -256,7 +260,8 @@ export function classifyChangeSignificance(input: {
   if (installRemote) return "CRITICAL";
 
   const remoteFetch = input.findingsAdded.some(
-    (f) => f.category === "REMOTE_CODE_FETCH" || f.ruleId.includes("remote-content-to-shell"),
+    (f) =>
+      f.category === "REMOTE_CODE_FETCH" || f.ruleId.includes("remote-content-to-shell"),
   );
   const installExec = input.findingsAdded.some(
     (f) =>

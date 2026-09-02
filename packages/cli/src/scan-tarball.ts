@@ -83,8 +83,7 @@ export async function scanLocalTarball(
             localPath: local.displayPath,
             registryIntegrity: {
               status: "NOT_APPLICABLE",
-              reason:
-                "Local artifact has no trusted registry integrity reference",
+              reason: "Local artifact has no trusted registry integrity reference",
             },
             ...(suppliedMatched
               ? {

@@ -32,14 +32,7 @@ const CODES = {
 } as const;
 
 export type StyleKind =
-  | "success"
-  | "warning"
-  | "danger"
-  | "info"
-  | "muted"
-  | "heading"
-  | "emphasis"
-  | "plain";
+  "success" | "warning" | "danger" | "info" | "muted" | "heading" | "emphasis" | "plain";
 
 export interface ThemeOptions {
   /**

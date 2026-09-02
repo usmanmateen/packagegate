@@ -33,7 +33,9 @@ describe("report formatting", () => {
     const plain = formatInvestigationReport(result, { color: false });
     expect(plain).toContain("severity ·");
     expect(plain).toContain("confidence]");
-    expect(plain).toMatch(/\[(?:INFO|LOW|MEDIUM|HIGH|CRITICAL) severity · (?:LOW|MEDIUM|HIGH) confidence\]/);
+    expect(plain).toMatch(
+      /\[(?:INFO|LOW|MEDIUM|HIGH|CRITICAL) severity · (?:LOW|MEDIUM|HIGH) confidence\]/,
+    );
   });
 
   it("keeps colour-disabled output readable and free of ANSI", () => {

@@ -38,7 +38,10 @@ export function chainIdentity(chain: BehaviourChain): string {
 }
 
 export function destinationFromFinding(finding: Finding): string | undefined {
-  if (finding.category !== "NETWORK_DESTINATION" && finding.category !== "REMOTE_CODE_FETCH") {
+  if (
+    finding.category !== "NETWORK_DESTINATION" &&
+    finding.category !== "REMOTE_CODE_FETCH"
+  ) {
     return undefined;
   }
   if (typeof finding.metadata.destinationUrl === "string") {

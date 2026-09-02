@@ -50,17 +50,11 @@ export function parsePackageManifest(
   try {
     parsed = JSON.parse(manifestText);
   } catch {
-    throw new ScanError(
-      "PACKAGE_MANIFEST_INVALID",
-      "package.json is not valid JSON",
-    );
+    throw new ScanError("PACKAGE_MANIFEST_INVALID", "package.json is not valid JSON");
   }
 
   if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw new ScanError(
-      "PACKAGE_MANIFEST_INVALID",
-      "package.json must be a JSON object",
-    );
+    throw new ScanError("PACKAGE_MANIFEST_INVALID", "package.json must be a JSON object");
   }
 
   const record = parsed as Record<string, unknown>;
@@ -90,24 +84,17 @@ export function parsePackageManifest(
       "package.json is missing a valid package name",
       {
         details: {
-          name: sanitiseInlineValue(
-            typeof rawName === "string" ? rawName : "",
-            80,
-          ),
+          name: sanitiseInlineValue(typeof rawName === "string" ? rawName : "", 80),
         },
       },
     );
   } else {
-    throw new ScanError(
-      "PACKAGE_MANIFEST_INVALID",
-      "package.json is missing a version",
-    );
+    throw new ScanError("PACKAGE_MANIFEST_INVALID", "package.json is missing a version");
   }
 
   const description =
     typeof record["description"] === "string" ? record["description"] : undefined;
-  const license =
-    typeof record["license"] === "string" ? record["license"] : undefined;
+  const license = typeof record["license"] === "string" ? record["license"] : undefined;
   const homepage =
     typeof record["homepage"] === "string" ? record["homepage"] : undefined;
 

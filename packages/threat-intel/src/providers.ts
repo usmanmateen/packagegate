@@ -37,10 +37,7 @@ export class MemoryThreatIntelProvider implements ThreatIntelProvider {
   lookup(query: ThreatIntelLookup): ThreatIntelResult {
     const matches: ThreatIntelMatch[] = [];
     for (const record of this.records) {
-      if (
-        record.packageName === query.packageName &&
-        record.version === query.version
-      ) {
+      if (record.packageName === query.packageName && record.version === query.version) {
         matches.push({
           source: record.source,
           classification: record.classification,

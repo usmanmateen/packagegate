@@ -3,10 +3,7 @@ import { access, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import {
-  buildNpmTarball,
-  buildTarball,
-} from "@packagegate/artifact-fetcher/testing";
+import { buildNpmTarball, buildTarball } from "@packagegate/artifact-fetcher/testing";
 import { withExtractedTarball } from "@packagegate/artifact-fetcher";
 import { ScanError } from "@packagegate/shared";
 import { formatInvestigationJson } from "./output/json.js";
@@ -28,7 +25,7 @@ const SUSPICIOUS_INDEX = [
   "",
 ].join("\n");
 
-const BENIGN_INDEX = 'module.exports = function add(a, b) { return a + b; };\n';
+const BENIGN_INDEX = "module.exports = function add(a, b) { return a + b; };\n";
 
 const MARKER_JS = [
   '"use strict";',
@@ -124,17 +121,13 @@ describe("scanLocalTarball — end-to-end inert packages", () => {
     const path = await writeTempTarball(bytes);
     const result = await scanLocalTarball(path);
 
-    expect(result.findings.some((f) => f.category === "ENVIRONMENT_ACCESS")).toBe(
-      true,
-    );
+    expect(result.findings.some((f) => f.category === "ENVIRONMENT_ACCESS")).toBe(true);
     expect(result.findings.some((f) => f.category === "NETWORK_ACCESS")).toBe(true);
     expect(result.behaviourChains.length).toBeGreaterThanOrEqual(1);
     expect(result.behaviourChains[0]?.source).toBe("ENVIRONMENT_ACCESS");
     expect(result.behaviourChains[0]?.sink).toBe("NETWORK_REQUEST");
     expect(result.risk.recommendation).toBe("REVIEW");
-    expect(["SUSPICIOUS", "HIGH_RISK_BEHAVIOUR"]).toContain(
-      result.risk.classification,
-    );
+    expect(["SUSPICIOUS", "HIGH_RISK_BEHAVIOUR"]).toContain(result.risk.classification);
   });
 
   it("reports postinstall but never executes package code", async () => {
@@ -160,8 +153,7 @@ describe("scanLocalTarball — end-to-end inert packages", () => {
 
     expect(
       result.lifecycleScripts.some(
-        (script) =>
-          script.name === "postinstall" && script.command.includes("marker.js"),
+        (script) => script.name === "postinstall" && script.command.includes("marker.js"),
       ),
     ).toBe(true);
     expect(result.findings.some((f) => f.category === "INSTALL_SCRIPT")).toBe(true);
@@ -195,9 +187,9 @@ describe("scanLocalTarball — end-to-end inert packages", () => {
     const path = await writeTempTarball(bytes);
     const wrong = "a".repeat(64);
 
-    await expect(
-      scanLocalTarball(path, { expectedSha256: wrong }),
-    ).rejects.toMatchObject({ code: "INTEGRITY_MISMATCH" });
+    await expect(scanLocalTarball(path, { expectedSha256: wrong })).rejects.toMatchObject(
+      { code: "INTEGRITY_MISMATCH" },
+    );
   });
 });
 
@@ -232,10 +224,7 @@ describe("scanLocalTarball — hostile archives", () => {
   });
 
   it("returns MALFORMED_ARCHIVE for non-gzip input", async () => {
-    const path = await writeTempTarball(
-      Buffer.from("definitely not gzip"),
-      "broken.tgz",
-    );
+    const path = await writeTempTarball(Buffer.from("definitely not gzip"), "broken.tgz");
     await expect(scanLocalTarball(path)).rejects.toMatchObject({
       code: "MALFORMED_ARCHIVE",
     });
@@ -272,14 +261,17 @@ describe("local scan cleanup", () => {
     let capturedRoot = "";
 
     await expect(
-      withExtractedTarball({
-        bytes,
-        tarballUrl: "file://cleanup-me.tgz",
-      }, (extracted) => {
-        capturedRoot = extracted.extractionRoot;
-        // Force a failure after extraction, mirroring a late pipeline error.
-        throw new ScanError("INTERNAL", "forced downstream failure");
-      }),
+      withExtractedTarball(
+        {
+          bytes,
+          tarballUrl: "file://cleanup-me.tgz",
+        },
+        (extracted) => {
+          capturedRoot = extracted.extractionRoot;
+          // Force a failure after extraction, mirroring a late pipeline error.
+          throw new ScanError("INTERNAL", "forced downstream failure");
+        },
+      ),
     ).rejects.toMatchObject({ code: "INTERNAL" });
 
     expect(capturedRoot.length).toBeGreaterThan(0);

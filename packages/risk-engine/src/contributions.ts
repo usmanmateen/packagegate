@@ -33,9 +33,7 @@ export function buildContributions(
 
   if (breakdown.chainSaturated > 0) {
     const chainIds = evidenced.map((entry) => entry.chain.id);
-    const patternLabels = [
-      ...new Set(evidenced.map((entry) => entry.patternId)),
-    ]
+    const patternLabels = [...new Set(evidenced.map((entry) => entry.patternId))]
       .map((id) => CHAIN_PATTERNS[id]?.label ?? id)
       .join("; ");
 
@@ -44,8 +42,7 @@ export function buildContributions(
       kind: "BEHAVIOUR_CHAIN",
       label: "Evidence-backed behaviour chains",
       points: breakdown.chainSaturated,
-      rationale:
-        `${String(evidenced.length)} evidenced chain(s) saturated: ${patternLabels}.`,
+      rationale: `${String(evidenced.length)} evidenced chain(s) saturated: ${patternLabels}.`,
       findingIds: [],
       chainIds,
     });

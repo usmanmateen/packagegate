@@ -11,9 +11,7 @@ export const ANALYSIS_COMPLETENESS_STATUSES = [
   "INSUFFICIENT",
 ] as const;
 export const AnalysisCompletenessStatusSchema = z.enum(ANALYSIS_COMPLETENESS_STATUSES);
-export type AnalysisCompletenessStatus = z.infer<
-  typeof AnalysisCompletenessStatusSchema
->;
+export type AnalysisCompletenessStatus = z.infer<typeof AnalysisCompletenessStatusSchema>;
 
 export const ANALYSIS_COMPLETENESS_REASON_CODES = [
   "SOURCE_CONTENT_LIMIT_EXCEEDED",
@@ -46,9 +44,7 @@ export const AnalysisCompletenessReasonSchema = z.object({
   executableSource: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).default({}),
 });
-export type AnalysisCompletenessReason = z.infer<
-  typeof AnalysisCompletenessReasonSchema
->;
+export type AnalysisCompletenessReason = z.infer<typeof AnalysisCompletenessReasonSchema>;
 
 export const AnalysisCompletenessSchema = z.object({
   status: AnalysisCompletenessStatusSchema,

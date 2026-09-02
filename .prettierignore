@@ -16,3 +16,8 @@ docs/
 # static-analysis input. Their formatting is part of the test data.
 fixtures/
 **/__fixtures__/
+
+# Frozen ML dataset manifests. These are reproducibility artifacts — they carry
+# recorded sha256 digests and are referenced by pre-registered evaluation gates,
+# so reformatting them would rewrite frozen experimental evidence.
+ml/

@@ -196,8 +196,7 @@ export function investigateExtractedPackage(
 
   // Coverage: include dropped executable JS in the denominator for honesty.
   const analysedJsTs = staticResult.files.filter(
-    (file) =>
-      (file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT") && file.analysed,
+    (file) => (file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT") && file.analysed,
   );
   const retainedAnalysable = staticResult.files.filter(
     (file) => file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT",
@@ -251,7 +250,9 @@ export function investigateExtractedPackage(
     status: threat.status,
     provider: threat.provider,
     lookupFailed: threat.lookupFailed,
-    ...(threat.failureReason === undefined ? {} : { failureReason: threat.failureReason }),
+    ...(threat.failureReason === undefined
+      ? {}
+      : { failureReason: threat.failureReason }),
     matches: threat.matches.map((match) => ({
       source: match.source,
       classification: match.classification,
@@ -268,8 +269,7 @@ export function investigateExtractedPackage(
         path: file.path,
         sizeBytes: file.sizeBytes,
         sha256:
-          extractedFile?.sha256 ??
-          createHash("sha256").update(file.path).digest("hex"),
+          extractedFile?.sha256 ?? createHash("sha256").update(file.path).digest("hex"),
         kind: file.kind,
         analysed: file.analysed,
       };

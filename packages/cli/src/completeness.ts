@@ -76,7 +76,8 @@ export function buildAnalysisCompleteness(
     reasons.push({
       code: "OPAQUE_PAYLOAD",
       path,
-      message: "Bounded opaque-source triage ran because full AST analysis was unavailable",
+      message:
+        "Bounded opaque-source triage ran because full AST analysis was unavailable",
       executableSource: true,
       metadata: {},
     });

@@ -6,8 +6,7 @@ export function formatSecurityDiffReport(
   diff: SecurityDiff,
   options: { readonly color?: boolean; readonly theme?: Theme } = {},
 ): string {
-  const theme =
-    options.theme ?? createTheme({ enabled: options.color === true });
+  const theme = options.theme ?? createTheme({ enabled: options.color === true });
   const lines: string[] = [];
   const push = (line = ""): void => {
     lines.push(line);
@@ -35,7 +34,9 @@ export function formatSecurityDiffReport(
     push(theme.muted("  No install-lifecycle changes."));
   } else {
     for (const script of diff.lifecycleAdded) {
-      push(`  ${theme.warning("+")} ${theme.info(script.name)}: ${theme.muted(script.command)}`);
+      push(
+        `  ${theme.warning("+")} ${theme.info(script.name)}: ${theme.muted(script.command)}`,
+      );
     }
     for (const script of diff.lifecycleRemoved) {
       push(`  ${theme.muted("-")} ${script.name}: ${script.command}`);
@@ -49,9 +50,7 @@ export function formatSecurityDiffReport(
     push(theme.muted("  No semantic finding changes."));
   } else {
     for (const finding of diff.findingsAdded.slice(0, 15)) {
-      push(
-        `  ${theme.warning("+")} ${theme.info(finding.category)} — ${finding.title}`,
-      );
+      push(`  ${theme.warning("+")} ${theme.info(finding.category)} — ${finding.title}`);
     }
     for (const finding of diff.findingsRemoved.slice(0, 10)) {
       push(`  ${theme.muted("-")} ${finding.category} — ${finding.title}`);

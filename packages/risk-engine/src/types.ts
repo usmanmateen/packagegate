@@ -1,10 +1,7 @@
 import type { BehaviourChain, Finding } from "@packagegate/shared";
 
 export type IntelligenceTier =
-  | "AUTHORITATIVE_MALWARE"
-  | "CORROBORATED_MALWARE"
-  | "VULNERABILITY"
-  | "CONTEXT";
+  "AUTHORITATIVE_MALWARE" | "CORROBORATED_MALWARE" | "VULNERABILITY" | "CONTEXT";
 
 /**
  * Input to the deterministic risk engine.

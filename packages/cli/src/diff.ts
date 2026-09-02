@@ -27,9 +27,7 @@ export function toDiffable(result: InvestigationResult): DiffableInvestigation {
  * Resolve a registry package spec or an inert fixture for security diff.
  * Fixtures are never executed; registry packages use the existing static pipeline.
  */
-export async function resolveDiffTarget(
-  spec: string,
-): Promise<InvestigationResult> {
+export async function resolveDiffTarget(spec: string): Promise<InvestigationResult> {
   const fixture = resolveFixtureSpec(spec);
   if (fixture !== undefined) return loadNamedFixture(fixture);
   return scanPackage(spec);

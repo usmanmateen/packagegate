@@ -24,18 +24,7 @@ export const CONFIDENCE_NUMERIC = {
 /** Findings below this numeric confidence contribute zero (§4.1). */
 export const CONFIDENCE_HARD_GATE = 0.3;
 
-export const FAMILY_IDS = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "K",
-] as const;
+export const FAMILY_IDS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "K"] as const;
 export type FamilyId = (typeof FAMILY_IDS)[number];
 
 export interface RuleWeight {

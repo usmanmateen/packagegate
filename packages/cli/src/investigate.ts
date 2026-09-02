@@ -4,11 +4,7 @@ import {
   computeScoringBreakdown,
   WEIGHTS_VERSION,
 } from "@packagegate/risk-engine";
-import type {
-  ArtifactInfo,
-  PackageMetadata,
-  ScannedFile,
-} from "@packagegate/shared";
+import type { ArtifactInfo, PackageMetadata, ScannedFile } from "@packagegate/shared";
 import { disabledMlAssessment } from "@packagegate/shared";
 import {
   analysePackage,
@@ -19,10 +15,7 @@ import { buildAnalysisCompleteness } from "./completeness.js";
 import { buildDecisionExplanation } from "./decision.js";
 import { SCANNER_VERSION } from "./pipeline.js";
 import { getThreatIntelProvider } from "./threat-intel.js";
-import {
-  SAFETY_DISCLAIMER,
-  type InvestigationResult,
-} from "./types.js";
+import { SAFETY_DISCLAIMER, type InvestigationResult } from "./types.js";
 
 export interface SourceInvestigationInput {
   readonly requestedSpec: string;
@@ -39,9 +32,7 @@ export interface SourceInvestigationInput {
  * Run static analysis → behaviour chains → risk on in-memory sources.
  * Used for inert fixtures and offline demos. Never executes package code.
  */
-export function investigateSources(
-  input: SourceInvestigationInput,
-): InvestigationResult {
+export function investigateSources(input: SourceInvestigationInput): InvestigationResult {
   const startedAt = new Date();
 
   const staticResult = analysePackage({

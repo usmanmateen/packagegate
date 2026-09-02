@@ -244,13 +244,11 @@ export function extractStructuredFeatures(
   const analysedExecutableBytes = result.files
     .filter(
       (file: ScannedFile) =>
-        file.analysed &&
-        (file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT"),
+        file.analysed && (file.kind === "JAVASCRIPT" || file.kind === "TYPESCRIPT"),
     )
     .reduce((sum: number, file: ScannedFile) => sum + file.sizeBytes, 0);
 
-  const familyBreadth = Object.values(findingsByCategory).filter((n) => n > 0)
-    .length;
+  const familyBreadth = Object.values(findingsByCategory).filter((n) => n > 0).length;
 
   const base: StructuredMlFeatures = {
     schemaVersion: ML_FEATURE_SCHEMA_VERSION,
@@ -275,10 +273,8 @@ export function extractStructuredFeatures(
     shellCommandCount: countCategory(result.findings, "SHELL_COMMAND"),
     opaqueSourceCount,
     largeSourceCount,
-    completenessStatusComplete:
-      result.analysisCompleteness.status === "COMPLETE" ? 1 : 0,
-    completenessStatusDegraded:
-      result.analysisCompleteness.status === "DEGRADED" ? 1 : 0,
+    completenessStatusComplete: result.analysisCompleteness.status === "COMPLETE" ? 1 : 0,
+    completenessStatusDegraded: result.analysisCompleteness.status === "DEGRADED" ? 1 : 0,
     completenessStatusInsufficient:
       result.analysisCompleteness.status === "INSUFFICIENT" ? 1 : 0,
     coverageRatio: result.analysisCompleteness.coverageRatio,
@@ -298,10 +294,7 @@ export function extractStructuredFeatures(
  * Labels in training metadata must never be embedded in sourceText.
  */
 export function buildSecuritySlices(
-  result: Pick<
-    InvestigationResult,
-    "findings" | "behaviourChains" | "lifecycleScripts"
-  >,
+  result: Pick<InvestigationResult, "findings" | "behaviourChains" | "lifecycleScripts">,
   sourceByPath: ReadonlyMap<string, string>,
   options: { readonly maxSlices?: number } = {},
 ): {
@@ -366,7 +359,9 @@ export function buildSecuritySlices(
     });
   }
 
-  candidates.sort((a, b) => b.priority - a.priority || a.filePath.localeCompare(b.filePath));
+  candidates.sort(
+    (a, b) => b.priority - a.priority || a.filePath.localeCompare(b.filePath),
+  );
   const truncated = candidates.length > maxSlices;
   return {
     slices: candidates.slice(0, maxSlices),
@@ -401,9 +396,7 @@ export function exportPackageGateMlRecord(
       version: result.resolved.version,
     },
     artifact: {
-      ...(result.artifact.sha256 === undefined
-        ? {}
-        : { sha256: result.artifact.sha256 }),
+      ...(result.artifact.sha256 === undefined ? {} : { sha256: result.artifact.sha256 }),
     },
     lifecycle: result.lifecycleScripts.map((script: LifecycleScript) => ({
       name: script.name,
@@ -445,9 +438,10 @@ export function exportPackageGateMlRecord(
 /**
  * Flatten structured features to a stable numeric vector for classical ML.
  */
-export function flattenStructuredFeatures(
-  features: StructuredMlFeatures,
-): { readonly keys: string[]; readonly values: number[] } {
+export function flattenStructuredFeatures(features: StructuredMlFeatures): {
+  readonly keys: string[];
+  readonly values: number[];
+} {
   const keys: string[] = [];
   const values: number[] = [];
   const push = (key: string, value: number): void => {
@@ -491,16 +485,11 @@ export function flattenStructuredFeatures(
   return { keys, values };
 }
 
-function countCategory(
-  findings: readonly Finding[],
-  category: FindingCategory,
-): number {
+function countCategory(findings: readonly Finding[], category: FindingCategory): number {
   return findings.filter((f) => f.category === category).length;
 }
 
-function emptyCountMap(
-  keys: readonly string[],
-): Record<string, number> {
+function emptyCountMap(keys: readonly string[]): Record<string, number> {
   const out: Record<string, number> = {};
   for (const key of keys) out[key] = 0;
   return out;
@@ -550,8 +539,7 @@ function scoreSlicePriority(input: {
   const cat = input.finding.category;
   if (cat === "PROCESS_EXECUTION" || cat === "REMOTE_CODE_FETCH") score += 60;
   if (cat === "SHELL_COMMAND" || cat === "DOWNLOAD_BEHAVIOUR") score += 50;
-  if (cat === "CREDENTIAL_RELATED_ACCESS" || cat === "SENSITIVE_FILE_ACCESS")
-    score += 40;
+  if (cat === "CREDENTIAL_RELATED_ACCESS" || cat === "SENSITIVE_FILE_ACCESS") score += 40;
   if (cat === "ENVIRONMENT_ACCESS" || cat === "DYNAMIC_CODE_EXECUTION") score += 30;
   if (input.finding.confidence === "HIGH") score += 10;
   return score;

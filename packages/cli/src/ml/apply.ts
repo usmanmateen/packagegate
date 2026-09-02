@@ -3,11 +3,7 @@ import { disabledMlAssessment, type MlAssessment } from "@packagegate/shared";
 import { buildDecisionExplanation } from "../decision.js";
 import type { InvestigationResult } from "../types.js";
 import { exportPackageGateMlRecord } from "./export.js";
-import {
-  createMlProviderFromEnv,
-  LocalMlProvider,
-  type MlProvider,
-} from "./provider.js";
+import { createMlProviderFromEnv, LocalMlProvider, type MlProvider } from "./provider.js";
 
 export interface ApplyMlOptions {
   readonly enabled?: boolean;
@@ -48,10 +44,7 @@ export async function withMlAssessment(
   return finalise(result, ml);
 }
 
-function finalise(
-  result: InvestigationResult,
-  ml: MlAssessment,
-): InvestigationResult {
+function finalise(result: InvestigationResult, ml: MlAssessment): InvestigationResult {
   const policy = decidePolicy({
     behaviouralRecommendation: result.risk.recommendation,
     analysisCompleteness: result.analysisCompleteness,

@@ -65,8 +65,7 @@ export async function scanPackage(
         } else if (extracted.artifact.integrityVerified === false) {
           registryIntegrity = {
             status: "UNSUPPORTED" as const,
-            reason:
-              "Registry declared an integrity algorithm PackageGate cannot verify",
+            reason: "Registry declared an integrity algorithm PackageGate cannot verify",
           };
         } else {
           registryIntegrity = {

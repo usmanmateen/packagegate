@@ -26,10 +26,7 @@ export async function resolveLocalArtifactPath(
   inputPath: string,
 ): Promise<LocalArtifactPath> {
   if (typeof inputPath !== "string" || inputPath.trim().length === 0) {
-    throw new ScanError(
-      "LOCAL_ARTIFACT_NOT_FOUND",
-      "Local artifact path is required",
-    );
+    throw new ScanError("LOCAL_ARTIFACT_NOT_FOUND", "Local artifact path is required");
   }
 
   const displayPath = sanitiseInlineValue(inputPath.trim(), 512);
@@ -97,9 +94,7 @@ export async function resolveLocalArtifactPath(
 /**
  * Read the validated local artifact bytes. Caller must have validated the path.
  */
-export async function readLocalArtifactBytes(
-  absolutePath: string,
-): Promise<Buffer> {
+export async function readLocalArtifactBytes(absolutePath: string): Promise<Buffer> {
   const handle = await open(absolutePath, "r");
   try {
     const info = await handle.stat();

@@ -18,9 +18,7 @@ export function assessRisk(input: RiskEngineInput): RiskAssessment {
   const contributions = buildContributions(input, breakdown);
 
   if (!contributionsReconcile(contributions, breakdown.rawTotal)) {
-    throw new Error(
-      "Risk contributions do not reconcile to rawTotal — scoring bug",
-    );
+    throw new Error("Risk contributions do not reconcile to rawTotal — scoring bug");
   }
 
   const verdict = decideVerdict({

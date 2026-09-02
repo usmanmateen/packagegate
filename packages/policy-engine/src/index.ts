@@ -82,8 +82,7 @@ export function decidePolicy(input: PolicyEngineInput): PolicyDecision {
   if (input.analysisCompleteness.status === "INSUFFICIENT") {
     reasons.push({
       code: "INSUFFICIENT_ANALYSIS",
-      message:
-        "Static analysis coverage was insufficient to support an ALLOW decision.",
+      message: "Static analysis coverage was insufficient to support an ALLOW decision.",
     });
     finalAction = escalate(finalAction, "REVIEW");
   } else if (
@@ -134,9 +133,7 @@ function escalate(
  * Gaps that matter for policy: skipped/unparsed executable JS/TS, especially
  * when lifecycle-reachable or opaque. README parse failures do not qualify.
  */
-export function hasSecurityRelevantGap(
-  completeness: AnalysisCompleteness,
-): boolean {
+export function hasSecurityRelevantGap(completeness: AnalysisCompleteness): boolean {
   return completeness.reasons.some((reason) => {
     if (reason.executableSource === true) return true;
     if (reason.lifecycleReachable === true && reason.executableSource !== false) {

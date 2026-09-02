@@ -71,9 +71,7 @@ export function loadNamedFixture(name: string): InvestigationResult {
 /**
  * Source map for a fixture — used for ML slice export without re-reading labels.
  */
-export function loadNamedFixtureSources(
-  name: string,
-): Map<string, string> {
+export function loadNamedFixtureSources(name: string): Map<string, string> {
   const root = join(fixturesRoot(), name);
   const manifestPath = join(root, "package.json");
   if (!existsSync(manifestPath)) {
