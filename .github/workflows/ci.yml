@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# The workflow only reads the repository. No token is needed for anything here,
+# and a scanner project should not hold write scope it never uses.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          # Babel 8 requires ^22.18.0 || >=24.11.0, which excludes 24.0–24.10.
+          # Pin a version inside the supported window rather than tracking a
+          # floating major that could land in the gap.
+          node-version: "24.19.0"
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Formatting
+        run: pnpm format:check
+
+      # Proves the scanner works against the live registry, not only fixtures.
+      # Uses a benign, long-stable package so a failure means our pipeline broke
+      # rather than that upstream published something new.
+      - name: Smoke scan a real package
+        run: pnpm --silent packagegate scan lodash@4.17.21 --json > /tmp/scan.json
+
+      - name: Assert the smoke scan is a real result
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          with open("/tmp/scan.json") as handle:
+              report = json.load(handle)
+          artifact = report.get("artifact") or {}
+          risk = report.get("risk") or {}
+
+          problems = []
+          if artifact.get("fileCount") != 1054:
+              problems.append(f"expected 1054 extracted files, got {artifact.get('fileCount')}")
+          if artifact.get("integrityVerified") is not True:
+              problems.append("registry integrity was not verified")
+          if risk.get("recommendation") != "ALLOW":
+              problems.append(f"lodash should be ALLOW, got {risk.get('recommendation')}")
+          # A benign, ubiquitous package scoring high means calibration regressed.
+          if not isinstance(risk.get("score"), int) or risk["score"] > 15:
+              problems.append(f"lodash score regressed to {risk.get('score')}")
+
+          if problems:
+              print("Smoke scan assertions failed:")
+              for problem in problems:
+                  print(f"  - {problem}")
+              sys.exit(1)
+          print(f"Smoke scan OK: {artifact['fileCount']} files, score {risk['score']} {risk['recommendation']}")
+          PY
+
+      # Calibration guard: the negative control must stay negative. If a rule
+      # change starts inventing chains from mere co-occurrence, this fails.
+      - name: Assert the co-occurrence negative control emits no chain
+        run: |
+          pnpm --silent packagegate fixture inert-shell-cooccurrence-negative --json > /tmp/neg.json
+          python3 - <<'PY'
+          import json, sys
+          with open("/tmp/neg.json") as handle:
+              report = json.load(handle)
+          chains = report.get("behaviourChains") or []
+          if chains:
+              print(f"Negative control produced {len(chains)} chain(s); it must produce none.")
+              sys.exit(1)
+          print("Negative control OK: no chains from co-occurrence alone.")
+          PY
