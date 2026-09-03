@@ -9,6 +9,7 @@ import { resolveVersion, type VersionResolution } from "./resolve.js";
 import {
   PackumentSchema,
   normaliseDeprecated,
+  normaliseHomepage,
   normaliseLicense,
   normaliseMaintainers,
   normaliseRepositoryUrl,
@@ -256,7 +257,7 @@ export function toPackageMetadata(
     description: manifest.description,
     publishedAt,
     repositoryUrl: normaliseRepositoryUrl(manifest.repository),
-    homepage: manifest.homepage ?? undefined,
+    homepage: normaliseHomepage(manifest.homepage),
     license: normaliseLicense(manifest.license),
     deprecated: normaliseDeprecated(manifest.deprecated),
     maintainers: normaliseMaintainers(manifest.maintainers),

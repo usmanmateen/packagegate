@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { PackumentSchema, VersionManifestSchema } from "./schemas.js";
+import {
+  PackumentSchema,
+  VersionManifestSchema,
+  normaliseHomepage,
+  normaliseLicense,
+} from "./schemas.js";
 
 /**
  * Regression tests for shapes found in the *real* registry corpus.
@@ -57,6 +62,35 @@ describe("VersionManifestSchema — real-corpus shapes", () => {
       manifest({ dependencies: { good: "^1.0.0", broken: null, alsoBroken: 42 } }),
     );
     expect(parsed.dependencies).toEqual({ good: "^1.0.0" });
+  });
+
+  it("accepts homepage as an array of strings", () => {
+    // fs-extra@0.0.1 and 18 sibling versions ship homepage as an array.
+    // Rejecting it made fs-extra entirely unscannable.
+    const parsed = VersionManifestSchema.parse(
+      manifest({ homepage: ["https://github.com/jprichardson/node-fs-extra"] }),
+    );
+    expect(normaliseHomepage(parsed.homepage)).toBe(
+      "https://github.com/jprichardson/node-fs-extra",
+    );
+  });
+
+  it("accepts license as the historical licenses[] array shape", () => {
+    // socket.io@0.3.8 carries the licenses[] array under the `license` key.
+    const parsed = VersionManifestSchema.parse({
+      name: "socket.io",
+      version: "0.3.8",
+      license: [{ url: "http://example.invalid/LICENSE", type: "MIT" }],
+      dist: { tarball: "https://r.invalid/s.tgz" },
+    });
+    expect(normaliseLicense(parsed.license)).toBe("MIT");
+  });
+
+  it("takes the first entry from a licence array of plain strings", () => {
+    const parsed = VersionManifestSchema.parse(
+      manifest({ license: ["MIT", "Apache-2.0"] }),
+    );
+    expect(normaliseLicense(parsed.license)).toBe("MIT");
   });
 
   it("requires a tarball, which is the one field we genuinely cannot work without", () => {

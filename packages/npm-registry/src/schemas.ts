@@ -26,14 +26,32 @@ const RepositorySchema = z
   ])
   .optional();
 
-/** `license` is a string now; older manifests used an object or `licenses[]`. */
+/**
+ * `license` is a string today. Older manifests used an object, and some used
+ * the `licenses[]` array shape *under the `license` key* — socket.io@0.3.8 is a
+ * real example. Rejecting that form makes a very widely used package
+ * unscannable, so all four shapes are accepted.
+ */
+const LicenseEntrySchema = z.object({
+  type: z.string().optional(),
+  url: z.string().optional(),
+});
+
 const LicenseSchema = z
   .union([
     z.string(),
-    z.object({ type: z.string().optional(), url: z.string().optional() }),
+    LicenseEntrySchema,
+    z.array(z.union([z.string(), LicenseEntrySchema])),
     z.null(),
   ])
   .optional();
+
+/**
+ * `homepage` is documented as a string but appears as an array of strings in
+ * the early corpus — fs-extra@0.0.1 is a real example, and 19 of its versions
+ * carry that shape.
+ */
+const HomepageSchema = z.union([z.string(), z.array(z.string()), z.null()]).optional();
 
 /** Maintainers appear as `"name <email>"` strings in older packuments. */
 const MaintainerSchema = z.union([
@@ -105,7 +123,7 @@ export const VersionManifestSchema = z.object({
   version: z.string().min(1),
   description: z.string().optional(),
   repository: RepositorySchema,
-  homepage: z.union([z.string(), z.null()]).optional(),
+  homepage: HomepageSchema,
   license: LicenseSchema,
   deprecated: z.union([z.string(), z.boolean()]).optional(),
   maintainers: z.array(MaintainerSchema).optional(),
@@ -149,7 +167,25 @@ export function normaliseLicense(
 ): string | undefined {
   if (license === undefined || license === null) return undefined;
   if (typeof license === "string") return license;
+  if (Array.isArray(license)) {
+    // The historical `licenses[]` shape. Take the first declared licence
+    // rather than inventing a composite expression the publisher never wrote.
+    for (const entry of license) {
+      if (typeof entry === "string" && entry.length > 0) return entry;
+      if (entry !== null && typeof entry === "object" && entry.type) return entry.type;
+    }
+    return undefined;
+  }
   return license.type ?? undefined;
+}
+
+/** Flatten the string-or-array shapes of `homepage` into a single URL. */
+export function normaliseHomepage(
+  homepage: RegistryVersionManifest["homepage"],
+): string | undefined {
+  if (homepage === undefined || homepage === null) return undefined;
+  if (typeof homepage === "string") return homepage;
+  return homepage.find((entry) => typeof entry === "string" && entry.length > 0);
 }
 
 /** Normalise maintainers, accepting the `"name <email>"` string form. */
