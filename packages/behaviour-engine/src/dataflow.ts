@@ -90,6 +90,10 @@ export function analyseFileForChains(
 
   const limits = DEFAULT_ANALYSIS_LIMITS;
   const resolver = CapabilityResolver.collect(parsed.parsed.ast, filePath, limits);
+  // Internal vocabulary only. User-facing evidence says "source-derived"
+  // rather than "tainted": this is conservative binding and argument
+  // tracking, not taint analysis, and the output must not imply otherwise.
+  // Source-derived, not taint analysis.
   const taintedBindings = new Map<Binding, TaintRecord>();
   const pendingChains: PendingChain[] = [];
 
@@ -139,7 +143,7 @@ export function analyseFileForChains(
           {
             kind: "SHARED_BINDING",
             via: node.name,
-            description: `Tainted value read from binding \`${node.name}\``,
+            description: `Source-derived value read from binding \`${node.name}\``,
             location: locationOf(node, filePath),
           },
         ],
@@ -336,7 +340,7 @@ export function analyseFileForChains(
               taintResult,
               networkSinkKind(target),
               locationOf(path.node, filePath),
-              `Tainted value passed as argument to \`${describeTarget(target)}\``,
+              `Source-derived value passed as argument to \`${describeTarget(target)}\``,
               argPath.node,
             );
           }
@@ -369,7 +373,7 @@ export function analyseFileForChains(
           taintResult,
           "NETWORK_REQUEST",
           locationOf(path.node, filePath),
-          `Tainted value passed to \`.${memberName}()\` on a request stream`,
+          `Source-derived value passed to \`.${memberName}()\` on a request stream`,
           firstArg.node,
         );
       }
