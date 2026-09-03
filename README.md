@@ -115,6 +115,49 @@ reported above `LOW` — and can never unlock `BLOCK`.
 
 ---
 
+## False positives, measured
+
+The discrimination table above is fixtures. This is 131 real, widely used npm
+packages — build tooling, test frameworks, HTTP clients, database drivers,
+loggers, auth libraries, frameworks — each resolved, downloaded, extracted and
+analysed. Reproducible with
+`./packages/evaluation/corpus/run-control-corpus.sh`.
+
+| Metric | Value |
+|---|---|
+| Successfully analysed | **131 / 131** |
+| `ALLOW` | 125 (95.4%) |
+| `REVIEW` | 6 (4.6%) |
+| `BLOCK` | **0** |
+| Median behavioural score | **0** |
+| **Packages emitting any behaviour chain** | **0** |
+
+**Zero of 131 produced a behaviour chain.** Chains are what drive escalation, and
+across the whole corpus the engine inferred none — while still producing a
+HIGH-confidence chain on the exfiltration fixture. That gap is the product.
+
+Of the six escalations, **five carry a behavioural recommendation of `ALLOW` and
+zero chains**. They are escalated by the completeness policy because some
+executable source failed to parse, not by anything the rules found. `zustand`
+scores 0 and is still escalated for that reason.
+
+The clearest example is `pino`, escalated at 99.4% coverage because of one file:
+
+```
+test/fixtures/syntax-error-esm.mjs — Unexpected token, expected "{" (3:0)
+```
+
+A deliberately invalid 33-byte test fixture. That is a **known false positive**,
+documented in [`docs/CONTROL_CORPUS.md`](docs/CONTROL_CORPUS.md) rather than
+quietly fixed by weakening the policy — the conservative default is right, and
+the fix belongs in reachability analysis.
+
+The corpus also earns its keep as a bug-finder: it caught that `fs-extra` and
+`socket.io` **could not be scanned at all**, both failing on historical registry
+field shapes the npm documentation does not describe.
+
+---
+
 ## Why isolated signals stay cheap
 
 From `docs/RISK_MODEL.md`, and enforced by tests rather than asserted in prose:
@@ -209,8 +252,11 @@ Tiny corpora are not statistically meaningful.
 ```
 
 **That caveat is printed by the tool itself.** n=7 is a smoke test, not a
-benchmark, and a perfect score on seven samples means very little. Expanding the
-control corpus is the most valuable open contribution to this project.
+benchmark, and a perfect score on seven samples means very little. The larger
+false-positive measurement lives in
+[`docs/CONTROL_CORPUS.md`](docs/CONTROL_CORPUS.md) — 131 packages, 4.6% flag
+rate, zero chains — and expanding both corpora is the most valuable open
+contribution to this project.
 
 Real malicious samples are **never auto-downloaded**. They require an explicit
 `--malware-root` pointing at a quarantine directory you populated deliberately.
