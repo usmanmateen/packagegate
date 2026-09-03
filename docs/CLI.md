@@ -45,3 +45,37 @@ pnpm packagegate evaluate --malware-root /tmp/packagegate-malware-eval
 | Final policy | Deterministic combination of the lanes above |
 
 Real malware evaluation requires an explicit `--malware-root`. PackageGate never auto-downloads malware.
+
+## Exit codes
+
+| Code | Meaning |
+| --- | --- |
+| `0` | The command ran successfully |
+| `1` | Usage error — unknown command, missing or invalid arguments |
+| `2` | The scan could not be completed — package not found, invalid specifier, registry unavailable, artifact limit exceeded, malformed archive, integrity mismatch |
+
+**The verdict does not affect the exit code.** A package that scores `REVIEW`
+still exits `0`, because `0` means "the investigation completed", not "the
+package is fine". Conflating the two would make a registry outage
+indistinguishable from a clean result — the failure mode this project cares most
+about avoiding.
+
+Consumers that want to gate on a verdict should read it from `--json`:
+
+```bash
+action=$(packagegate scan "$pkg" --json | jq -r '.finalPolicy.finalAction')
+[ "$action" = "ALLOW" ] || exit 1
+```
+
+There is currently no `--fail-on` flag. See the limitations section of the
+README for the known gaps.
+
+## JSON output
+
+`--json` writes a single JSON document to stdout and nothing else. Diagnostics
+go to stderr. When invoking through the pnpm script, pass `pnpm --silent` so
+pnpm's own banner does not precede the document:
+
+```bash
+pnpm --silent packagegate scan lodash@4.17.21 --json | jq .risk
+```
