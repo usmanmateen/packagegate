@@ -35,7 +35,7 @@ REPO = Path(__file__).resolve().parents[3]
 SPLIT = REPO / "ml" / "data-manifests" / "v4" / "neural" / "split.json"
 MATCHED = REPO / "ml" / "data-manifests" / "v4" / "structure_matches.json"
 FEATURES = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/strict_features.jsonl")
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 RUNS = REPO / "ml" / "runs"
 HOLDOUT = "02-echo@0.0.7"
 

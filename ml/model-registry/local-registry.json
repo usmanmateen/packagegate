@@ -12,7 +12,7 @@
       "maxSeqLength": 512,
       "experimentId": "pg-neural-exp1",
       "weightsInGit": false,
-      "localCheckpoint": "/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/best.pt"
+      "localCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T191708Z-pg-slice-v1/best.pt"
     },
     {
       "id": "pg-package-embed-mean-v1",

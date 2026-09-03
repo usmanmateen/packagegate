@@ -50,7 +50,7 @@ V4_FEATURES = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/strict_feature
 V4_INDEX = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/index.jsonl")
 V5_FEATURES = Path("/tmp/packagegate-ml-data-v5/exports/v5-neural/strict_features.jsonl")
 V5_INDEX = Path("/tmp/packagegate-ml-data-v5/exports/v5-neural/index.jsonl")
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 OUT = EXP / "v5_eval"
 
 

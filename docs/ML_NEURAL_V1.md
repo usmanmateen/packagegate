@@ -25,7 +25,7 @@ Root cause of empty slices: Python `investigation_to_mle_export` hard-coded
 | PyTorch | **2.11.0+cu128** (`torch.cuda.is_available()=True`) |
 | Transformers | 5.14.1 |
 | Install | `uv pip install torch --index-url https://download.pytorch.org/whl/cu128` (ml venv only) |
-| Weights cache | `/home/usman/packagegate-ml-models/` (not git; avoid `/tmp` tmpfs) |
+| Weights cache | `${PACKAGEGATE_ML_MODELS}/` (not git; avoid `/tmp` tmpfs) |
 
 ## Encoder — PG-SLICE-V1
 

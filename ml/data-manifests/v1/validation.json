@@ -451,8 +451,8 @@
       "version": "9.5.2"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/version-diff-benign-v1",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/version-diff-benign-v1",
+      "artifact_path": "fixtures/version-diff-benign-v1",
+      "artifact_path_external": "fixtures/version-diff-benign-v1",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",

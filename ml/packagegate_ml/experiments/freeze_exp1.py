@@ -11,8 +11,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[3]
 EXP = REPO / "ml" / "experiments" / "pg-neural-exp1"
 PKG_RUN = REPO / "ml" / "runs" / "20260809T193015Z-pg-package-mil-v1" / "metadata.json"
-SLICE_META = Path("/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/metadata.json")
-SLICE_CKPT = Path("/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/best.pt")
+SLICE_META = Path("${PACKAGEGATE_ML_MODELS}/20260809T191708Z-pg-slice-v1/metadata.json")
+SLICE_CKPT = Path("${PACKAGEGATE_ML_MODELS}/20260809T191708Z-pg-slice-v1/best.pt")
 FEATURES = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/strict_features.jsonl")
 V4_HASHES = REPO / "ml" / "data-manifests" / "v4" / "hashes.json"
 NEURAL_HASHES = REPO / "ml" / "data-manifests" / "v4" / "neural" / "hashes.json"
@@ -154,7 +154,7 @@ def main() -> None:
     (EXP / "README.md").write_text(
         "# pg-neural-exp1 (FROZEN)\n\n"
         "Metadata-only freeze of the first GraphCodeBERT + mean-pooling package experiment.\n"
-        "Weights live under `/home/usman/packagegate-ml-models/` and are not committed.\n",
+        "Weights live under `${PACKAGEGATE_ML_MODELS}/` and are not committed.\n",
         encoding="utf-8",
     )
     print(json.dumps({"frozen": True, "experimentId": freeze["experimentId"], "predictionsSha256": pred_hash, "delta": freeze["testMetrics"]["absoluteDeltaPrAuc"]}, indent=2))

@@ -1399,9 +1399,9 @@
   "baseModelRevision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
   "tokenizerRevision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
   "maxSeqLength": 512,
-  "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/best.pt",
+  "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T191708Z-pg-slice-v1/best.pt",
   "sliceCheckpointSha256": "cec6d3f5f737d1c6cbc83942c0cbf9dd5cac638ddc51a43eae800d2c71474442",
-  "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-cec6d3f5f737d1c6",
+  "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-cec6d3f5f737d1c6",
   "packageRunId": "20260809T193015Z-pg-package-mil-v1",
   "sliceRunId": "20260809T191708Z-pg-slice-v1",
   "trainingHyperparameters": {

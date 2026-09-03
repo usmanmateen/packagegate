@@ -28,7 +28,7 @@ from packagegate_ml.neural.datasets import SliceDataset, load_index, load_split
 REPO = Path(__file__).resolve().parents[3]
 SPLIT = REPO / "ml" / "data-manifests" / "v4" / "neural" / "split.json"
 INDEX = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/index.jsonl")
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 RUNS = REPO / "ml" / "runs"
 
 HOLDOUT_IDS = {"02-echo@0.0.7"}

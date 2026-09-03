@@ -36,7 +36,7 @@ shell_execution, remote_download, remote_code_fetch
 - Loss: BCEWithLogits + positive class weights
 - Optimiser: AdamW 2e-5, bf16 when supported
 - Epochs: 3 (validation micro-F1 selection)
-- Checkpoint: `/home/usman/packagegate-ml-models/20260809T191708Z-pg-slice-v1/best.pt` (not in git)
+- Checkpoint: `${PACKAGEGATE_ML_MODELS}/20260809T191708Z-pg-slice-v1/best.pt` (not in git)
 
 ## Untouched slice test (approx.)
 

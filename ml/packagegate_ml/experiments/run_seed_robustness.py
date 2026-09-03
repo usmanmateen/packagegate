@@ -11,7 +11,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[3]
 SEEDS = [11, 22, 33, 44, 55]
 EXP = REPO / "ml" / "experiments" / "pg-neural-exp1"
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 
 
 def run(cmd: list[str], env: dict) -> None:
@@ -23,8 +23,8 @@ def main() -> None:
     base_env = os.environ.copy()
     base_env.update(
         {
-            "HF_HOME": "/home/usman/packagegate-ml-cache/huggingface",
-            "TRANSFORMERS_CACHE": "/home/usman/packagegate-ml-cache/huggingface",
+            "HF_HOME": "${PACKAGEGATE_ML_CACHE}/huggingface",
+            "TRANSFORMERS_CACHE": "${PACKAGEGATE_ML_CACHE}/huggingface",
             "PACKAGEGATE_ML_MODELS": str(MODELS),
             "PACKAGEGATE_ML_DATA_ROOT": "/tmp/packagegate-ml-data-v4",
             "PYTHONUNBUFFERED": "1",

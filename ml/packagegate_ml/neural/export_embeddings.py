@@ -24,7 +24,7 @@ from packagegate_ml.neural.train_slice_encoder import SliceEncoder, HOLDOUT_IDS
 REPO = Path(__file__).resolve().parents[3]
 SPLIT = REPO / "ml" / "data-manifests" / "v4" / "neural" / "split.json"
 INDEX = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/index.jsonl")
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 
 
 @torch.no_grad()

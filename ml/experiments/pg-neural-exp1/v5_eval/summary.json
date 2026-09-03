@@ -361,7 +361,7 @@
     "v4MatchedTestGe1": 1.0,
     "v5Ge1": 0.9904306220095693
   },
-  "predictionsPath": "/home/usman/projects/packagegate/ml/experiments/pg-neural-exp1/v5_eval/v5_predictions.jsonl",
-  "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/v5-slice-cec6d3f5f737d1c6",
+  "predictionsPath": "ml/experiments/pg-neural-exp1/v5_eval/v5_predictions.jsonl",
+  "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/v5-slice-cec6d3f5f737d1c6",
   "sliceCheckpointSha256": "cec6d3f5f737d1c6cbc83942c0cbf9dd5cac638ddc51a43eae800d2c71474442"
 }

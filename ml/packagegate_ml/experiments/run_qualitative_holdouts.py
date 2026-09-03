@@ -74,7 +74,7 @@ FREEZE = EXP / "freeze.json"
 V4_SPLIT = REPO / "ml" / "data-manifests" / "v4" / "neural" / "split.json"
 V4_MATCHED = REPO / "ml" / "data-manifests" / "v4" / "structure_matches.json"
 V4_FEATURES = Path("/tmp/packagegate-ml-data-v4/exports/v4-neural/strict_features.jsonl")
-MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "/home/usman/packagegate-ml-models"))
+MODELS = Path(os.environ.get("PACKAGEGATE_ML_MODELS", "${PACKAGEGATE_ML_MODELS}"))
 
 QUAL_DIR = Path("/tmp/packagegate-ml-data-v5/qualitative")
 

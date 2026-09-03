@@ -9,8 +9,8 @@
   "results": [
     {
       "seed": 11,
-      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T194527Z-pg-slice-v1-seed11/best.pt",
-      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-8162ccbe42918171",
+      "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T194527Z-pg-slice-v1-seed11/best.pt",
+      "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-8162ccbe42918171",
       "packageRunId": "20260809T200611Z-pg-package-mil-v1",
       "structuredPrAuc": 0.8434452568906352,
       "embedMeanPrAuc": 0.8592962862842728,
@@ -21,8 +21,8 @@
     },
     {
       "seed": 22,
-      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T200616Z-pg-slice-v1-seed22/best.pt",
-      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-f58378a35e86dfb4",
+      "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T200616Z-pg-slice-v1-seed22/best.pt",
+      "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-f58378a35e86dfb4",
       "packageRunId": "20260809T201622Z-pg-package-mil-v1",
       "structuredPrAuc": 0.8434452568906352,
       "embedMeanPrAuc": 0.90796209038338,
@@ -33,8 +33,8 @@
     },
     {
       "seed": 33,
-      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T201627Z-pg-slice-v1-seed33/best.pt",
-      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-20a7ac6df167728e",
+      "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T201627Z-pg-slice-v1-seed33/best.pt",
+      "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-20a7ac6df167728e",
       "packageRunId": "20260809T202631Z-pg-package-mil-v1",
       "structuredPrAuc": 0.8434452568906352,
       "embedMeanPrAuc": 0.8886483886483889,
@@ -45,8 +45,8 @@
     },
     {
       "seed": 44,
-      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T202635Z-pg-slice-v1-seed44/best.pt",
-      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-29b12b05bacd822f",
+      "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T202635Z-pg-slice-v1-seed44/best.pt",
+      "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-29b12b05bacd822f",
       "packageRunId": "20260809T203635Z-pg-package-mil-v1",
       "structuredPrAuc": 0.8434452568906352,
       "embedMeanPrAuc": 0.8633550062121493,
@@ -57,8 +57,8 @@
     },
     {
       "seed": 55,
-      "sliceCheckpoint": "/home/usman/packagegate-ml-models/20260809T203640Z-pg-slice-v1-seed55/best.pt",
-      "embeddingDir": "/home/usman/packagegate-ml-models/embeddings/slice-a07c0ccd19742497",
+      "sliceCheckpoint": "${PACKAGEGATE_ML_MODELS}/20260809T203640Z-pg-slice-v1-seed55/best.pt",
+      "embeddingDir": "${PACKAGEGATE_ML_MODELS}/embeddings/slice-a07c0ccd19742497",
       "packageRunId": "20260809T204632Z-pg-package-mil-v1",
       "structuredPrAuc": 0.8434452568906352,
       "embedMeanPrAuc": 0.8514205449079402,

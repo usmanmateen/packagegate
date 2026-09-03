@@ -2935,8 +2935,8 @@
       "version": "13.0.2"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/inert-install-curl-bash",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/inert-install-curl-bash",
+      "artifact_path": "fixtures/inert-install-curl-bash",
+      "artifact_path_external": "fixtures/inert-install-curl-bash",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",
@@ -2953,8 +2953,8 @@
       "version": "fixture"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/inert-normal-installer",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/inert-normal-installer",
+      "artifact_path": "fixtures/inert-normal-installer",
+      "artifact_path_external": "fixtures/inert-normal-installer",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",
@@ -2971,8 +2971,8 @@
       "version": "fixture"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/inert-powershell-irm-iex",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/inert-powershell-irm-iex",
+      "artifact_path": "fixtures/inert-powershell-irm-iex",
+      "artifact_path_external": "fixtures/inert-powershell-irm-iex",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",
@@ -2989,8 +2989,8 @@
       "version": "fixture"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/inert-shell-cooccurrence-negative",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/inert-shell-cooccurrence-negative",
+      "artifact_path": "fixtures/inert-shell-cooccurrence-negative",
+      "artifact_path_external": "fixtures/inert-shell-cooccurrence-negative",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",
@@ -3007,8 +3007,8 @@
       "version": "fixture"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/version-diff-remote-v2",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/version-diff-remote-v2",
+      "artifact_path": "fixtures/version-diff-remote-v2",
+      "artifact_path_external": "fixtures/version-diff-remote-v2",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",

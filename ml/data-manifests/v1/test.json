@@ -577,8 +577,8 @@
       "version": "1.3.1"
     },
     {
-      "artifact_path": "/home/usman/projects/packagegate/fixtures/inert-env-exfil",
-      "artifact_path_external": "/home/usman/projects/packagegate/fixtures/inert-env-exfil",
+      "artifact_path": "fixtures/inert-env-exfil",
+      "artifact_path_external": "fixtures/inert-env-exfil",
       "artifact_sha256": null,
       "available": true,
       "dataset_source": "fixture",
