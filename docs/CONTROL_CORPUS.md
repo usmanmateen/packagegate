@@ -29,17 +29,17 @@ nothing wrong*.
 
 ## Results
 
-Run of 2026-08-10, scanner `packagegate-cli/0.2.0`, rules
-`static-analyser/2.0.0 + behaviour-engine/2.0.0 + risk-weights/1.0.0 + policy-engine/1.0.0`.
+Scanner `packagegate-cli/0.2.0`. Re-run the harness rather than citing these
+figures indefinitely — the corpus resolves to current versions and will drift.
 
 | Metric | Value |
 | --- | --- |
 | Packages in corpus | 131 |
 | Successfully analysed | **131** (0 errors) |
-| Final action `ALLOW` | 125 (95.4%) |
-| Final action `REVIEW` | 6 (4.6%) |
+| Final action `ALLOW` | 128 (97.7%) |
+| Final action `REVIEW` | 3 (2.3%) |
 | Final action `BLOCK` | **0** |
-| **Flag rate** | **4.6%** |
+| **Flag rate** | **2.3%** |
 | Median behavioural score | **0** |
 | Mean behavioural score | 3.7 |
 | p95 / max score | 18 / 27 |
@@ -59,42 +59,44 @@ inference is not manufacturing relationships out of proximity.
 A median score of **0** across 131 real packages says the same thing from the
 other direction: ordinary code is not accumulating incidental risk.
 
-### The six escalations, and why they are not behavioural
+### The three remaining escalations
 
 | Package | Score | Coverage | Driver |
 | --- | --- | --- | --- |
-| `next` | 27 | 0.277 | behavioural score at 27% coverage |
-| `astro` | 20 | 0.971 | analysis completeness |
-| `pino` | 19 | 0.994 | analysis completeness |
-| `playwright` | 18 | 0.974 | analysis completeness |
-| `graphql` | 2 | 0.999 | analysis completeness |
-| `zustand` | 0 | 0.980 | analysis completeness |
+| `next` | 27 | 0.277 | behavioural score below the coverage floor |
+| `astro` | 20 | 0.971 | 3 *reachable* executable parse failures |
+| `playwright` | 18 | 0.974 | 1 *reachable* executable parse failure |
 
-**Five of the six carry a behavioural recommendation of `ALLOW` and zero
-chains.** They are escalated by the completeness policy, not by anything the
-rules found: some executable source failed to parse, so the scanner declines to
-say `ALLOW` about code it did not read. `zustand` scores **0** and is still
-escalated for exactly this reason.
+None has a behaviour chain. `astro` and `playwright` are escalated because source
+that can actually run failed to parse, which is the conservative behaviour we
+want: coverage gaps in reachable code remove our right to say `ALLOW`. `next` is
+analysed at 27% coverage, and a `REVIEW` on a package we could only partly parse
+is a defensible outcome rather than a bug.
 
-That is the intended conservative behaviour — coverage gaps remove our right to
-say `ALLOW` — but the trigger is often trivial. `pino`'s escalation comes from
-a single file:
+### What this corpus changed
 
-```
-test/fixtures/syntax-error-esm.mjs — Unexpected token, expected "{" (3:0)
-```
+An earlier run of the same corpus flagged **six** packages at a 4.6% flag rate.
+Five of those were the scanner's fault, not the packages':
 
-A deliberately invalid test fixture, 33 bytes, shipped in the tarball. Coverage
-0.994. This is a **known false positive** and the clearest tuning target in the
-project: a parse failure in a path that is obviously test material should not
-degrade the completeness verdict for the whole package. It is recorded here
-rather than quietly fixed by weakening the policy, because the conservative
-default is correct and the fix belongs in reachability analysis, not in lowering
-the bar.
+| Package | Then | Now | Why |
+| --- | --- | --- | --- |
+| `pino` | REVIEW | ALLOW | only gap was an unreachable invalid test fixture |
+| `zustand` | REVIEW | ALLOW | scored **0**, escalated purely on an unreachable gap |
+| `graphql` | REVIEW | ALLOW | single unreachable gap at 99.9% coverage |
 
-`next` is the one genuine behavioural escalation: 6,936 findings at 27%
-coverage. A `REVIEW` on a package we could only partially parse is a defensible
-outcome, not a bug.
+`pino` was escalated at 99.4% coverage because of
+`test/fixtures/syntax-error-esm.mjs` — a deliberately invalid 33-byte file whose
+entire purpose is to be unparseable.
+
+The fix was **not** to ignore `test/`. A path heuristic is trivially defeated and
+functions as an instruction manual for hiding. PackageGate now computes install
+reachability from declared entrypoints, install lifecycle targets and the static
+import graph, and weighs a parse failure only when the file can actually run.
+Unreachable files are still fully analysed and still scored; only the
+completeness verdict changes. See [`REACHABILITY.md`](REACHABILITY.md) for the
+security tradeoff and the four properties that bound it.
+
+No score changed, and no behaviour chain appeared or disappeared.
 
 ## What this run also found
 

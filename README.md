@@ -126,8 +126,8 @@ analysed. Reproducible with
 | Metric | Value |
 |---|---|
 | Successfully analysed | **131 / 131** |
-| `ALLOW` | 125 (95.4%) |
-| `REVIEW` | 6 (4.6%) |
+| `ALLOW` | 128 (97.7%) |
+| `REVIEW` | 3 (2.3%) |
 | `BLOCK` | **0** |
 | Median behavioural score | **0** |
 | **Packages emitting any behaviour chain** | **0** |
@@ -136,27 +136,57 @@ analysed. Reproducible with
 across the whole corpus the engine inferred none — while still producing a
 HIGH-confidence chain on the exfiltration fixture. That gap is the product.
 
-Of the six escalations, **five carry a behavioural recommendation of `ALLOW` and
-zero chains**. They are escalated by the completeness policy because some
-executable source failed to parse, not by anything the rules found. `zustand`
-scores 0 and is still escalated for that reason.
+The three remaining escalations are honest ones: `next` at 27% analysis
+coverage, and `astro` and `playwright` where source that *can actually run*
+failed to parse. None has a behaviour chain, and the report says so.
 
-The clearest example is `pino`, escalated at 99.4% coverage because of one file:
+### The corpus changed the product
 
-```
-test/fixtures/syntax-error-esm.mjs — Unexpected token, expected "{" (3:0)
-```
+An earlier run flagged six packages, and five turned out to be the scanner's
+fault rather than the packages'. `pino` was escalated at **99.4% coverage**
+because of one file — `test/fixtures/syntax-error-esm.mjs`, a deliberately
+invalid 33-byte fixture — and `zustand` scored **0** and was escalated for the
+same reason.
 
-A deliberately invalid 33-byte test fixture. That is a **known false positive**,
-documented in [`docs/CONTROL_CORPUS.md`](docs/CONTROL_CORPUS.md) rather than
-quietly fixed by weakening the policy — the conservative default is right, and
-the fix belongs in reachability analysis.
+The fix was not to ignore `test/`; a path heuristic is trivially defeated and
+tells an attacker where to hide. PackageGate now computes **install
+reachability** from declared entrypoints, install lifecycle targets and the
+static import graph, and only weighs a parse failure when the file can actually
+run. Flag rate fell from 4.6% to 2.3% with **no score changes and no chains
+gained or lost**. Unreachable files are still fully analysed and still scored;
+only the completeness verdict changes, and any dynamic import we cannot resolve
+disables the optimisation entirely. See
+[`docs/REACHABILITY.md`](docs/REACHABILITY.md).
 
-The corpus also earns its keep as a bug-finder: it caught that `fs-extra` and
-`socket.io` **could not be scanned at all**, both failing on historical registry
-field shapes the npm documentation does not describe.
+The corpus also caught that `fs-extra` and `socket.io` **could not be scanned at
+all**, both failing on historical registry field shapes the npm documentation
+does not describe.
 
----
+## Real malware: what we can and cannot show
+
+We do **not** publish a malware detection rate, because the denominator does not
+exist.
+
+Of 24 npm package versions labelled malicious by OSV — including
+`eslint-scope@3.7.2`, `event-stream@3.3.6`, `flatmap-stream@0.1.1`,
+`ua-parser-js@0.7.29`, `coa@2.0.3` and `rc@1.2.9` — **0 are still retrievable.**
+All 24 have been unpublished. The packages survive with dozens of clean
+versions; the malicious versions are gone.
+
+> Static-analysis recall against real npm malware cannot be measured from the
+> public registry. Any tool reporting one either holds a private artifact
+> archive, is measuring advisory lookups, or is measuring synthetic samples.
+
+What *is* measurable is the advisory lane, which identified all 24 — 18 as
+`KNOWN_MALICIOUS`, 6 as `KNOWN_VULNERABLE`. That is a database lookup, not
+detection, and it is reported in its own column for exactly that reason.
+
+The 18/6 split is itself informative: the most famous npm compromises are
+carried as GHSA advisories rather than OSV `MAL-` records, so a tool that
+equates "malware" with "has a MAL- record" under-classifies them.
+
+Full method, per-sample results and ranked gaps:
+[`docs/MALWARE_EVALUATION.md`](docs/MALWARE_EVALUATION.md).
 
 ## Why isolated signals stay cheap
 
@@ -257,7 +287,7 @@ Tiny corpora are not statistically meaningful.
 **That caveat is printed by the tool itself.** n=7 is a smoke test, not a
 benchmark, and a perfect score on seven samples means very little. The larger
 false-positive measurement lives in
-[`docs/CONTROL_CORPUS.md`](docs/CONTROL_CORPUS.md) — 131 packages, 4.6% flag
+[`docs/CONTROL_CORPUS.md`](docs/CONTROL_CORPUS.md) — 131 packages, 2.3% flag
 rate, zero chains — and expanding both corpora is the most valuable open
 contribution to this project.
 
@@ -358,7 +388,7 @@ without divergence. `static-analyser` takes file *contents* as arguments rather
 than a directory path, so it can move into a network-isolated container without
 refactoring.
 
-409 tests. `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` are all
+439 tests. `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build` are all
 green on `main`.
 
 ---
