@@ -22,6 +22,7 @@ import {
 import { buildDecisionExplanation } from "./decision.js";
 import { parsePackageManifest } from "./manifest.js";
 import { getThreatIntelProvider } from "./threat-intel.js";
+import { computeInstallReachable } from "./reachability.js";
 import type { ThreatIntelResult } from "@packagegate/threat-intel";
 import {
   SAFETY_DISCLAIMER,
@@ -223,11 +224,41 @@ export function investigateExtractedPackage(
     );
   }
 
+  // Reachability decides whether a parse failure sits in code that can run.
+  // Computed from the manifest entrypoints, install lifecycle targets and the
+  // static import graph — never from path shape.
+  let manifestObject: Record<string, unknown> | undefined;
+  if (manifestText !== undefined) {
+    try {
+      const parsedManifest: unknown = JSON.parse(manifestText);
+      if (parsedManifest !== null && typeof parsedManifest === "object") {
+        manifestObject = parsedManifest as Record<string, unknown>;
+      }
+    } catch {
+      // An unparseable manifest leaves manifestObject undefined, which makes
+      // reachability fail closed and treat every file as reachable.
+    }
+  }
+
+  const reachability = computeInstallReachable({
+    manifest: manifestObject,
+    files: sourceFiles.map((file) => ({ path: file.path, content: file.content })),
+    lifecycleReferencedFiles: [...reachable],
+  });
+
+  // Fail closed: with no computable graph, or with any dynamic import we could
+  // not resolve, every file counts as reachable.
+  const isInstallReachable =
+    reachability === null || reachability.unresolvedDynamicImport
+      ? undefined
+      : (path: string) => reachability.has(path);
+
   const analysisCompleteness = buildAnalysisCompleteness({
     coverageRatio: analysisCoverage,
     droppedExecutable,
     parseFailures: staticResult.parseFailures,
     opaquePaths,
+    ...(isInstallReachable === undefined ? {} : { isInstallReachable }),
   });
 
   const riskInput = {

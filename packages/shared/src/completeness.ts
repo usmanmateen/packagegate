@@ -42,6 +42,19 @@ export const AnalysisCompletenessReasonSchema = z.object({
   lifecycleReachable: z.boolean().optional(),
   /** True when the path looks like executable JS/TS source. */
   executableSource: z.boolean().optional(),
+  /**
+   * Whether the file is reachable from a declared entrypoint or an install
+   * lifecycle script.
+   *
+   * `false` means nothing the package declares points at this file, so a parse
+   * failure here says little about code that can actually run. It never means
+   * the file is inert — see docs/REACHABILITY.md — and the reason is still
+   * reported either way.
+   *
+   * Absent when reachability could not be established, in which case the file
+   * is treated as reachable.
+   */
+  installReachable: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).default({}),
 });
 export type AnalysisCompletenessReason = z.infer<typeof AnalysisCompletenessReasonSchema>;

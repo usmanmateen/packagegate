@@ -36,6 +36,7 @@
     "@packagegate/version-diff": "workspace:*"
   },
   "devDependencies": {
+    "@babel/types": "^8.0.4",
     "@types/node": "^26.2.0"
   }
 }
