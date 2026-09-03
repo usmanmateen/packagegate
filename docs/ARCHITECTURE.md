@@ -30,32 +30,33 @@ These are constraints on the code, not slogans.
 ## 2. System shape
 
 ```
-apps/
-  web/                 Next.js investigation UI
-  api/                 Fastify HTTP API
-
 packages/
-  shared/              Domain model: Zod schemas + inferred types. No I/O.
-  npm-registry/        Registry metadata, version resolution, spec parsing
-  artifact-fetcher/    Tarball download + hostile-input-safe extraction
-  static-analyser/     AST parsing → Finding[]
-  behaviour-engine/    Finding[] + AST relationships → BehaviourChain[]
-  risk-engine/         Findings + chains + intelligence → RiskAssessment
-  advisory-intelligence/  GitHub Advisories / OSV lookups
-  provenance/          npm attestation context
-  version-analysis/    Security-relevant diff between two scans
-  ai-investigator/     Optional. Explains; never decides.
-  cli/                 packagegate scan | compare
+  shared/            Domain model: Zod schemas + inferred types. No I/O, no Node types.
+  npm-registry/      Packuments, version resolution, spec parsing. Read-only.
+  artifact-fetcher/  Download, integrity verification, hostile-input-safe extraction
+  static-analyser/   Babel AST + binding resolution → Finding[]
+  shell-analyser/    Lifecycle command strings parsed as data, never executed
+  behaviour-engine/  Findings + AST relationships → BehaviourChain[]
+  risk-engine/       Deterministic scoring with family saturation → RiskAssessment
+  threat-intel/      Advisory lookups; malware and vulnerability kept separate
+  version-diff/      Security-relevant capability delta between two scans
+  policy-engine/     Final action across behavioural, completeness and intel lanes
+  cli/               scan · diff · fixture · evaluate · scan-tarball
+  evaluation/        Metrics harness and control corpus
 
-workers/scanner/       Analysis process, designed to run without network
-evaluation/            Reproducible precision/recall harness
-fixtures/              Inert synthetic packages for analyser tests
+fixtures/            Inert synthetic packages for analyser tests
+ml/                  Optional, disabled by default. Experiment records and datasets.
+docs/                Threat model, risk model, limitations, evaluation reports
 ```
+
+There is no web application or HTTP API in this release. PackageGate is a CLI and
+a set of libraries; the domain model is deliberately transport-agnostic so an API
+can be added later without reshaping it.
 
 `packages/shared` deliberately compiles **without Node type definitions**. It
 performs no I/O and touches no filesystem, which is what lets the same domain
-model be imported by the network-disabled scanner, the API, the CLI and browser
-code in the Next.js app without divergence.
+model be imported by a network-disabled scanner process, the CLI, and browser
+code in any future interface without divergence.
 
 ---
 
@@ -87,12 +88,13 @@ package spec  ──▶ parse & validate ──▶ resolve version ──▶ reg
                     provenance context ──┼──▶ deterministic risk engine
                     version comparison ──┘                      │
                                                                 ▼
-                                                        persist investigation
                                                                 │
-                                            ┌───────────────────┼───────────────────┐
-                                            ▼                   ▼                   ▼
-                                          web UI               CLI            GitHub check
+                                                                ▼
+                                                               CLI
 ```
+
+Everything above is implemented. Persistence, an HTTP API, a web interface and a
+GitHub check are **not** in this release — see §7.
 
 Optional AI analysis attaches **after** the risk assessment exists and can only
 read it. It is not in the path that produces a score.
@@ -157,35 +159,37 @@ package as clean.
 | --- | --- | --- |
 | TypeScript **6.0.3** | `typescript-eslint` declares a peer range of `<6.1.0`. Type-aware lint rules (`no-floating-promises`) matter more here than the newest compiler — a dropped promise in the scanner means a temp directory is never cleaned. | TS 7.0.2 (no lint support yet) |
 | **Zod** schemas as source of truth | External input — registry responses, advisory feeds, API bodies — is untrusted. Runtime validation with inferred types beats compile-time-only assertions. | Hand-written interfaces |
-| **Fastify** | Lightweight, first-class schema validation, no decorator metaprogramming. | NestJS (weight unjustified here) |
-| **Drizzle** | SQL-first, generated migrations, no runtime proxy magic over a security-critical audit trail. | Prisma |
 | **Babel parser** in the analyser | Error-recovering parse of hostile/minified input, one parser for CJS/ESM/TS/JSX, and a real `Scope`/`Binding` API — binding resolution is what makes honest alias tracking possible instead of text matching. | acorn (no TS), regex (not analysis) |
 | **tar-stream** + `zlib` | Every entry decision is explicit and auditable. We never call `fs.symlink`, and budgets are enforced mid-stream. | High-level extractors that hide entry handling |
-| **PostgreSQL** only | The workload is relational and audit-shaped. | Redis/Kafka/Elasticsearch — complexity must earn its place |
 
 Deliberately **not** used: Kubernetes, microservices, message queues, search
 clusters. None are justified by the workload, and each would be architecture
 theatre.
 
+No database, HTTP framework or ORM is a dependency of this release. A
+`docker-compose.yml` providing PostgreSQL is kept for the persistence work in
+§7, but nothing currently connects to it — the CLI holds no state between runs.
+
 ---
 
 ## 6. Module ownership
 
-Parallel work is safe only with disjoint file ownership. Charters live in
-`.claude/agents/`.
+Parallel work is safe only with disjoint file ownership. The boundaries and the
+standards each area is held to are recorded in
+[`MODULE_OWNERSHIP.md`](MODULE_OWNERSHIP.md).
 
-| Owner | Modules |
-| --- | --- |
-| Lead | root config, `packages/shared`, `packages/risk-engine`, `packages/version-analysis`, `docs/ARCHITECTURE.md`, integration |
-| Security Researcher | `docs/THREAT_MODEL.md`, `docs/RISK_MODEL.md`, `docs/LIMITATIONS.md`, risk weight tables |
-| Static Analysis | `packages/static-analyser`, `packages/behaviour-engine`, related docs |
-| Backend / Platform | `packages/npm-registry`, `packages/artifact-fetcher`, `packages/advisory-intelligence`, `packages/provenance`, `apps/api` |
-| Frontend / Product | `apps/web` |
-| Evaluation / QA | `evaluation`, `fixtures`, integration and e2e tests |
-| DevSecOps | `packages/cli`, `workers/scanner`, `docker-compose.yml`, `.github` |
+Each package owns its own colocated unit tests. Cross-cutting integration
+coverage and the control corpus live in `packages/evaluation` and
+`packages/cli`.
 
-Implementing agents write their own colocated unit tests. QA verifies
-independently and reports defects rather than editing another owner's source.
+The boundaries that are load-bearing for security rather than merely tidy:
+
+- `shared` must not gain I/O or Node types — that is what keeps one domain model
+  valid on both sides of the trust boundary.
+- `static-analyser` and `behaviour-engine` must not gain filesystem access. They
+  receive file contents, which is what allows the analysis stage to run with no
+  network and no credentials.
+- `risk-engine` must not gain an input from the optional ML lane.
 
 ---
 
@@ -193,6 +197,8 @@ independently and reports defects rather than editing another owner's source.
 
 Stated here so it is not inferred from silence:
 
+- No persistence, HTTP API or web interface. The CLI is stateless; each scan is
+  computed fresh and printed.
 - No dynamic execution or sandboxed detonation. Static analysis only in v1.
 - No whole-program taint analysis. Conservative, mostly intra-file relationship
   inference — see `docs/BEHAVIOUR_ANALYSIS.md`.

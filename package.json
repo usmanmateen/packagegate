@@ -2,8 +2,17 @@
   "name": "packagegate",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "description": "npm supply-chain Trust & Safety investigation platform",
+  "keywords": [
+    "npm",
+    "supply-chain",
+    "security",
+    "static-analysis",
+    "malware-analysis",
+    "trust-and-safety",
+    "sbom",
+    "dependency-security"
+  ],
   "license": "Apache-2.0",
   "packageManager": "pnpm@11.20.0",
   "engines": {
@@ -15,16 +24,13 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "test:e2e": "turbo run test:e2e",
-    "eval": "pnpm --filter @packagegate/evaluation run eval",
-    "db:generate": "pnpm --filter @packagegate/api run db:generate",
-    "db:migrate": "pnpm --filter @packagegate/api run db:migrate",
+    "eval": "pnpm --filter @packagegate/cli exec node ./dist/bin.js evaluate",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "packagegate": "pnpm --filter @packagegate/cli exec node ./dist/bin.js",
-    "scan": "pnpm --filter @packagegate/cli exec node ./dist/bin.js scan",
-    "eval": "pnpm --filter @packagegate/cli exec node ./dist/bin.js evaluate"
+    "scan": "pnpm --filter @packagegate/cli exec node ./dist/bin.js scan"
   },
+  "type": "module",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.2.0",

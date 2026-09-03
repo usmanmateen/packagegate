@@ -233,7 +233,10 @@ precede the document:
 pnpm --silent packagegate scan lodash@4.17.21 --json | jq .risk
 ```
 
-PostgreSQL (for persistence work) runs via `docker compose up -d`.
+There is no database, API or web interface in this release. The CLI is
+stateless — each scan is computed fresh and printed. A `docker-compose.yml`
+providing PostgreSQL is present for future persistence work, but nothing
+currently connects to it.
 
 ---
 
@@ -372,8 +375,9 @@ The highest-value contributions, in order:
 3. **Behaviour-chain linkage cases** the engine currently misses — or chains it
    emits that a human would reject.
 
-See `.claude/agents/` for the module ownership boundaries used during
-development, and `docs/ARCHITECTURE.md` for the trust boundaries.
+See [`docs/MODULE_OWNERSHIP.md`](docs/MODULE_OWNERSHIP.md) for module
+boundaries and the standards each area is held to, and
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the trust boundaries.
 
 ## Security
 
