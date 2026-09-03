@@ -117,9 +117,17 @@ authoritative but not instantaneous.
   stealer or a worthless spam package, and the record alone does not distinguish
   them. PackageGate surfaces the record and its source rather than converting it
   into a severity we cannot justify.
-- Coverage differs by source. Most malicious-package records carry no GitHub
-  advisory alias, so consulting a single feed produces a large blind spot. We
-  query more than one and record which were consulted.
+- **The intelligence lane is opt-in and consults exactly one source.** It is
+  disabled by default; `PACKAGEGATE_THREAT_INTEL=osv` enables live OSV lookups.
+  OSV is used rather than the GitHub advisory API because the npm
+  malicious-package corpus lives predominantly in OSV `MAL-` records, most of
+  which carry no GHSA alias — so querying GitHub alone would miss most of it.
+  Querying OSV alone still leaves a blind spot for anything only GitHub carries.
+- **Version matching is conservative.** Only records that explicitly enumerate
+  the scanned version count as a hit. Records that apply by semver range without
+  enumerating it are not treated as confirmed, because a wrong range
+  interpretation would either invent a hit on a clean version or silently miss a
+  real one.
 - A failed lookup is reported as a failed lookup, never as "no advisories
   found". Those are different facts and the UI keeps them different.
 - Advisory version ranges are taken verbatim from the feed. A record covering a

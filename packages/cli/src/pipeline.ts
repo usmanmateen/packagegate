@@ -22,6 +22,7 @@ import {
 import { buildDecisionExplanation } from "./decision.js";
 import { parsePackageManifest } from "./manifest.js";
 import { getThreatIntelProvider } from "./threat-intel.js";
+import type { ThreatIntelResult } from "@packagegate/threat-intel";
 import {
   SAFETY_DISCLAIMER,
   type AcquisitionInfo,
@@ -78,6 +79,17 @@ export interface InvestigateExtractedInput {
    * caller-supplied SHA-256).
    */
   readonly integrityVerifiedForRisk: boolean;
+  /**
+   * Intelligence resolved by the caller before analysis begins.
+   *
+   * Live advisory lookups are network I/O, and the analysis stage is
+   * deliberately network-free and credential-free. The async CLI layer — which
+   * is already talking to the registry — resolves intelligence and passes the
+   * result in, so no I/O seam is introduced inside the trust boundary.
+   *
+   * When absent, the configured synchronous provider is consulted instead.
+   */
+  readonly threatIntel?: ThreatIntelResult;
 }
 
 /**
@@ -230,11 +242,13 @@ export function investigateExtractedPackage(
   const risk = assessRisk(riskInput);
   const scoringBreakdown = computeScoringBreakdown(riskInput);
 
-  const threat = getThreatIntelProvider().lookup({
-    packageName: metadata.name,
-    version: metadata.version,
-    sha256: extracted.artifact.sha256,
-  });
+  const threat =
+    input.threatIntel ??
+    getThreatIntelProvider().lookup({
+      packageName: metadata.name,
+      version: metadata.version,
+      sha256: extracted.artifact.sha256,
+    });
 
   // Lookup failures must not invent malware; UNKNOWN does not BLOCK.
   const threatStatus =

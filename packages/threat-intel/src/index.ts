@@ -16,3 +16,6 @@ export {
   FailingThreatIntelProvider,
   createThreatIntelProviderFromEnv,
 } from "./providers.js";
+
+export { lookupOsv, OSV_DEFAULT_API_URL } from "./osv.js";
+export type { OsvFetch, OsvLookupOptions } from "./osv.js";

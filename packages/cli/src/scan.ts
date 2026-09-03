@@ -6,6 +6,7 @@ import {
 } from "@packagegate/npm-registry";
 import { ScanError, toScanError } from "@packagegate/shared";
 import { investigateExtractedPackage, SCANNER_VERSION } from "./pipeline.js";
+import { resolveThreatIntel } from "./intel-resolve.js";
 import type { InvestigationResult } from "./types.js";
 
 export { SCANNER_VERSION };
@@ -74,6 +75,11 @@ export async function scanPackage(
           };
         }
 
+        const threatIntel = await resolveThreatIntel(
+          fallbackMetadata.name,
+          fallbackMetadata.version,
+        );
+
         const result = investigateExtractedPackage({
           extracted,
           requestedSpec: spec.raw,
@@ -85,6 +91,7 @@ export async function scanPackage(
           fallbackMetadata,
           requireManifest: false,
           integrityVerifiedForRisk: integrityVerified,
+          ...(threatIntel === undefined ? {} : { threatIntel }),
         });
 
         if (options.ml !== true) return result;
