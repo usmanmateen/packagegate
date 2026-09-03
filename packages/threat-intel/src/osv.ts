@@ -91,7 +91,8 @@ export async function lookupOsv(
   options: OsvLookupOptions = {},
 ): Promise<ThreatIntelResult> {
   const provider = "osv";
-  const fetchImpl = options.fetchImpl ?? (globalThis.fetch as unknown as OsvFetch);
+  // Node's global fetch satisfies OsvFetch structurally; no cast is needed.
+  const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   if (typeof fetchImpl !== "function") {
     return {
       status: "UNKNOWN",
